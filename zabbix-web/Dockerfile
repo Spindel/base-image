@@ -14,11 +14,9 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Zabbix server from zabbix
 RUN yum install -y http://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-release-3.0-1.el7.noarch.rpm && \
-    yum install -y zabbix-web-pgsql  && \
-    yum clean all && \
-    systemctl enable httpd.service
-
-ADD files/zabbix.conf /etc/httpd/conf.d/zabbix.conf
+    yum install -y zabbix-web-pgsql php-fpm && \
+    rm -f /etc/php-fpm.d/www.conf && \
+    yum clean all
 
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
