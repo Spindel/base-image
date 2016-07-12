@@ -1,9 +1,10 @@
-# Frontend container 
+# Frontend container
 FROM registry.gitlab.com/modioab/base-image:zabbix-web-latest
 MAINTAINER "D.S. Ljungmark" <ljungmark@modio.se>
 ENV container docker
 
-ADD files/etc/php-fpm.d/frontend.conf /etc/php-fpm.d/frontend.conf
+COPY files/etc/php-fpm.d/frontend.conf /etc/php-fpm.d/frontend.conf
+RUN systemctl enable php-fpm.service
 
 EXPOSE 9000
 VOLUME [ "/sys/fs/cgroup", "/etc/zabbix/web/zabbix.conf.php" ]
