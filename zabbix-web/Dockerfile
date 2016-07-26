@@ -18,5 +18,8 @@ RUN yum install -y http://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-releas
     rm -f /etc/php-fpm.d/www.conf && \
     yum clean all
 
+COPY journald.conf /etc/systemd/journald.conf
+COPY zabbix.ini /etc/php.d/zabbix.ini
+
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
