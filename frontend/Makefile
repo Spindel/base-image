@@ -7,7 +7,7 @@ RELEASE_TAG := $(shell date +%Y%m%dT%H%M)
 all: build publish
 
 build:
-	docker build \
+	docker build --rm=true \
 	    --tag=$(REPO_NAME):$(NAME)-latest \
 	    --tag=$(REPO_NAME):$(NAME)-$(RELEASE_TAG) \
 	    --file Dockerfile .

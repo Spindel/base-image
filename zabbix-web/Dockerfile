@@ -13,8 +13,13 @@ rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Zabbix server from zabbix
-RUN yum install -y http://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-release-3.0-1.el7.noarch.rpm && \
-    yum install -y zabbix-web-pgsql php-fpm && \
+RUN rpm --import https://repo.zabbix.com/zabbix-official-repo.key && \
+    rpm --import https://getfedora.org/static/352C64E5.txt && \
+    rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
+    yum -y install epel-release https://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-release-3.0-1.el7.noarch.rpm && \
+    yum clean metadata && \
+    yum -y update  && \
+    yum -y install nginx zabbix-web-pgsql php-fpm && \
     rm -f /etc/php-fpm.d/www.conf && \
     yum clean all
 
