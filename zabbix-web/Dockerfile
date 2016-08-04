@@ -1,16 +1,22 @@
 # Base zabbix-web for zabbix 3.0 image
 FROM centos:7
 MAINTAINER "D.S. Ljungmark" <ljungmark@modio.se>
-ENV container docker
+ENV container=docker
+STOPSIGNAL RTMIN+3
 
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-rm -f /lib/systemd/system/multi-user.target.wants/*;\
-rm -f /etc/systemd/system/*.wants/*;\
-rm -f /lib/systemd/system/local-fs.target.wants/*; \
-rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-rm -f /lib/systemd/system/basic.target.wants/*;\
-rm -f /lib/systemd/system/anaconda.target.wants/*;
+rm -f /lib/systemd/system/multi-user.target.wants/*;        \
+rm -f /etc/systemd/system/*.wants/*;                        \
+rm -f /lib/systemd/system/local-fs.target.wants/*;          \
+rm -f /lib/systemd/system/sockets.target.wants/*udev*;      \
+rm -f /lib/systemd/system/sockets.target.wants/*initctl*;   \
+rm -f /lib/systemd/system/basic.target.wants/*;             \
+rm -f /lib/systemd/system/anaconda.target.wants/*;          \
+ln -sf /dev/null /etc/systemd/system/systemd-remount-fs.service; \
+ln -sf /dev/null /etc/systemd/system/dev-hugepages.mount;        \
+ln -sf /dev/null /etc/systemd/system/sys-fs-fuse-connections.mount; 
+
+
 
 # Zabbix server from zabbix
 RUN rpm --import https://repo.zabbix.com/zabbix-official-repo.key && \
