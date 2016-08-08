@@ -12,10 +12,11 @@ zabbix-images:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - make all
 
-supermin-images:
+python3-image:
   stage: build
   tags:
     - docker
+    - fedora
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - ./build-python-image.sh
