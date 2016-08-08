@@ -5,10 +5,10 @@ set -eux
 NAME=python
 PACKAGES="python3"
 REPO_NAME="registry.gitlab.com/modioab/base-image:$(lsb_release -is|tr A-Z a-z)-$(lsb_release -rs)-${NAME}"
-RELEASE_TAG="-$(date +%Y%m%d)"
+RELEASE_TAG="-$(date +%Y%m%dT%H%M)"
 
 TMPDIR=$(mktemp -d supermin-docker.XXXXX)
-#trap "sudo rm -rf $TMPDIR" EXIT
+trap "chmod -R u+w $TMPDIR; rm -rf $TMPDIR" EXIT
 
 SUPERMIN_APPLIANCE="${TMPDIR}/${NAME}.o"
 DOCKER_CONTEXT="${TMPDIR}/${NAME}.docker"
@@ -34,6 +34,6 @@ FROM scratch
 COPY . /
 RUN ln -f -s python3 /usr/bin/python
 EOF
-docker build --tag="${REPO_NAME}" --tag="${REPO_NAME}${RELEASE_TAG}" "${DOCKER_CONTEXT}"
-docker push "${REPO_NAME}"
+docker build --tag="${REPO_NAME}-latest" --tag="${REPO_NAME}${RELEASE_TAG}" "${DOCKER_CONTEXT}"
+docker push "${REPO_NAME}-latest"
 docker push "${REPO_NAME}${RELEASE_TAG}"

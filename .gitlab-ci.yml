@@ -1,7 +1,21 @@
 before_script:
   - docker info
 
+stages:
+  - build
+
 zabbix-images:
+  stage: build
+  tags:
+    - docker
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - make all
+
+supermin-images:
+  stage: build
+  tags:
+    - docker
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - ./build-python-image.sh
