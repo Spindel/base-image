@@ -16,7 +16,7 @@ ln -sf /dev/null /etc/systemd/system/systemd-remount-fs.service; \
 ln -sf /dev/null /etc/systemd/system/dev-hugepages.mount;        \
 ln -sf /dev/null /etc/systemd/system/sys-fs-fuse-connections.mount; 
 
-
+COPY container_limits.conf  /etc/security/limits.d/
 
 # Zabbix server from zabbix
 RUN rpm --import https://repo.zabbix.com/zabbix-official-repo.key && \
