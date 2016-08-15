@@ -1,22 +1,22 @@
 before_script:
   - docker info
 
-stages:
-  - build
-
 zabbix-images:
   stage: build
+  image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
   tags:
     - docker
+    - x86_64
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - make all
 
 python3-image:
   stage: build
+  image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
   tags:
     - docker
-    - fedora
+    - x86_64
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - ./build-python-image.sh
