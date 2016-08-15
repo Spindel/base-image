@@ -1,9 +1,9 @@
+image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
 before_script:
   - docker info
 
 zabbix-images:
   stage: build
-  image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
   tags:
     - docker
     - x86_64
@@ -13,7 +13,6 @@ zabbix-images:
 
 python3-image:
   stage: build
-  image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
   tags:
     - docker
     - x86_64
