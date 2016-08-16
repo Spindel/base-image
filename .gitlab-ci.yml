@@ -11,15 +11,6 @@ build-image:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - make -C build all
 
-zabbix-images:
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-    - make all
-
 python3-image:
   stage: build
   tags:
