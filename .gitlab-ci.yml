@@ -1,5 +1,6 @@
 image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
 before_script:
+  - echo $CI_BUILD_TOKEN
   - docker info
 
 build-image:
@@ -39,6 +40,5 @@ debian-armv7:
     - docker
     - arm
   script:
-    - echo $CI_BUILD_TOKEN
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - make -C debian-armv7 all
