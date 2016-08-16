@@ -2,9 +2,11 @@
 
 set -eux
 
+source /etc/os-release
+
 NAME=python
 PACKAGES="python3"
-REPO_NAME="registry.gitlab.com/modioab/base-image:$(lsb_release -is|tr A-Z a-z)-$(lsb_release -rs)-${NAME}"
+REPO_NAME="registry.gitlab.com/modioab/base-image:${ID}-${VERSION_ID}-${NAME}"
 RELEASE_TAG="-$(date +%Y%m%dT%H%M)"
 
 TMPDIR=$(mktemp -d supermin-docker.XXXXX)
