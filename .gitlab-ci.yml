@@ -1,5 +1,6 @@
 image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
 before_script:
+  - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
   - docker info
 
 build-image:
@@ -8,7 +9,6 @@ build-image:
     - docker
     - x86_64
   script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN -e "autobuild@modio.se" registry.gitlab.com
     - make -C build all
 
 
@@ -18,7 +18,6 @@ zabbix-web:
     - docker
     - x86_64
   script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN -e "autobuild@modio.se" registry.gitlab.com
     - make -C zabbix-web all
 
 
@@ -28,16 +27,14 @@ python3-image:
     - docker
     - x86_64
   script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN -e "autobuild@modio.se" registry.gitlab.com
     - ./build-python-image.sh
 
 
-debian-armv7:
-  image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
-  stage: build
-  tags:
-    - docker
-    - arm
-  script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN -e "autobuild@modio.se" registry.gitlab.com
-    - make -C debian-armv7 all
+# debian-armv7:
+#  image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
+#  stage: build
+#  tags:
+#    - docker
+#    - arm
+#  script:
+#    - make -C debian-armv7 all
