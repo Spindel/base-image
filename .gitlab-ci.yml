@@ -1,9 +1,9 @@
 image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
-before_script:
-  - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
-  - docker info
 
 build-image:
+  before_script:
+    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
+    - docker info
   stage: build
   tags:
     - docker
@@ -13,6 +13,9 @@ build-image:
 
 
 zabbix-web:
+  before_script:
+    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
+    - docker info
   stage: build
   tags:
     - docker
@@ -22,6 +25,9 @@ zabbix-web:
 
 
 python3-image:
+  before_script:
+    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
+    - docker info
   stage: build
   tags:
     - docker
@@ -31,24 +37,27 @@ python3-image:
 
 
 arm-rootfs:
-    image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
-    stage: build
-    tags: 
-        - arm
-    script:
-        - apt-get update
-        - apt-get install -y -qq debootstrap
-        - make -C debian-armv7 rootfs
-    artifacts:
-        paths:
-            - debian-armv7/rootfs.tar.gz
+  image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
+  stage: build
+  tags: 
+    - arm
+  script:
+    - apt-get update
+    - apt-get install -y -qq debootstrap
+    - make -C debian-armv7 rootfs
+  artifacts:
+    paths:
+      - debian-armv7/rootfs.tar.gz
 
 arm-container:
-    stage: test # Because we want it in the stage after build
-    tags: 
-        - docker
-        - x86_64
-    dependencies:
-        - arm-rootfs
-    script:
-        - make -C debian-armv7 build publish
+  before_script:
+    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
+    - docker info
+  stage: test # Because we want it in the stage after build
+  tags: 
+    - docker
+    - x86_64
+  dependencies:
+    - arm-rootfs
+  script:
+    - make -C debian-armv7 build publish
