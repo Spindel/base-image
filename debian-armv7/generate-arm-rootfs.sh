@@ -20,6 +20,3 @@ chroot $TMPDIR apt-get clean
 pushd $TMPDIR
 tar czf $CWD/rootfs.tar.gz .
 popd
-
-# Clean up
-rm -fr $TMPDIR
