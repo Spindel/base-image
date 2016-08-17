@@ -31,7 +31,7 @@ python3-image:
 
 
 arm-rootfs:
-    image: registry.gitlab.com/modioab/base-image:debian-armv7
+    image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
     stage: build
     tags: 
         - arm
