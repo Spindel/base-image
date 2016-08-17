@@ -38,13 +38,17 @@ python3-image:
 
 arm-rootfs:
   image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
+  # TODO: Replace bootstrap with below image
+  # image: registry.gitlab.com/modioab/base-image:debian-armv7
+  before_script: 
+    - apt-get update
+    - apt-get install -y -qq debootstrap
+    - apt-get install -y -qq make  # TODO: remove this line
+
   stage: build
   tags: 
     - arm
   script:
-      # - apt-get clean
-      #    - apt-get update
-    - apt-get install -y -qq debootstrap make
     - make -C debian-armv7 rootfs
   artifacts:
     paths:

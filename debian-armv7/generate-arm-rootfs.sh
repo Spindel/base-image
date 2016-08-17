@@ -13,7 +13,7 @@ debootstrap testing $TMPDIR
 
 # Install extra deps for modio-distribution
 chroot $TMPDIR apt-get update
-chroot $TMPDIR apt-get -qq -y install multistrap squashfs-tools dracut xdelta3
+chroot $TMPDIR apt-get -qq -y install make multistrap squashfs-tools dracut xdelta3
 chroot $TMPDIR apt-get clean
 
 # create an archive
