@@ -14,5 +14,5 @@ build:
 
 publish:
 	docker push $(REPO_NAME):$(NAME)-latest
-	docker push $(REPO_NAME):$(NAME)-$(RELEASE_TAG)
+#	docker push $(REPO_NAME):$(NAME)-$(RELEASE_TAG)
 

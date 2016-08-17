@@ -5,6 +5,9 @@ REPO_NAME = registry.gitlab.com/modioab/base-image
 
 all: build publish
 
+rootfs: 
+	./generate-arm-rootfs.sh
+
 build:
 	docker build --rm=true \
 	    --tag=$(REPO_NAME):$(NAME) \

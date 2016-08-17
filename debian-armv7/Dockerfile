@@ -1,6 +1,5 @@
-FROM registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
+FROM scratch
+MAINTAINER "D.S. Ljungmark" <ljungmark@modio.se>
+ENV container docker
 
-RUN apt update && \
-    apt upgrade && \
-    apt install multistrap squashfs-tools dracut xdelta3 && \
-    apt-get clean
+ADD rootfs.tar.gz /

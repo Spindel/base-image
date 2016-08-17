@@ -30,11 +30,22 @@ python3-image:
     - ./build-python-image.sh
 
 
-# debian-armv7:
-#  image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
-#  stage: build
-#  tags:
-#    - docker
-#    - arm
-#  script:
-#    - make -C debian-armv7 all
+arm-rootfs:
+    stage: build
+    tags: 
+        - arm
+    script:
+        - make -C debian-armv7 rootfs
+    artifacts:
+        paths:
+            - debian-armv7/rootfs.tar.gz
+
+arm-container:
+    stage: test # Because we want it in the stage after build
+    tags: 
+        - docker
+        - x86_64
+    dependencies:
+        - arm-rootfs
+    script:
+        - make -C debian-armv7 build publish
