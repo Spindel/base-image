@@ -10,7 +10,7 @@ rootfs:
 
 build:
 	docker build --rm=true \
-	    --tag=$(REPO_NAME):$(NAME) \
+	    --tag=$(REPO_NAME):$(NAME)-latest \
 	    --file Dockerfile .
 publish:
-	docker push $(REPO_NAME):$(NAME)
+	docker push $(REPO_NAME):$(NAME)-latest

@@ -53,6 +53,9 @@ python3-image:build:
     - x86_64
   script:
     - make -C python-image rootfs
+  artifacts:
+    paths:
+    - python-image/rootfs.tar.gz
 
 
 python3-image:deploy:
@@ -62,6 +65,8 @@ python3-image:deploy:
   tags:
     - docker
     - x86_64
+  dependencies:
+      - python3-image:build
   script:
     - make -C python-image build
     - make -C python-image publish
@@ -85,7 +90,7 @@ debian-armv7:build:
       - debian-armv7/rootfs.tar.gz
 
 
-arm-container:deploy:
+debian-armv7:deploy:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
     - docker info
@@ -94,6 +99,7 @@ arm-container:deploy:
     - docker
     - x86_64
   dependencies:
-    - arm-rootfs
+    - debian-armv7:build
   script:
-    - make -C debian-armv7 build publish
+    - make -C debian-armv7 build 
+    - make -C debian-armv7 publish
