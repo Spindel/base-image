@@ -4,6 +4,9 @@ build-image:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
 #    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
+    - cat /root/.docker/config.json
+    - echo TOKEN '*****'
+    - echo "$CI_BUILD_TOKEN"
     - docker info
   stage: build
   tags:
