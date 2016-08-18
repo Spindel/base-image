@@ -19,12 +19,12 @@ zabbix-web-test:
         - docker
         - x86_64
     before_script:
-        - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN -e "autobuild@modio.se" registry.gitlab.com
         - docker info
     script:
         - docker build --rm=true --no-cache 
                        --tag=registry.gitlab.com/modioab/base-image:zabbix-web-latest
                        --file zabbix-web/Dockerfile zabbix-web
+        - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN -e "autobuild@modio.se" registry.gitlab.com
         - docker push registry.gitlab.com/modioab/base-image:zabbix-web-latest 
 
 
