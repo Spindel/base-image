@@ -1,36 +1,7 @@
 image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
 stages:
-    - pull
     - build
     - publish
-
-
-pull-runners:x86_64:
-    before_script:
-        - docker info
-        - df -h /
-    stage: pull
-    tags:
-        - docker
-        - x86_64
-    script:
-        - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
-        - docker pull registry.gitlab.com/modioab/base-image:fedora-24-build-latest
-
-
-pull-runners:arm:
-    before_script:
-        - docker info
-        - df -h /
-    stage: pull
-    tags: 
-        - docker
-        - arm
-    script:
-        - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
-        - docker pull registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
-        - docker pull registry.gitlab.com/modioab/base-image:debian-armv7-latest
-
 
 build-image:build:
   before_script:
