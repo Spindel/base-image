@@ -9,7 +9,7 @@ TMPDIR=$(mktemp -d rootfs.XXXXX)
 trap "chmod -R u+w $TMPDIR; rm -rf $TMPDIR" EXIT
 
 # Create basic root
-debootstrap testing $TMPDIR
+debootstrap jessie $TMPDIR
 
 # Install extra deps for modio-distribution
 chroot $TMPDIR apt-get update

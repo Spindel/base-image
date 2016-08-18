@@ -1,4 +1,7 @@
 image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
+stages:
+    - build
+    - publish
 
 build-image:build:
   before_script:
@@ -11,10 +14,11 @@ build-image:build:
     - make -C build build
 
 
-build-image:deploy:
+build-image:publish:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
-  stage: deploy
+  stage: publish
+  when: always
   tags:
     - docker
     - x86_64
@@ -33,10 +37,11 @@ zabbix-web:build:
     - make -C zabbix-web build
 
 
-zabbix-web:deploy:
+zabbix-web:publish:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
-  stage: deploy
+  stage: publish
+  when: always
   tags:
     - docker
     - x86_64
@@ -58,10 +63,11 @@ python3-image:build:
     - python3-image/rootfs.tar.gz
 
 
-python3-image:deploy:
+python3-image:publish:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
-  stage: deploy
+  stage: publish
+  when: always
   tags:
     - docker
     - x86_64
@@ -90,11 +96,12 @@ debian-armv7:build:
       - debian-armv7/rootfs.tar.gz
 
 
-debian-armv7:deploy:
+debian-armv7:publish:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
     - docker info
-  stage: deploy # Because we want it in the stage after build
+  stage: publish # Because we want it in the stage after build
+  when: always
   tags:
     - docker
     - x86_64
