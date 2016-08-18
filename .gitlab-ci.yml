@@ -2,7 +2,7 @@ image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
 
 build-image:
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN -e "autobuild@modio.se" registry.gitlab.com
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
 #    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
     - docker info
   stage: build
@@ -15,7 +15,7 @@ build-image:
 
 zabbix-web:
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN -e "autobuild@modio.se" registry.gitlab.com
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
 #    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
     - docker info
   stage: build
@@ -28,7 +28,7 @@ zabbix-web:
 
 python3-image:
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN -e "autobuild@modio.se" registry.gitlab.com
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
 #    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
     - docker info
   stage: build
@@ -59,7 +59,7 @@ arm-rootfs:
 
 arm-container:
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN -e "autobuild@modio.se" registry.gitlab.com
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
 #    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
     - docker info
   stage: test # Because we want it in the stage after build
