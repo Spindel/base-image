@@ -1,58 +1,82 @@
 image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
 
-build-image:
+build-image:build:
   before_script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
-#    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
-    - cat /root/.docker/config.json
-    - echo TOKEN '*****'
-    - echo "$CI_BUILD_TOKEN"
     - docker info
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C build all
+    - make -C build build
 
 
-zabbix-web:
+build-image:deploy:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
-#    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
+  stage: deploy
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C build publish
+
+
+zabbix-web:build:
+  before_script:
     - docker info
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C zabbix-web all
+    - make -C zabbix-web build
 
 
-python3-image:
+zabbix-web:deploy:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
-#    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
+  stage: deploy
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C zabbix-web publish
+
+
+python3-image:build:
+  before_script:
     - docker info
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - ./build-python-image.sh
+    - make -C python-image rootfs
 
 
-arm-rootfs:
+python3-image:deploy:
+  before_script:
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
+  stage: deploy
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C python-image build
+    - make -C python-image publish
+
+
+debian-armv7:build:
   image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
   # TODO: Replace bootstrap with below image
   # image: registry.gitlab.com/modioab/base-image:debian-armv7
-  before_script: 
+  before_script:
     - apt-get update
     - apt-get install -y -qq debootstrap
     - apt-get install -y -qq make  # TODO: remove this line
-
   stage: build
-  tags: 
+  tags:
     - arm
   script:
     - make -C debian-armv7 rootfs
@@ -60,13 +84,13 @@ arm-rootfs:
     paths:
       - debian-armv7/rootfs.tar.gz
 
-arm-container:
+
+arm-container:deploy:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
-#    - docker login -u $BUILD_USER -p $BUILD_PASSWORD -e "autobuild@modio.se" registry.gitlab.com
     - docker info
-  stage: test # Because we want it in the stage after build
-  tags: 
+  stage: deploy # Because we want it in the stage after build
+  tags:
     - docker
     - x86_64
   dependencies:
