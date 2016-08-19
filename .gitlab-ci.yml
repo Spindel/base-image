@@ -10,7 +10,7 @@ build-image:build:
     - x86_64
   script:
     - docker info
-    - make -C build build
+    - make -C build build save
   artifacts:
     paths:
       - build/*-image.tar.gz
@@ -25,7 +25,7 @@ build-image:publish:
     - x86_64
   script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C build publish
+    - make -C build load publish
   dependencies:
     - build-image:build
 
