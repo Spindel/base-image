@@ -1,16 +1,23 @@
 NAME = fedora-24-build
 REPO_NAME = registry.gitlab.com/modioab/base-image
-RELEASE_TAG := $(shell date +%Y%m%dT%H%M)
+TAG = $(REPO_NAME):$(NAME)-latest
+IMAGE_FILENAME = $(NAME)-image.tar.gz
 
-.PHONY: all build publish
-
-all: build publish
+.PHONY: build save load publish
 
 build:
-	docker build --rm=true --no-cache \
-	    --tag=$(REPO_NAME):$(NAME)-latest \
-	    --file Dockerfile .
+	docker build --pull --no-cache \
+	    --tag=$(TAG) \
+	    .
+
+save: $(IMAGE_FILENAME)
+
+$(IMAGE_FILENAME):
+	docker save $(TAG) | gzip > $@
+
+load: $(IMAGE_FILENAME)
+	gunzip < $< | docker load
 
 publish:
-	docker push $(REPO_NAME):$(NAME)-latest
+	docker push $(TAG)
 

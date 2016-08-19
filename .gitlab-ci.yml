@@ -4,26 +4,30 @@ stages:
     - publish
 
 build-image:build:
-  before_script:
-    - docker info
   stage: build
   tags:
     - docker
     - x86_64
   script:
+    - docker info
     - make -C build build
+  artifacts:
+    paths:
+      - build/*-image.tar.gz
+    expire_in: 1 hour
 
 
 build-image:publish:
-  before_script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
   stage: publish
   when: always
   tags:
     - docker
     - x86_64
   script:
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
     - make -C build publish
+  dependencies:
+    - build-image:build
 
 
 zabbix-web:build:
