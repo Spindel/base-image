@@ -24,7 +24,7 @@ gpgkey = https://yum.dockerproject.org/gpg
 name = Docker repository
 EOF
 
-dnf --installroot=${ROOTFS} --disablerepo='*' --enablerepo=fedora --enablerepo=docker --releasever=${VERSION_ID} --setopt=tsflags=nodocs install -y ${PACKAGES}
+dnf --installroot=${ROOTFS} --disablerepo='*' --enablerepo=fedora --enablerepo=updates --enablerepo=docker --releasever=${VERSION_ID} --setopt=tsflags=nodocs install -y ${PACKAGES}
 echo tsflags=nodocs >> rootfs/etc/dnf/dnf.conf
 
 dnf --installroot=${ROOTFS} clean all
