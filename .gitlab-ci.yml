@@ -23,34 +23,38 @@ build-image:publish:
   tags:
     - docker
     - x86_64
+  dependencies:
+    - build-image:build
   script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
     - make -C build load publish
-  dependencies:
-    - build-image:build
 
 
 zabbix-web:build:
-  before_script:
-    - docker info
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C zabbix-web build
+    - docker info
+    - make -C zabbix-web build save
+  artifacts:
+    paths:
+      - zabbix-web/*-image.tar.gz
+    expire_in: 1 hour
 
 
 zabbix-web:publish:
-  before_script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
   stage: publish
   when: always
   tags:
     - docker
     - x86_64
+  dependencies:
+    - zabbix-web:build
   script:
-    - make -C zabbix-web publish
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
+    - make -C zabbix-web load publish
 
 
 python3-image:build:
@@ -64,7 +68,8 @@ python3-image:build:
     - make -C python3-image rootfs
   artifacts:
     paths:
-    - python3-image/rootfs.tar.gz
+      - python3-image/rootfs.tar.gz
+    expire_in: 1 hour
 
 
 python3-image:publish:
