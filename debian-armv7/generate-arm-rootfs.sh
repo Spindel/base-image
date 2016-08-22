@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eux
 
+uname -p | grep x86 && exit 1
+
 export DEBIAN_FRONTEND=noninteractive
 CWD=$(pwd)
 
