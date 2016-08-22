@@ -1,16 +1,24 @@
-.PHONY: all build publish
 include /etc/os-release
-NAME=python
-REPO_NAME:=registry.gitlab.com/modioab/base-image:$(ID)-$(VERSION_ID)-$(NAME)-latest
+NAME = $(ID)-$(VERSION_ID)-python
+REPO_NAME = registry.gitlab.com/modioab/base-image
+CI_BUILD_ID ?= build
+LOCAL_TAG = $(REPO_NAME):$(NAME)-$(CI_BUILD_ID)
+TAG = $(REPO_NAME):$(NAME)-latest
+ROOTFS_ARCHIVE = rootfs.tar.gz
+
+.PHONY: all rootfs build publish
+
 all: build publish
 
-rootfs: rootfs.tar.gz
+rootfs: $(ROOTFS_ARCHIVE)
 
-rootfs.tar.gz: 
+$(ROOTFS_ARCHIVE):
 	./build-python-rootfs.sh
 
-build:
-	docker build --tag="$(REPO_NAME)" .
+build: $(ROOTFS_ARCIVE)
+	docker build --tag=$(LOCAL_TAG) .
 
 publish:
-	docker push "$(REPO_NAME)"
+	docker tag $(LOCAL_TAG) $(TAG)
+	docker rmi $(LOCAL_TAG)
+	docker push $(TAG)
