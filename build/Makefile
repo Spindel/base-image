@@ -1,7 +1,7 @@
 NAME = fedora-24-build
 REPO_NAME = registry.gitlab.com/modioab/base-image
-CI_BUILD_ID ?= build
-LOCAL_TAG = $(REPO_NAME):$(NAME)-$(CI_BUILD_ID)
+CI_BUILD_REF_NAME ?= build
+LOCAL_TAG = $(REPO_NAME):$(NAME)-$(CI_BUILD_REF_NAME)
 TAG = $(REPO_NAME):$(NAME)-latest
 IMAGE_FILENAME = $(NAME)-image.tar.gz
 

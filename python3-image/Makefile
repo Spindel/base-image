@@ -1,8 +1,8 @@
 include /etc/os-release
 NAME = $(ID)-$(VERSION_ID)-python
 REPO_NAME = registry.gitlab.com/modioab/base-image
-CI_BUILD_ID ?= build
-LOCAL_TAG = $(REPO_NAME):$(NAME)-$(CI_BUILD_ID)
+CI_BUILD_REF_NAME ?= build
+LOCAL_TAG = $(REPO_NAME):$(NAME)-$(CI_BUILD_REF_NAME)
 TAG = $(REPO_NAME):$(NAME)-latest
 ROOTFS_ARCHIVE = rootfs.tar.gz
 
