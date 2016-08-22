@@ -15,7 +15,11 @@ debootstrap jessie $TMPDIR
 
 # Install extra deps for modio-distribution
 chroot $TMPDIR apt-get update
-chroot $TMPDIR apt-get -qq -y install make multistrap squashfs-tools dracut xdelta3
+chroot $TMPDIR apt-get -qq -y install multistrap squashfs-tools dracut      \
+                                      xdelta3 unzip xz-utils dbus           \
+                                      util-linux e2fsprogs dosfstools tar   \
+                                      make git automake libtool
+
 chroot $TMPDIR apt-get clean
 
 # create an archive
