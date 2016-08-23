@@ -16,5 +16,5 @@ debootstrap --include=${PACKAGES} jessie $TMPDIR
 
 # create an archive
 pushd $TMPDIR
-tar czf $CWD/rootfs.tar.gz .
+tar cf $CWD/rootfs.tar .
 popd

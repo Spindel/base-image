@@ -104,7 +104,7 @@ debian-armv7:build:
     - make -C debian-armv7 rootfs
   artifacts:
     paths:
-      - debian-armv7/rootfs.tar.gz
+      - debian-armv7/rootfs.tar
 
 
 debian-armv7:publish:
