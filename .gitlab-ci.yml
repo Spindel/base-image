@@ -92,6 +92,8 @@ debian-armv7:build:
   # TODO: Replace bootstrap with below image
   # image: registry.gitlab.com/modioab/base-image:debian-armv7
   before_script:
+    - sed -i s:httpredir:ftp.nl:g /etc/apt/sources.list
+    - apt-get clean
     - apt-get update
     - apt-get install -y -qq debootstrap
     - apt-get install -y -qq make  # TODO: remove this line
