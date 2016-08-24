@@ -74,7 +74,7 @@ python3-image:build:
 
 python3-image:publish:
   before_script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
   stage: publish
   when: always
   tags:
@@ -105,11 +105,12 @@ debian-armv7:build:
   artifacts:
     paths:
       - debian-armv7/rootfs.tar
+    expire_in: 1 hour
 
 
 debian-armv7:publish:
   before_script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" -e "autobuild@modio.se" registry.gitlab.com
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
     - docker info
   stage: publish # Because we want it in the stage after build
   when: always
@@ -119,5 +120,5 @@ debian-armv7:publish:
   dependencies:
     - debian-armv7:build
   script:
-    - make -C debian-armv7 build 
+    - make -C debian-armv7 build
     - make -C debian-armv7 publish
