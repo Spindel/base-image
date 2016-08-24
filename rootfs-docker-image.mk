@@ -4,12 +4,7 @@ TAG = $(REPO_NAME):$(NAME)-latest
 
 .PHONY: rootfs build publish
 
-rootfs: $(ROOTFS_ARCHIVE)
-
-$(ROOTFS_ARCHIVE):
-	$(BUILD_ROOTFS_ARCHIVE)
-
-build: $(ROOTFS_ARCIVE)
+build: rootfs
 	docker build --tag=$(LOCAL_TAG) .
 
 publish:
