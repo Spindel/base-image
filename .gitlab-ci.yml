@@ -62,7 +62,6 @@ python3-image:build:
     - docker info
   stage: build
   tags:
-    - docker
     - x86_64
   script:
     - make -C python3-image rootfs
