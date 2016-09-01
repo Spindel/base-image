@@ -66,7 +66,6 @@ python3-image:build:
     - x86_64
   script:
     - make -C python3-image rootfs
-    - tar xOf python3-image/rootfs.tar.gz ./packagelist | grep python
   artifacts:
     paths:
       - python3-image/rootfs.tar.gz
@@ -83,7 +82,6 @@ python3-image:publish:
       - python3-image:build
   script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - tar xOf python3-image/rootfs.tar.gz ./packagelist | grep python
     - make -C python3-image build
     - make -C python3-image publish
 

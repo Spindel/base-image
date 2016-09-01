@@ -16,6 +16,7 @@ trap "chmod -R u+w $TMPDIR; rm -rf $TMPDIR" EXIT
 SUPERMIN_APPLIANCE="${TMPDIR}/${NAME}.o"
 DOCKER_CONTEXT="${TMPDIR}/${NAME}.docker"
 
+dnf install -y ${PACKAGES}
 supermin --prepare ${PACKAGES} -o "${SUPERMIN_APPLIANCE}"
 # Exclude Python 2 mystery files
 cat > "${SUPERMIN_APPLIANCE}/excludefiles" <<EOF
