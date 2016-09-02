@@ -58,8 +58,6 @@ zabbix-web:publish:
 
 
 python3-image:build:
-  before_script:
-    - docker info
   stage: build
   tags:
     - x86_64
