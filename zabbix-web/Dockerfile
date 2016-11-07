@@ -26,7 +26,7 @@ RUN rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0 && \
     yum -y install epel-release https://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-release-3.0-1.el7.noarch.rpm && \
     yum clean metadata && \
     yum -y update  && \
-    yum -y install nginx zabbix-web-pgsql php-fpm && \
+    yum -y install nginx zabbix-web-pgsql php-fpm python-setuptools && \
     rm -f /etc/php-fpm.d/www.conf && \
     yum clean all
 
