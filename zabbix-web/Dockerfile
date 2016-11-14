@@ -32,6 +32,7 @@ RUN rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0 && \
 
 COPY journald.conf /etc/systemd/journald.conf
 COPY zabbix.ini /etc/php.d/zabbix.ini
+RUN  chmod g-rwx /etc/php.d/zabbix.ini  /etc/systemd/journald.conf
 
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
