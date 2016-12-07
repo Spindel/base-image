@@ -16,6 +16,7 @@ source /etc/os-release
 mkdir -p build/rootfs/etc/yum.repos.d
 cd build
 ROOTFS=$(realpath rootfs)
+
 cat > rootfs/etc/yum.repos.d/docker.repo <<EOF
 [docker]
 baseurl = https://yum.dockerproject.org/repo/main/fedora/\$releasever/
@@ -24,7 +25,7 @@ gpgkey = https://yum.dockerproject.org/gpg
 name = Docker repository
 EOF
 
-dnf --installroot=${ROOTFS} --disablerepo='*' --enablerepo=fedora --enablerepo=updates --enablerepo=docker --releasever=${VERSION_ID} --setopt=tsflags=nodocs install -y ${PACKAGES}
+dnf --installroot=${ROOTFS} --repofrompath=docker,rootfs/etc/yum.repos.d/docker.repo --disablerepo='*' --enablerepo=fedora --enablerepo=updates --enablerepo=docker --releasever=${VERSION_ID} --setopt=tsflags=nodocs install -y ${PACKAGES}
 echo tsflags=nodocs >> rootfs/etc/dnf/dnf.conf
 
 dnf --installroot=${ROOTFS} clean all
