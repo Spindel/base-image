@@ -1,38 +1,25 @@
 # Base zabbix-web for zabbix 3.0 image
 FROM centos:7
 MAINTAINER "D.S. Ljungmark" <ljungmark@modio.se>
-ENV container=docker
+ENV container docker
 STOPSIGNAL RTMIN+3
-
-RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-rm -f /lib/systemd/system/multi-user.target.wants/*;        \
-rm -f /etc/systemd/system/*.wants/*;                        \
-rm -f /lib/systemd/system/local-fs.target.wants/*;          \
-rm -f /lib/systemd/system/sockets.target.wants/*udev*;      \
-rm -f /lib/systemd/system/sockets.target.wants/*initctl*;   \
-rm -f /lib/systemd/system/basic.target.wants/*;             \
-rm -f /lib/systemd/system/anaconda.target.wants/*;          \
-ln -sf /dev/null /etc/systemd/system/systemd-remount-fs.service; \
-ln -sf /dev/null /etc/systemd/system/dev-hugepages.mount;        \
-ln -sf /dev/null /etc/systemd/system/sys-fs-fuse-connections.mount; 
 
 COPY container_limits.conf  /etc/security/limits.d/
 COPY RPM-GPG-KEY-ZABBIX-3.0 /etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0
 
 # Zabbix server from zabbix
-RUN rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0 && \
-    rpm --import https://getfedora.org/static/352C64E5.txt && \
-    rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
+RUN rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0         && \
+    rpm --import https://getfedora.org/static/352C64E5.txt              && \
+    rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7           && \
     yum -y install epel-release https://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-release-3.0-1.el7.noarch.rpm && \
-    yum clean metadata && \
-    yum -y update  && \
-    yum -y install nginx zabbix-web-pgsql php-fpm python-setuptools && \
-    rm -f /etc/php-fpm.d/www.conf && \
+    yum clean metadata                                                  && \
+    yum -y update                                                       && \
+    yum -y install nginx zabbix-web-pgsql php-fpm python-setuptools     && \
+    rm -f /etc/php-fpm.d/www.conf                                       && \
     yum clean all
 
 COPY journald.conf /etc/systemd/journald.conf
 COPY zabbix.ini /etc/php.d/zabbix.ini
 RUN  chmod g-rwx /etc/php.d/zabbix.ini  /etc/systemd/journald.conf
 
-VOLUME [ "/sys/fs/cgroup" ]
-CMD ["/usr/sbin/init"]
+CMD ["/sbin/init"]
