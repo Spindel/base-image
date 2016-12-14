@@ -2,6 +2,7 @@ image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
 stages:
     - build
     - publish
+    - deploy
 
 build-image:build:
   stage: build
@@ -118,3 +119,10 @@ debian-armv7:publish:
   script:
     - make -C debian-armv7 build
     - make -C debian-armv7 publish
+
+
+trigger_build:
+    stage: deploy
+    script:
+        - "curl -X POST -F token=$API_KEY  -F ref=master https://gitlab.com/api/v3/projects/1282148/trigger/builds"
+        - "curl -X POST -F token=$CONTAINER_KEY  -F ref=master https://gitlab.com/api/v3/projects/1528552/trigger/builds"
