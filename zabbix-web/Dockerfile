@@ -16,10 +16,11 @@ RUN rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0         && \
     yum -y update                                                       && \
     yum -y install nginx zabbix-web-pgsql php-fpm python-setuptools     && \
     rm -f /etc/php-fpm.d/www.conf                                       && \
-    yum clean all
+    yum clean all                                                       && \
+    echo ForwardToConsole=yes >> /etc/systemd/journald.conf             && \
+    echo MaxLevelConsole=debug >> /etc/systemd/journald.conf
 
-COPY journald.conf /etc/systemd/journald.conf
 COPY zabbix.ini /etc/php.d/zabbix.ini
-RUN  chmod g-rwx /etc/php.d/zabbix.ini  /etc/systemd/journald.conf
+RUN  chmod go-wx /etc/php.d/zabbix.ini  /etc/systemd/journald.conf
 
 CMD ["/sbin/init"]
