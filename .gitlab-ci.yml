@@ -123,6 +123,7 @@ debian-armv7:publish:
 
 trigger_build:
     stage: deploy
+    dependencies: []
     script:
         - curl -X POST -F token=$API_KEY        -F ref=master https://gitlab.com/api/v3/projects/1282148/trigger/builds
         - curl -X POST -F token=$SUBMIT_KEY     -F ref=master https://gitlab.com/api/v3/projects/1282147/trigger/builds
