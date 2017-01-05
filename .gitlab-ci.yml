@@ -14,7 +14,7 @@ build-image:build:
     - make -C build build save
   artifacts:
     paths:
-      - build/*-image.tar.gz
+      - build/*-image.tar
     expire_in: 1 hour
 
 
@@ -41,7 +41,7 @@ zabbix-web:build:
     - make -C zabbix-web build save
   artifacts:
     paths:
-      - zabbix-web/*-image.tar.gz
+      - zabbix-web/*-image.tar
     expire_in: 1 hour
 
 
@@ -66,7 +66,7 @@ python3-image:build:
     - make -C python3-image rootfs
   artifacts:
     paths:
-      - python3-image/rootfs.tar.gz
+      - python3-image/rootfs.tar
     expire_in: 1 hour
 
 

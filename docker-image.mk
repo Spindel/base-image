@@ -1,7 +1,7 @@
 CI_BUILD_REF_NAME ?= build
 LOCAL_TAG = $(REPO_NAME):$(NAME)-$(CI_BUILD_REF_NAME)
 TAG = $(REPO_NAME):$(NAME)-latest
-IMAGE_FILENAME = $(NAME)-image.tar.gz
+IMAGE_FILENAME = $(NAME)-image.tar
 
 .PHONY: build save load publish
 
@@ -13,11 +13,11 @@ build:
 save: $(IMAGE_FILENAME)
 
 $(IMAGE_FILENAME):
-	docker save $(LOCAL_TAG) | gzip > $@
+	docker save $(LOCAL_TAG) > $@
 	docker rmi $(LOCAL_TAG)
 
 load: $(IMAGE_FILENAME)
-	gunzip < $< | docker load
+	docker load < $<
 
 publish:
 	docker tag $(LOCAL_TAG) $(TAG)

@@ -3,7 +3,7 @@
 set -eux
 
 source /etc/os-release
-OUTPUT="$(pwd)/rootfs.tar.gz"
+OUTPUT="$(pwd)/rootfs.tar"
 
 NAME=python
 PACKAGES="python3 python3-pycurl python3-cryptography python3-zope-interface"
@@ -33,5 +33,5 @@ EOF
 
 supermin --build --format chroot "${SUPERMIN_APPLIANCE}" -o "${DOCKER_CONTEXT}" --include-packagelist
 pushd ${DOCKER_CONTEXT}
-tar czf ${OUTPUT} .
+tar cf ${OUTPUT} .
 popd
