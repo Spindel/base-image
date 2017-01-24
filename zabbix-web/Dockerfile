@@ -21,7 +21,8 @@ RUN rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0         && \
     echo MaxLevelConsole=debug >> /etc/systemd/journald.conf            && \
     rm -f /etc/httpd/logs && mkdir /etc/httpd/logs                      && \
     ln -sf /dev/stdout /etc/httpd/logs/access_log                       && \
-    ln -sf /dev/stderr /etc/httpd/logs/error_log
+    ln -sf /dev/stderr /etc/httpd/logs/error_log                        && \
+    systemctl mask systemd-remount-fs.service
 
 
 COPY zabbix.ini /etc/php.d/zabbix.ini
