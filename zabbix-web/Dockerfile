@@ -18,7 +18,8 @@ RUN rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0         && \
     rm -f /etc/php-fpm.d/www.conf                                       && \
     yum clean all                                                       && \
     echo ForwardToConsole=yes >> /etc/systemd/journald.conf             && \
-    echo MaxLevelConsole=debug >> /etc/systemd/journald.conf
+    echo MaxLevelConsole=debug >> /etc/systemd/journald.conf            && \
+    mkdir -p /var/log/httpd /var/log/php-fpm /var/log/nginx
 
 COPY zabbix.ini /etc/php.d/zabbix.ini
 RUN  chmod go-wx /etc/php.d/zabbix.ini  /etc/systemd/journald.conf
