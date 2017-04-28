@@ -1,14 +1,18 @@
 # Docker container building docker container
-FROM registry.gitlab.com/modioab/base-image:fedora-24-bootstrap-latest
+FROM registry.gitlab.com/modioab/base-image:fedora-25-bootstrap-latest
 MAINTAINER "Nicklas Lindgren" <nili@modio.se>
 
-# If the base image does not already have the docker repository:
-# COPY docker.repo /etc/yum.repos.d/docker.repo
+ARG URL=unknown
+ARG COMMIT=unknown
+ARG BRANCH=unknown
+ARG HOST=unknown
+ARG DATE=unknown
 
-# If the base image does not already have the build tools:
-# RUN dnf -y upgrade && \
-#     dnf -y install docker-engine make supermin redhat-lsb && \
-#     dnf clean all
+LABEL "se.modio.ci.url"=$URL
+LABEL "se.modio.ci.branch"=$BRANCH
+LABEL "se.modio.ci.commit"=$COMMIT
+LABEL "se.modio.ci.host"=$HOST
+LABEL "se.modio.ci.date"=$DATE
 
 RUN dnf -y upgrade && \
     dnf clean all
