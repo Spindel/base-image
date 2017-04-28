@@ -1,4 +1,4 @@
-image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
+image: registry.gitlab.com/modioab/base-image:fedora-25-build-latest
 stages:
     - build
     - publish
