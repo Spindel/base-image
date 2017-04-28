@@ -42,7 +42,7 @@ build-image-24:build:
     - make -C build-fedora-24 build save
   artifacts:
     paths:
-      - build/*-image.tar
+      - build-fedora-24/*-image.tar
     expire_in: 1 hour
 
 
