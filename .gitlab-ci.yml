@@ -89,6 +89,7 @@ zabbix-web:publish:
 python3-image:build:
   stage: build
   tags:
+    - docker
     - x86_64
   script:
     - make -C python3-image build save
@@ -115,6 +116,7 @@ python3-image-24:build:
   image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
   stage: build
   tags:
+    - docker
     - x86_64
   script:
     - make -C python3-image build save
