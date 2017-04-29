@@ -1,6 +1,6 @@
 CI_BUILD_REF_NAME ?= build
 LOCAL_TAG = $(REPO_NAME):$(NAME)-$(CI_BUILD_REF_NAME)
-TAG = $(REPO_NAME):$(NAME)-latest
+TAG ?= $(REPO_NAME):$(NAME)-latest
 
 .PHONY: rootfs build publish
 
