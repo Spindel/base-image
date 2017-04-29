@@ -91,10 +91,10 @@ python3-image:build:
   tags:
     - x86_64
   script:
-    - make -C python3-image rootfs
+    - make -C python3-image build save
   artifacts:
     paths:
-      - python3-image/rootfs.tar
+      - python3-image/fedora-25-python-image.tar
     expire_in: 1 hour
 
 
@@ -105,11 +105,10 @@ python3-image:publish:
     - docker
     - x86_64
   dependencies:
-      - python3-image:build
+    - python3-image:build
   script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C python3-image build
-    - make -C python3-image publish
+    - make -C load publish
 
 
 python3-image-24:build:
@@ -118,10 +117,10 @@ python3-image-24:build:
   tags:
     - x86_64
   script:
-    - make -C python3-image rootfs
+    - make -C python3-image build save
   artifacts:
     paths:
-      - python3-image/rootfs.tar
+      - python3-image/fedora-24-python-image.tar
     expire_in: 1 hour
 
 
@@ -133,11 +132,10 @@ python3-image-24:publish:
     - docker
     - x86_64
   dependencies:
-      - python3-image:build
+    - python3-image:build
   script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C python3-image build
-    - make -C python3-image publish
+    - make -C load publish
 
 
 debian-armv7:build:
