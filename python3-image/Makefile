@@ -6,7 +6,9 @@ ifeq ($(VERSION_ID),24)
 TAG = $(REPO_NAME):$(NAME)-latest
 endif
 
-include ../rootfs-docker-image.mk
+include ../docker-image.mk
 
-rootfs:
+build: rootfs.tar
+
+rootfs.tar:
 	./build-python-rootfs.sh
