@@ -55,7 +55,7 @@ $(IMAGE_FILENAME):
 	docker rmi $(LOCAL_TAG)
 
 load:
-	docker load < $<
+	docker load < $(IMAGE_FILENAME)
 
 publish:
 	docker tag $(LOCAL_TAG) $(TAG)
