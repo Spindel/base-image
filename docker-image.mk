@@ -54,7 +54,7 @@ $(IMAGE_FILENAME):
 	docker save $(LOCAL_TAG) > $@
 	docker rmi $(LOCAL_TAG)
 
-load: $(IMAGE_FILENAME)
+load:
 	docker load < $<
 
 publish:
