@@ -109,7 +109,7 @@ python3-image:publish:
     - python3-image:build
   script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C load publish
+    - make -C python3-image load publish
 
 
 python3-image-24:build:
@@ -137,7 +137,7 @@ python3-image-24:publish:
     - python3-image:build
   script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C load publish
+    - make -C python3-image load publish
 
 
 debian-armv7:build:
