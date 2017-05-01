@@ -53,7 +53,7 @@ build-image-24:publish:
     - docker
     - x86_64
   dependencies:
-    - build-image:build
+    - build-image-24:build
   script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
     - make -C build-fedora-24 load publish
