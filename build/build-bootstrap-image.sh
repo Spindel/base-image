@@ -16,6 +16,7 @@ PACKAGES=" \
     docker-engine \
     git \
     xorg-x11-server-Xvfb \
+    which \
     firefox \
     chromium \
     nodejs \
