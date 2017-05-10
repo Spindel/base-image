@@ -16,4 +16,5 @@ LABEL "se.modio.ci.date"=$DATE
 
 RUN dnf -y upgrade && \
     dnf clean all && \
-    pip install --upgrade pip setuptools
+    pip install --upgrade pip setuptools \
+    pip3 install --upgrade pip setuptools
