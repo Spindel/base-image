@@ -5,6 +5,33 @@ stages:
     - deploy
 
 
+build-image-24:build:
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - docker info
+    - make -C build-fedora-24 build
+  artifacts:
+    paths:
+      - build-fedora-24/*-image.tar
+    expire_in: 1 hour
+
+
+build-image-24:publish:
+  stage: publish
+  when: always
+  tags:
+    - docker
+    - x86_64
+  dependencies:
+    - build-image-24:build
+  script:
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
+    - make -C build-fedora-24 load publish
+
+
 build-image-25:build:
   stage: build
   tags:
@@ -32,31 +59,31 @@ build-image-25:publish:
     - make -C build-fedora-25 load publish
 
 
-build-image-24:build:
+build-image-26:build:
   stage: build
   tags:
     - docker
     - x86_64
   script:
     - docker info
-    - make -C build-fedora-24 build
+    - make -C build-fedora-26 build
   artifacts:
     paths:
-      - build-fedora-24/*-image.tar
+      - build/*-image.tar
     expire_in: 1 hour
 
 
-build-image-24:publish:
+build-image-26:publish:
   stage: publish
   when: always
   tags:
     - docker
     - x86_64
   dependencies:
-    - build-image-24:build
+    - build-image-26:build
   script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C build-fedora-24 load publish
+    - make -C build-fedora-26 load publish
 
 
 zabbix-web:build:
