@@ -38,7 +38,10 @@ REF_FILE = $(shell git rev-parse --git-path $(HEAD_REF))
 
 .PHONY: build save load publish
 
-build:
+build: $(IMAGE_FILENAME)
+
+
+$(IMAGE_FILENAME):
 	docker build --pull --no-cache \
 	    --build-arg=BRANCH="$(CI_BUILD_REF_NAME)" \
 	    --build-arg=COMMIT="$(CI_BUILD_REF)" \
@@ -47,10 +50,6 @@ build:
 	    --build-arg=HOST="$(HOST)" \
 	    --tag=$(LOCAL_TAG) \
 	    .
-
-save: $(IMAGE_FILENAME)
-
-$(IMAGE_FILENAME):
 	docker save $(LOCAL_TAG) > $@
 	docker rmi $(LOCAL_TAG)
 
