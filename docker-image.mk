@@ -26,7 +26,7 @@ CI_PROJECT_URL ?= http://localhost.localdomain/
 LOCAL_TAG = $(REPO_NAME):$(NAME)-$(CI_PIPELINE_ID)
 
 # Final tag
-TAG ?= $(REPO_NAME):$(NAME)-$(CI_BUILD_REF)
+TAG ?= $(REPO_NAME):$(NAME)-$(CI_BUILD_REF_NAME)
 IMAGE_FILENAME = $(NAME)-image.tar
 
 # Git archive
