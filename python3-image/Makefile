@@ -8,7 +8,7 @@ endif
 
 include ../docker-image.mk
 
-build: rootfs.tar
+$(IMAGE_FILENAME): rootfs.tar
 
 rootfs.tar:
 	./build-python-rootfs.sh
