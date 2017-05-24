@@ -1,4 +1,5 @@
-FROM scratch
+# Docker container building docker container
+FROM registry.gitlab.com/modioab/base-image:fedora-26-bootstrap-latest
 MAINTAINER "Nicklas Lindgren" <nili@modio.se>
 
 ARG URL=unknown
@@ -13,6 +14,5 @@ LABEL "se.modio.ci.commit"=$COMMIT
 LABEL "se.modio.ci.host"=$HOST
 LABEL "se.modio.ci.date"=$DATE
 
-ADD rootfs.tar /
-RUN ln -f -s python3 /usr/bin/python && \
-    pip install --upgrade pip setuptools
+RUN dnf -y upgrade && \
+    dnf clean all
