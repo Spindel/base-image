@@ -3,7 +3,9 @@ NAME = $(ID)-$(VERSION_ID)-python
 REPO_NAME = registry.gitlab.com/modioab/base-image
 
 ifeq ($(VERSION_ID),24)
-TAG = $(REPO_NAME):$(NAME)-latest
+ifeq ($(CI_BUILD_REF_NAME),master)
+CI_BUILD_REF_NAME := latest
+endif
 endif
 
 include ../docker-image.mk
