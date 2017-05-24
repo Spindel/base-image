@@ -15,4 +15,6 @@ LABEL "se.modio.ci.host"=$HOST
 LABEL "se.modio.ci.date"=$DATE
 
 RUN dnf -y upgrade && \
-    dnf clean all
+    dnf clean all && \
+    python2 -m pip install --upgrade pip && \
+    python3 -m pip install --upgrade pip setuptools
