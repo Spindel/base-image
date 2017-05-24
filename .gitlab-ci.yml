@@ -113,7 +113,8 @@ zabbix-web:publish:
     - make -C zabbix-web load publish
 
 
-python3-image:build:
+python3-image-25:build:
+  image: registry.gitlab.com/modioab/base-image:fedora-25-build-master
   stage: build
   tags:
     - docker
@@ -126,14 +127,14 @@ python3-image:build:
     expire_in: 1 hour
 
 
-python3-image:publish:
+python3-image-25:publish:
   stage: publish
   when: always
   tags:
     - docker
     - x86_64
   dependencies:
-    - python3-image:build
+    - python3-image-25:build
   script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
     - make -C python3-image load publish
@@ -154,7 +155,6 @@ python3-image-24:build:
 
 
 python3-image-24:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
   stage: publish
   when: always
   tags:
