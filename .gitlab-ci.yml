@@ -128,6 +128,7 @@ python3-image-25:build:
 
 
 python3-image-25:publish:
+  image: registry.gitlab.com/modioab/base-image:fedora-25-build-master
   stage: publish
   when: always
   tags:
@@ -155,6 +156,7 @@ python3-image-24:build:
 
 
 python3-image-24:publish:
+  image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
   stage: publish
   when: always
   tags:
