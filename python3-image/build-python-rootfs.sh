@@ -12,6 +12,7 @@ PACKAGES="python3 \
     python3-pyOpenSSL \
     python3-zope-interface \
     python3-CacheControl \
+    python3-pip \
     python3-netifaces"
 REPO_NAME="registry.gitlab.com/modioab/base-image:${ID}-${VERSION_ID}-${NAME}"
 RELEASE_TAG="-$(date +%Y%m%dT%H%M)"
