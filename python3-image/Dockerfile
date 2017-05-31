@@ -14,5 +14,6 @@ LABEL "se.modio.ci.host"=$HOST
 LABEL "se.modio.ci.date"=$DATE
 
 ADD rootfs.tar /
+ADD get-pip.py /usr/local/bin
 RUN ln -f -s python3 /usr/bin/python && \
-    pip install --upgrade pip setuptools
+    python3 /usr/local/bin/get-pip.py
