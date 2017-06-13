@@ -206,6 +206,63 @@ debian-armv7:publish:
     - make -C debian-armv7 publish
 
 
+nodejs-image-26:build:
+  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C nodejs-image build
+  artifacts:
+    paths:
+      - nodejs-image/fedora-26-nodejs-image.tar
+    expire_in: 1 hour
+
+
+nodejs-image-26:publish:
+  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
+  stage: publish
+  when: always
+  tags:
+    - docker
+    - x86_64
+  dependencies:
+    - nodejs-image-26:build
+  script:
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
+    - make -C nodejs-image load publish
+
+
+
+meteor-image-26:build:
+  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C meteor-fedora-26 build
+  artifacts:
+    paths:
+      - meteor-fedora-26/fedora-26-meteor-image.tar
+    expire_in: 1 hour
+
+
+meteor-image-26:publish:
+  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
+  stage: publish
+  when: always
+  tags:
+    - docker
+    - x86_64
+  dependencies:
+    - meteor-image-26:build
+  script:
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
+    - make -C meteor-fedora-26 load publish
+
+
 trigger_build:
     stage: deploy
     dependencies: []
