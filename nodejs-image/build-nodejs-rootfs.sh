@@ -7,9 +7,7 @@ OUTPUT="$(pwd)/rootfs.tar"
 
 NAME=nodejs
 PACKAGES="nodejs \
-    npm
-    gzip
-    tar"
+    yarn"
 
 REPO_NAME="registry.gitlab.com/modioab/base-image:${ID}-${VERSION_ID}-${NAME}"
 RELEASE_TAG="-$(date +%Y%m%dT%H%M)"
