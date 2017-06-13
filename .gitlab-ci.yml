@@ -234,6 +234,33 @@ nodejs-image-26:publish:
     - make -C nodejs-image load publish
 
 
+nginx-26:build:
+  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C nginx build
+  artifacts:
+    paths:
+      - nginx/fedora-26-nginx-image.tar
+    expire_in: 1 hour
+
+
+nginx-26:publish:
+  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
+  stage: publish
+  when: always
+  tags:
+    - docker
+    - x86_64
+  dependencies:
+    - nginx-26:build
+  script:
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
+    - make -C nginx load publish
+
 
 meteor-image-26:build:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
