@@ -19,12 +19,13 @@ LABEL "se.modio.ci.date"=$DATE
 
 ADD "https://meteorinstall-4168.kxcdn.com/packages-bootstrap/${RELEASE}/meteor-bootstrap-${PLATFORM}.tar.gz" /tmp/meteor.tgz
 
-RUN echo wtf:x:100000:100:wtf:/data:/bin/sh >> /etc/passwd && \
-    mkdir /data && \
-    tar xf /tmp/meteor.tgz -C /data/ && \
-    rm -f /tmp/meteor.tgz && \
-    echo "WTF? Meteor requires /usr/local/bin/meteor to be a symlink...." && \
-    ln -s /data/.meteor/meteor /usr/local/bin/meteor && \
+RUN mkdir /data                         && \
+    tar xf /tmp/meteor.tgz -C /data/    && \
+    rm -f /tmp/meteor.tgz
+
+RUN echo wtf:x:100000:100:wtf:/data:/bin/sh >> /etc/passwd                  && \
+    echo "WTF? Meteor requires /usr/local/bin/meteor to be a symlink...."   && \
+    ln -s /data/.meteor/meteor /usr/local/bin/meteor                        && \
     chown -R wtf /data
 
 USER wtf 
