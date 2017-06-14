@@ -7,6 +7,10 @@ RELEASE=1.5
 include ../docker-image.mk
 
 
+clean:
+	rm -f $(IMAGE_FILENAME)
+	rm -f meteor.tar.gz
+
 $(IMAGE_FILENAME): meteor.tar.gz
 
 

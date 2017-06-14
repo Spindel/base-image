@@ -1,5 +1,5 @@
 # Docker container building docker container
-FROM registry.gitlab.com/modioab/base-image:fedora-26-build-master
+FROM  registry.fedoraproject.org/fedora:26
 
 
 ARG URL=unknown
@@ -20,8 +20,9 @@ ADD meteor.tar.gz /data/
 RUN echo wtf:x:100000:100:wtf:/data:/bin/sh >> /etc/passwd                  && \
     echo "WTF? Meteor requires /usr/local/bin/meteor to be a symlink...."   && \
     ln -s /data/.meteor/meteor /usr/local/bin/meteor                        && \
-    chown -R wtf /data
+    chown -R wtf /data                                                      && \
+    dnf update --refresh -y                                                 && \
+    dnf clean all
 
 USER wtf 
 WORKDIR /data
-
