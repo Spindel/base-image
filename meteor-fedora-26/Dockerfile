@@ -16,13 +16,17 @@ LABEL "se.modio.ci.date"=$DATE
 
 
 ADD meteor.tar.gz /data/
-
-RUN echo wtf:x:100000:100:wtf:/data:/bin/sh >> /etc/passwd                  && \
-    echo "WTF? Meteor requires /usr/local/bin/meteor to be a symlink...."   && \
-    ln -s /data/.meteor/meteor /usr/local/bin/meteor                        && \
-    chown -R wtf /data                                                      && \
-    dnf update --refresh -y                                                 && \
+WORKDIR /data
+RUN echo "WTF? Meteor tarball has uid/gid 1000"                              \
+         " and docker duplicates filesize if we use chown"                && \
+    echo wtf:x:1000:1000:wtf:/data:/bin/sh >> /etc/passwd                 && \
+    chown wtf /data                                                       && \
+    echo "WTF? Meteor requires /usr/local/bin/meteor to be a symlink...." && \
+    ln -fs /data/.meteor/meteor /usr/local/bin/meteor                     && \
+    dnf update --refresh -y                                               && \
+    dnf -y install nodejs sqlite                                          && \
     dnf clean all
 
+
 USER wtf 
-WORKDIR /data
+
