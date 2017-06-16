@@ -16,7 +16,7 @@ build-image-24:build:
   artifacts:
     paths:
       - build-fedora-24/*-image.tar
-    expire_in: 1 hour
+    expire_in: 1 day
 
 
 build-image-24:publish:
@@ -43,7 +43,7 @@ build-image-25:build:
   artifacts:
     paths:
       - build-fedora-25/*-image.tar
-    expire_in: 1 hour
+    expire_in: 1 day
 
 
 build-image-25:publish:
@@ -70,7 +70,7 @@ build-image-26:build:
   artifacts:
     paths:
       - build-fedora-26/*-image.tar
-    expire_in: 1 hour
+    expire_in: 1 day
 
 
 build-image-26:publish:
@@ -97,7 +97,7 @@ zabbix-web:build:
   artifacts:
     paths:
       - zabbix-web/*-image.tar
-    expire_in: 1 hour
+    expire_in: 1 day
 
 
 zabbix-web:publish:
@@ -124,7 +124,7 @@ python3-image-25:build:
   artifacts:
     paths:
       - python3-image/fedora-25-python-image.tar
-    expire_in: 1 hour
+    expire_in: 1 day
 
 
 python3-image-25:publish:
@@ -152,7 +152,7 @@ python3-image-24:build:
   artifacts:
     paths:
       - python3-image/fedora-24-python-image.tar
-    expire_in: 1 hour
+    expire_in: 1 day
 
 
 python3-image-24:publish:
@@ -187,7 +187,7 @@ debian-armv7:build:
   artifacts:
     paths:
       - debian-armv7/rootfs.tar
-    expire_in: 1 hour
+    expire_in: 1 day
 
 
 debian-armv7:publish:
