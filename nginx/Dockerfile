@@ -1,6 +1,9 @@
 FROM scratch
 MAINTAINER "D.S. Ljungmark" <spider@modio.se>
 
+env LANG C.UTF-8
+env LC_CTYPE C.utf8
+
 ARG URL=unknown
 ARG COMMIT=unknown
 ARG BRANCH=unknown

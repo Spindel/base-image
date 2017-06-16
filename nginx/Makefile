@@ -7,4 +7,4 @@ include ../docker-image.mk
 $(IMAGE_FILENAME): rootfs.tar
 
 rootfs.tar:
-	./build-nginx-rootfs.sh
+	../build-rootfs.sh nginx
