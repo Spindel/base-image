@@ -13,4 +13,11 @@ include ../docker-image.mk
 $(IMAGE_FILENAME): rootfs.tar
 
 rootfs.tar:
-	./build-python-rootfs.sh
+	../build-rootfs.sh python3 \
+	    python3-pycurl \
+	    python3-cryptography \
+	    python3-pyOpenSSL \
+	    python3-zope-interface \
+	    python3-CacheControl \
+	    python3-pip \
+	    python3-netifaces
