@@ -74,7 +74,7 @@ rpm --root=${ROOTFS} \
     --import \
     rootfs/etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL
 
-curl -o build/rootfs/etc/yum.repos.d/yarn.repo \
+curl -o rootfs/etc/yum.repos.d/yarn.repo \
     https://dl.yarnpkg.com/rpm/yarn.repo
 
 rpm --root=${ROOTFS} \
