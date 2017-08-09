@@ -4,7 +4,6 @@ MAINTAINER "D.S. Ljungmark" <ljungmark@modio.se>
 ENV container docker
 STOPSIGNAL RTMIN+3
 
-COPY container_limits.conf  /etc/security/limits.d/
 COPY RPM-GPG-KEY-ZABBIX-3.0 /etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0
 
 # Zabbix server from zabbix
