@@ -1,5 +1,4 @@
-NAME = fedora-24-build
-REPO_NAME = registry.gitlab.com/modioab/base-image
-TAG = $(REPO_NAME):$(NAME)-latest
+IMAGE_REPO = registry.gitlab.com/modioab/base-image
+IMAGE_TAG_PREFIX = fedora-24-build
 
-include ../docker-image.mk
+include ../build.mk
