@@ -41,89 +41,34 @@ zabbix-web:
   script:
     - make -C zabbix-web build-publish
 
-python3-image-26:build:
+python3-image-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C python3-image build
-  artifacts:
-    paths:
-      - python3-image/fedora-26-python-image.tar
-    expire_in: 1 day
+    - make -C python3-image build-publish
 
 
-python3-image-26:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - python3-image-26:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C python3-image load publish
-
-
-python3-image-25:build:
+python3-image-25:
   image: registry.gitlab.com/modioab/base-image:fedora-25-build-master
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C python3-image build
-  artifacts:
-    paths:
-      - python3-image/fedora-25-python-image.tar
-    expire_in: 1 day
+    - make -C python3-image build-publish
 
 
-python3-image-25:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-25-build-master
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - python3-image-25:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C python3-image load publish
-
-
-python3-image-24:build:
+python3-image-24:
   image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C python3-image build
-  artifacts:
-    paths:
-      - python3-image/fedora-24-python-image.tar
-    expire_in: 1 day
-
-
-python3-image-24:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - python3-image-24:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C python3-image load publish
-
+    - make -C python3-image build-publish
 
 debian-armv7:build:
   image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
@@ -139,7 +84,7 @@ debian-armv7:build:
   tags:
     - arm
   script:
-    - make -C debian-armv7 rootfs.tar
+    - make -C debian-armv7 rootfs
   artifacts:
     paths:
       - debian-armv7/rootfs.tar

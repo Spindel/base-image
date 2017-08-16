@@ -1,8 +1,7 @@
-IMAGE_REPO = registry.gitlab.com/modioab/base-image
-IMAGE_TAG_PREFIX = debian-armv7
-IMAGE_FILES = rootfs.tar
+NAME = debian-armv7
+REPO_NAME = registry.gitlab.com/modioab/base-image
 
-include ../build.mk
+include ../rootfs-docker-image.mk
 
-rootfs.tar:
+rootfs:
 	./generate-arm-rootfs.sh
