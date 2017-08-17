@@ -1,18 +1,15 @@
-NAME = fedora-26-meteor
-REPO_NAME = registry.gitlab.com/modioab/base-image
+include /etc/os-release
 
 PLATFORM=os.linux.x86_64
 RELEASE=1.5
 
-include ../docker-image.mk
+IMAGE_REPO = registry.gitlab.com/modioab/base-image
+IMAGE_TAG_PREFIX = $(ID)-$(VERSION_ID)-meteor
+IMAGE_FILES = meteor.tar.gz
+CLEANUP_FILES = meteor.tar.gz
 
 
-clean:
-	rm -f $(IMAGE_FILENAME)
-	rm -f meteor.tar.gz
-
-$(IMAGE_FILENAME): meteor.tar.gz
-
+include ../build.mk
 
 meteor.tar.gz:
 	curl -o meteor.tar.gz \

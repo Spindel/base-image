@@ -106,88 +106,33 @@ debian-armv7:publish:
     - make -C debian-armv7 build-publish
 
 
-nodejs-image-26:build:
+nodejs-image-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C nodejs-image build
-  artifacts:
-    paths:
-      - nodejs-image/fedora-26-nodejs-image.tar
-    expire_in: 1 day
+    - make -C nodejs-image build-publish
 
 
-nodejs-image-26:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - nodejs-image-26:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C nodejs-image load publish
-
-
-nginx-26:build:
+nginx-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C nginx build
-  artifacts:
-    paths:
-      - nginx/fedora-26-nginx-image.tar
-    expire_in: 1 day
+    - make -C nginx build-publish
 
-
-nginx-26:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - nginx-26:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C nginx load publish
-
-
-meteor-image-26:build:
+meteor-image-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C meteor-fedora-26 build
-  artifacts:
-    paths:
-      - meteor-fedora-26/fedora-26-meteor-image.tar
-    expire_in: 1 day
-
-
-meteor-image-26:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - meteor-image-26:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C meteor-fedora-26 load publish
+    - make -C meteor-fedora-26 build-publish
 
 
 trigger_build:
