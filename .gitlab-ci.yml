@@ -8,14 +8,6 @@ before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker info
 
-build-image-24:
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C build-fedora-24 build-publish
-
 
 build-image-25:
   stage: build
@@ -60,15 +52,6 @@ python3-image-25:
   script:
     - make -C python3-image build-publish
 
-
-python3-image-24:
-  image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C python3-image build-publish
 
 debian-armv7:build:
   image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
