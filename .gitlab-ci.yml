@@ -84,7 +84,7 @@ debian-armv7:build:
   tags:
     - arm
   script:
-    - make -C debian-armv7 rootfs
+    - make -C debian-armv7 rootfs.tar
   artifacts:
     paths:
       - debian-armv7/rootfs.tar
@@ -103,8 +103,7 @@ debian-armv7:publish:
   dependencies:
     - debian-armv7:build
   script:
-    - make -C debian-armv7 build
-    - make -C debian-armv7 publish
+    - make -C debian-armv7 build-publish
 
 
 nodejs-image-26:build:
