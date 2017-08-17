@@ -1,8 +1,6 @@
 FROM scratch
 MAINTAINER "Nicklas Lindgren" <nili@modio.se>
 
-ENV LC_CTYPE C.utf8
-ENV LANG C.utf8
 
 ARG URL=unknown
 ARG COMMIT=unknown
@@ -16,8 +14,10 @@ LABEL "se.modio.ci.commit"=$COMMIT
 LABEL "se.modio.ci.host"=$HOST
 LABEL "se.modio.ci.date"=$DATE
 
+ENV LC_CTYPE C.utf8
+ENV LANG C.utf8
 # Because OS X
-ENV LANG  C.utf8
+ENV LANG C.utf8
 ENV LANGUAGE en_US:en
 ENV LC_ALL C.utf8
 

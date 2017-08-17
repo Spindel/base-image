@@ -1,10 +1,11 @@
 include /etc/os-release
-NAME = $(ID)-$(VERSION_ID)-nodejs
-REPO_NAME = registry.gitlab.com/modioab/base-image
+IMAGE_REPO = registry.gitlab.com/modioab/base-image
+IMAGE_TAG_PREFIX = $(ID)-$(VERSION_ID)-nodejs
 
-include ../docker-image.mk
+IMAGE_FILES = rootfs.tar
+CLEANUP_FILES = rootfs.tar
 
-$(IMAGE_FILENAME): rootfs.tar
+include ../build.mk
 
 rootfs.tar:
 	../build-rootfs.sh yarn nodejs

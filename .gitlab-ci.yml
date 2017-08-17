@@ -4,197 +4,53 @@ stages:
     - publish
     - deploy
 
+before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker info
 
-build-image-24:build:
+
+build-image-25:
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - docker info
-    - make -C build-fedora-24 build
-  artifacts:
-    paths:
-      - build-fedora-24/*-image.tar
-    expire_in: 1 day
+    - make -C build-fedora-25 build-publish
 
-
-build-image-24:publish:
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - build-image-24:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C build-fedora-24 load publish
-
-
-build-image-25:build:
+build-image-26:
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - docker info
-    - make -C build-fedora-25 build
-  artifacts:
-    paths:
-      - build-fedora-25/*-image.tar
-    expire_in: 1 day
+    - make -C build-fedora-26 build-publish
 
-
-build-image-25:publish:
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - build-image-25:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C build-fedora-25 load publish
-
-
-build-image-26:build:
+zabbix-web:
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - docker info
-    - make -C build-fedora-26 build
-  artifacts:
-    paths:
-      - build-fedora-26/*-image.tar
-    expire_in: 1 day
+    - make -C zabbix-web build-publish
 
-
-build-image-26:publish:
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - build-image-26:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C build-fedora-26 load publish
-
-
-zabbix-web:build:
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - docker info
-    - make -C zabbix-web build
-  artifacts:
-    paths:
-      - zabbix-web/*-image.tar
-    expire_in: 1 day
-
-
-zabbix-web:publish:
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - zabbix-web:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C zabbix-web load publish
-
-
-python3-image-26:build:
+python3-image-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C python3-image build
-  artifacts:
-    paths:
-      - python3-image/fedora-26-python-image.tar
-    expire_in: 1 day
+    - make -C python3-image build-publish
 
 
-python3-image-26:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - python3-image-26:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C python3-image load publish
-
-
-python3-image-25:build:
+python3-image-25:
   image: registry.gitlab.com/modioab/base-image:fedora-25-build-master
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C python3-image build
-  artifacts:
-    paths:
-      - python3-image/fedora-25-python-image.tar
-    expire_in: 1 day
-
-
-python3-image-25:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-25-build-master
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - python3-image-25:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C python3-image load publish
-
-
-python3-image-24:build:
-  image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C python3-image build
-  artifacts:
-    paths:
-      - python3-image/fedora-24-python-image.tar
-    expire_in: 1 day
-
-
-python3-image-24:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-24-build-latest
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - python3-image-24:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C python3-image load publish
+    - make -C python3-image build-publish
 
 
 debian-armv7:build:
@@ -211,7 +67,7 @@ debian-armv7:build:
   tags:
     - arm
   script:
-    - make -C debian-armv7 rootfs
+    - make -C debian-armv7 rootfs.tar
   artifacts:
     paths:
       - debian-armv7/rootfs.tar
@@ -230,95 +86,41 @@ debian-armv7:publish:
   dependencies:
     - debian-armv7:build
   script:
-    - make -C debian-armv7 build
-    - make -C debian-armv7 publish
+    - make -C debian-armv7 build-publish
 
 
-nodejs-image-26:build:
+nodejs-image-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C nodejs-image build
-  artifacts:
-    paths:
-      - nodejs-image/fedora-26-nodejs-image.tar
-    expire_in: 1 day
+    - make -C nodejs-image build-publish
 
 
-nodejs-image-26:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - nodejs-image-26:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C nodejs-image load publish
-
-
-nginx-26:build:
+nginx-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C nginx build
-  artifacts:
-    paths:
-      - nginx/fedora-26-nginx-image.tar
-    expire_in: 1 day
+    - make -C nginx build-publish
 
-
-nginx-26:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - nginx-26:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C nginx load publish
-
-
-meteor-image-26:build:
+meteor-image-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C meteor-fedora-26 build
-  artifacts:
-    paths:
-      - meteor-fedora-26/fedora-26-meteor-image.tar
-    expire_in: 1 day
-
-
-meteor-image-26:publish:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: publish
-  when: always
-  tags:
-    - docker
-    - x86_64
-  dependencies:
-    - meteor-image-26:build
-  script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - make -C meteor-fedora-26 load publish
+    - make -C meteor-fedora-26 build-publish
 
 
 trigger_build:
+    before_script:
+        - "true"
     stage: deploy
     dependencies: []
     script:
