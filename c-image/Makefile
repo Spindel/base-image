@@ -8,8 +8,12 @@ rootfs.tar:
 	    gcc gcc-c++ \
 	    glibc-headers \
 	    clang clang-analyzer \
-	    cppcheck
-
+	    cppcheck \
+	    avr-gcc avr-libc avr-gcc-c++ \
+	    arm-none-eabi-gcc-cs-c++ \
+	    arm-none-eabi-gcc-cs \
+	    arm-none-eabi-newlib \
+	    srecord
 
 
 include ../build.mk
