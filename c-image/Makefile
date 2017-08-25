@@ -5,11 +5,12 @@ IMAGE_FILES = rootfs.tar
 
 rootfs.tar:
 	../build-rootfs.sh make automake \
-	    gcc gcc-c++ \
+	    gcc gcc-c++ binutils \
 	    glibc-headers \
 	    clang clang-analyzer \
 	    cppcheck \
-	    avr-gcc avr-libc avr-gcc-c++ \
+	    avr-gcc avr-libc avr-gcc-c++ avr-binutils \
+	    arm-none-eabi-binutils-cs \
 	    arm-none-eabi-gcc-cs-c++ \
 	    arm-none-eabi-gcc-cs \
 	    arm-none-eabi-newlib \
