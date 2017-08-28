@@ -23,3 +23,5 @@ ENV LC_ALL C.utf8
 
 
 ADD rootfs.tar /
+# Supermin misses update-alternatives symlink for some reason
+RUN ln -fs ld.bfd /usr/bin/ld
