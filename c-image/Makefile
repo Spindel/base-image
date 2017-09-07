@@ -14,7 +14,8 @@ rootfs.tar:
 	    arm-none-eabi-gcc-cs-c++ \
 	    arm-none-eabi-gcc-cs \
 	    arm-none-eabi-newlib \
-	    srecord
+	    srecord \
+	    git
 
 
 include ../build.mk
