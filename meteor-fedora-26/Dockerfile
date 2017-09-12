@@ -14,7 +14,7 @@ LABEL "se.modio.ci.commit"=$COMMIT
 LABEL "se.modio.ci.host"=$HOST
 LABEL "se.modio.ci.date"=$DATE
 
-
+COPY yarn.repo /etc/yum.repos.d/ 
 ADD meteor.tar.gz /data/
 WORKDIR /data
 RUN echo "WTF? Meteor tarball has uid/gid 1000"                              \
