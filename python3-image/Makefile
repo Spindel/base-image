@@ -11,6 +11,7 @@ rootfs.tar:
 	    python3-zope-interface \
 	    python3-CacheControl \
 	    python3-pip \
+	    python3-dbus \
 	    python3-netifaces
 
 include ../build.mk
