@@ -41,6 +41,16 @@ zabbix-web:
   script:
     - make -C zabbix-web build-publish
 
+python3-image-27:
+  image: registry.gitlab.com/modioab/base-image:fedora-27-build-build-fedora-27
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C python3-image build-publish
+
+
 python3-image-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
   stage: build
