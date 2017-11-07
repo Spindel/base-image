@@ -25,6 +25,14 @@ build-image-26:
   script:
     - make -C build-fedora-26 build-publish
 
+build-image-27:
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C build-fedora-27 build-publish
+
 zabbix-web:
   stage: build
   tags:
