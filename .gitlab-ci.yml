@@ -42,7 +42,7 @@ zabbix-web:
     - make -C zabbix-web build-publish
 
 python3-image-27:
-  image: registry.gitlab.com/modioab/base-image:fedora-27-build-build-fedora-27
+  image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
   stage: build
   tags:
     - docker
