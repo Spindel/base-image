@@ -70,6 +70,21 @@ python3-image-25:
   script:
     - make -C python3-image build-publish
 
+debian8-firmware:
+    stage: build
+    tags:
+        - docker
+        - x86_64
+    script:
+      - make -C debian8-firmware build-publish
+
+debian9-firmware:
+    stage: build
+    tags:
+        - docker
+        - x86_64
+    script:
+      - make -C debian9-firmware build-publish
 
 debian-armv7:build:
   image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
