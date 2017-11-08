@@ -15,15 +15,6 @@ LABEL "se.modio.ci.commit"=$COMMIT
 LABEL "se.modio.ci.host"=$HOST
 LABEL "se.modio.ci.date"=$DATE
 
-ENV LC_CTYPE C.utf8
-ENV LANG C.utf8
-# Because OS X
-ENV LANG C.utf8
-ENV LANGUAGE en_US:en
-ENV LC_ALL C.utf8
-
-
-
 ADD testing.list /etc/apt/sources.list.d/
 ADD defaultrelease /etc/apt/apt.conf.d/
 RUN apt-get update && apt-get  -t jessie -y install \
@@ -39,6 +30,7 @@ RUN apt-get update && apt-get  -t jessie -y install \
                         python3-netifaces \
                         python3-dbus \
                         python3-gi \
+                        python3-pip \
                         python3-serial && \
     apt-get -t testing download  python3-pymodbus && \
     dpkg --force-depends -i python3-pymodbus* &&  rm -f python3-pymodbus* && \

@@ -14,14 +14,6 @@ LABEL "se.modio.ci.commit"=$COMMIT
 LABEL "se.modio.ci.host"=$HOST
 LABEL "se.modio.ci.date"=$DATE
 
-ENV LC_CTYPE C.utf8
-ENV LANG C.utf8
-# Because OS X
-ENV LANG C.utf8
-ENV LANGUAGE en_US:en
-ENV LC_ALL C.utf8
-
-
 
 ADD backports.list /etc/apt/sources.list.d/
 RUN apt-get update && apt-get -y install \
@@ -36,6 +28,7 @@ RUN apt-get update && apt-get -y install \
                         python3-flufl.lock \
                         python3-netifaces \
                         python3-dbus \
+                        python3-pip \
                         python3-gi \
                         python3-serial && \
                 apt-get download  python3-pymodbus && \
