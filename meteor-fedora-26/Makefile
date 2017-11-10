@@ -1,7 +1,7 @@
 include /etc/os-release
 
 PLATFORM=os.linux.x86_64
-RELEASE=1.5.2.2
+RELEASE=1.6
 
 IMAGE_REPO = registry.gitlab.com/modioab/base-image
 IMAGE_TAG_PREFIX = $(ID)-$(VERSION_ID)-meteor
