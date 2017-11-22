@@ -170,6 +170,15 @@ go-image-27:
   script:
     - make -C go-image build-publish
 
+rust-cross:
+  image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C rust-cross build-publish
+
 
 trigger_build:
     before_script:
