@@ -1,4 +1,4 @@
-image: registry.gitlab.com/modioab/base-image:fedora-25-build-master
+image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
 stages:
     - build
     - publish
@@ -9,13 +9,6 @@ before_script:
     - docker info
 
 
-build-image-25:
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C build-fedora-25 build-publish
 
 build-image-26:
   stage: build
@@ -60,15 +53,6 @@ python3-image-26:
   script:
     - make -C python3-image build-publish
 
-
-python3-image-25:
-  image: registry.gitlab.com/modioab/base-image:fedora-25-build-master
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C python3-image build-publish
 
 debian8-firmware:
     stage: build
