@@ -106,6 +106,36 @@ debian-armv7:publish:
     - make -C debian-armv7 build-publish
 
 
+rust-image-armv7:build:
+  image: arm32v7/fedora
+  before_script:
+    - dnf install -y --refresh mkosi make
+  stage: build
+  tags:
+    - arm
+  script:
+    - make -C rust-image-armv7 rootfs.tar
+  artifacts:
+    paths:
+      - rust-image-armv7/rootfs.tar
+    expire_in: 1 day
+
+
+rust-image-armv7:publish:
+  before_script:
+    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
+    - docker info
+  stage: publish # Because we want it in the stage after build
+  when: always
+  tags:
+    - docker
+    - x86_64
+  dependencies:
+    - rust-image-armv7:build
+  script:
+    - make -C rust-image-armv7 build-publish
+
+
 nodejs-image-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
   stage: build
