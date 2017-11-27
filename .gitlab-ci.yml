@@ -106,22 +106,24 @@ debian-armv7:publish:
     - make -C debian-armv7 build-publish
 
 
-rust-image-armv7:build:
-  image: arm32v7/fedora
+rust-armv7:build:
+  image: registry.gitlab.com/modioab/base-image:debian-armv7-master
   before_script:
-    - dnf install -y --refresh mkosi make
+    - apt-get clean
+    - apt-get update
+    - apt-get install -y -qq debootstrap
   stage: build
   tags:
     - arm
   script:
-    - make -C rust-image-armv7 rootfs.tar
+    - make -C rust-armv7 rootfs.tar
   artifacts:
     paths:
-      - rust-image-armv7/rootfs.tar
+      - rust-armv7/rootfs.tar
     expire_in: 1 day
 
 
-rust-image-armv7:publish:
+rust-armv7:publish:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
     - docker info
@@ -131,9 +133,9 @@ rust-image-armv7:publish:
     - docker
     - x86_64
   dependencies:
-    - rust-image-armv7:build
+    - rust-armv7:build
   script:
-    - make -C rust-image-armv7 build-publish
+    - make -C rust-armv7 build-publish
 
 
 nodejs-image-26:

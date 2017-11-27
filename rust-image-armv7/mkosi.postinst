@@ -1,2 +1,0 @@
-#!/bin/bash
-bash /usr/local/bin/rustup.sh -y
