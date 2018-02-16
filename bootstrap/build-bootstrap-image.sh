@@ -68,7 +68,7 @@ dnf --installroot=${ROOTFS} \
 
 rpm --root=${ROOTFS} \
     -i \
-    https://rpm.nodesource.com/pub_4.x/fc/25/x86_64/nodesource-release-fc25-1.noarch.rpm
+    https://rpm.nodesource.com/pub_9.x/fc/27/x86_64/nodesource-release-fc27-1.noarch.rpm
 
 rpm --root=${ROOTFS} \
     --import \
@@ -81,7 +81,7 @@ rpm --root=${ROOTFS} \
     --import https://dl.yarnpkg.com/rpm/pubkey.gpg
 
 dnf --installroot=${ROOTFS} \
-    --repofrompath=nodesource_x,https://rpm.nodesource.com/pub_6.x/fc/25/x86_64 \
+    --repofrompath=nodesource_x,https://rpm.nodesource.com/pub_9.x/fc/27/x86_64 \
     --repofrompath=yarn_x,https://dl.yarnpkg.com/rpm/ \
     --disablerepo='*' \
     --enablerepo=fedora \
