@@ -20,6 +20,7 @@ PACKAGES=" \
     firefox \
     chromium \
     nodejs \
+    python3-mypy \
     yarn"
 
 source /etc/os-release
