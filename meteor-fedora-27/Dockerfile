@@ -1,6 +1,5 @@
 # Docker container building docker container
-FROM  registry.fedoraproject.org/fedora:26
-
+FROM  registry.fedoraproject.org/fedora:27
 
 ARG URL=unknown
 ARG COMMIT=unknown
