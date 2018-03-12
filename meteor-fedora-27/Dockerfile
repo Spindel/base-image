@@ -23,7 +23,7 @@ RUN echo "WTF? Meteor tarball has uid/gid 1000"                              \
     echo "WTF? Meteor requires /usr/local/bin/meteor to be a symlink...." && \
     ln -fs /data/.meteor/meteor /usr/local/bin/meteor                     && \
     dnf update --refresh -y                                               && \
-    dnf -y install nodejs sqlite yarn git docker                          && \
+    dnf -y install nodejs sqlite yarn git docker python                   && \
     dnf clean all
 
 
