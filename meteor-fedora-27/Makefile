@@ -12,6 +12,6 @@ CLEANUP_FILES = meteor.tar.gz
 include ../build.mk
 
 meteor.tar.gz:
-	curl -o meteor.tar.gz \
+	curl -sS -o meteor.tar.gz \
 	    https://meteorinstall-4168.kxcdn.com/packages-bootstrap/${RELEASE}/meteor-bootstrap-${PLATFORM}.tar.gz
 	sha256sum -c checksum
