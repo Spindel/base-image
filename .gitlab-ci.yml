@@ -166,6 +166,15 @@ meteor-image-26:
   script:
     - make -C meteor-fedora-26 build-publish
 
+meteor-image-27:
+  image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C meteor-fedora-27 build-publish
+
 
 c-image-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
