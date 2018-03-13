@@ -13,7 +13,6 @@ LABEL "se.modio.ci.commit"=$COMMIT
 LABEL "se.modio.ci.host"=$HOST
 LABEL "se.modio.ci.date"=$DATE
 
-COPY yarn.repo /etc/yum.repos.d/ 
 ADD meteor.tar.gz /data/
 WORKDIR /data
 RUN echo "WTF? Meteor tarball has uid/gid 1000"                              \
@@ -23,7 +22,7 @@ RUN echo "WTF? Meteor tarball has uid/gid 1000"                              \
     echo "WTF? Meteor requires /usr/local/bin/meteor to be a symlink...." && \
     ln -fs /data/.meteor/meteor /usr/local/bin/meteor                     && \
     dnf update --refresh -y                                               && \
-    dnf -y install nodejs sqlite yarn git docker node-gyp bzip2           && \
+    dnf -y install nodejs sqlite git docker                               && \
     dnf clean all
 
 USER wtf 
