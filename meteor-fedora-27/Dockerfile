@@ -27,3 +27,5 @@ RUN echo "WTF? Meteor tarball has uid/gid 1000"                              \
 
 USER wtf 
 
+RUN meteor create --bare bare && \
+    cd bare && meteor list 
