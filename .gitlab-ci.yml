@@ -71,7 +71,7 @@ debian9-firmware:
       - make -C debian9-firmware build-publish
 
 debian-armv7:build:
-  image: registry.gitlab.com/modioab/base-image:debian-armv7-bootstrap
+  image: registry.gitlab.com/modioab/base-image/bootstrap:debian-armv7
   # TODO: Replace bootstrap with below image
   # image: registry.gitlab.com/modioab/base-image:debian-armv7
   before_script:
