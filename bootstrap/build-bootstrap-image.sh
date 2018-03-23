@@ -103,6 +103,6 @@ FROM scratch
 COPY rootfs /
 EOF
 
-TAG=registry.gitlab.com/modioab/base-image:fedora-${VERSION_ID}-bootstrap-latest
+TAG=registry.gitlab.com/modioab/base-image/bootstrap:fedora-${VERSION_ID}
 docker build -t ${TAG} .
 echo ${TAG}
