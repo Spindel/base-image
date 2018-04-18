@@ -1,17 +1,18 @@
 include /etc/os-release
 IMAGE_REPO = registry.gitlab.com/modioab/base-image
 IMAGE_TAG_PREFIX = $(ID)-$(VERSION_ID)-python
-IMAGE_FILES = rootfs.tar
+FEDORA_ROOT_ARCHIVE = rootfs.tar
+IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
 
-rootfs.tar:
-	../build-rootfs.sh python3 \
-	    python3-pycurl \
-	    python3-cryptography \
-	    python3-pyOpenSSL \
-	    python3-zope-interface \
-	    python3-CacheControl \
-	    python3-pip \
-	    python3-dbus \
-	    python3-netifaces
+
+FEDORA_ROOT_PACKAGES += python3
+FEDORA_ROOT_PACKAGES += python3-pycurl
+FEDORA_ROOT_PACKAGES += python3-pip
+FEDORA_ROOT_PACKAGES += python3-cryptography
+FEDORA_ROOT_PACKAGES += python3-pyOpenSSL
+FEDORA_ROOT_PACKAGES += python3-zope-interface
+FEDORA_ROOT_PACKAGES += python3-CacheControl
+FEDORA_ROOT_PACKAGES += python3-dbus
+FEDORA_ROOT_PACKAGES += python3-netifaces
 
 include ../build.mk

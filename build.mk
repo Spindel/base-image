@@ -34,7 +34,7 @@ endif
 
 .PHONY: clean
 clean:
-	$(Q)rm -f $(CLEANUP_FILES)
+	$(Q)rm -rf $(CLEANUP_FILES)
 
 
 ## Set the ARCHIVE_PREFIX variable to specify the path prefix used for
@@ -42,6 +42,12 @@ clean:
 
 # Remove leading and add one trailing slash
 _archive_prefix := $(patsubst %/,%,$(patsubst /%,%,$(ARCHIVE_PREFIX)))/
+
+# Check if we have a git binary. The _git variable should only be used
+# when _git is known to be non-empty. If git is required when it is
+# not available, an error should be raised.
+GIT ?= git
+_git = $(shell command -v $(GIT))
 
 
 ######################################################################
@@ -52,6 +58,10 @@ _archive_prefix := $(patsubst %/,%,$(patsubst /%,%,$(ARCHIVE_PREFIX)))/
 ## which will create a git archive with that name for the head
 ## revision. The archive will also include submodules.
 ##
+## The SOURCE_ARCHIVE_PATH variable can be used to specify what is to
+## be included in the source archive. The path is relative to the root
+## of the git working copy. The default includes everything.
+##
 ## The ARCHIVE_PREFIX variable will specify the prefix path for the
 ## archive.
 
@@ -59,10 +69,16 @@ ifneq ($(SOURCE_ARCHIVE),)
 
 CLEANUP_FILES += $(SOURCE_ARCHIVE)
 
+SOURCE_ARCHIVE_PATH ?= .
+
+ifeq ($(_git),)
+$(SOURCE_ARCHIVE):
+	$(error Git does not appear to be installed)
+else
 # The git ref file indicating the age of HEAD
-GIT_HEAD_REF := $(shell git rev-parse --symbolic-full-name HEAD)
-GIT_TOP_DIR := $(shell git rev-parse --show-toplevel)
-GIT_HEAD_REF_FILE := $(shell git rev-parse --git-path $(GIT_HEAD_REF))
+GIT_HEAD_REF := $(shell $(_git) rev-parse --symbolic-full-name HEAD)
+GIT_TOP_DIR := $(shell $(_git) rev-parse --show-toplevel)
+GIT_HEAD_REF_FILE := $(shell $(_git) rev-parse --git-path $(GIT_HEAD_REF))
 
 # Handle that older git versions output git-path results relative to
 # the git top dir instead of relative to cwd
@@ -76,21 +92,25 @@ $(SOURCE_ARCHIVE): $(GIT_HEAD_REF_FILE)
 	$(Q)tmpdir=$$(mktemp -d submodules.XXXXX) && \
 	trap "rm -rf $$tmpdir" EXIT && \
 	(cd "$(GIT_TOP_DIR)" && \
-	 git archive \
+	 $(_git) archive \
 	   -o "$(CURDIR)/$@" \
 	   --prefix="$(_archive_prefix)" \
-	   HEAD . && \
-	 git submodule sync && \
-	 git submodule update --init && \
-	 git submodule --quiet foreach 'echo $$path' | while read path; do \
-	   (cd "$$path" && \
-	    git archive \
-	      -o "$(CURDIR)/$$tmpdir/submodule.tar" \
-	      --prefix="$(_archive_prefix)$$path/" \
-	      HEAD . && \
-	    tar --concatenate -f "$(CURDIR)/$@" "$(CURDIR)/$$tmpdir/submodule.tar"); \
+	   HEAD $(SOURCE_ARCHIVE_PATH) && \
+	 $(_git) submodule sync && \
+	 $(_git) submodule update --init && \
+	 $(_git) submodule --quiet foreach 'echo $$path' | while read path; do \
+	   match=$$(find $(SOURCE_ARCHIVE_PATH) -samefile $$path 2>/dev/null); \
+	   if [ -n "$$match" ]; then \
+	     (cd "$$path" && \
+	      $(_git) archive \
+	        -o "$(CURDIR)/$$tmpdir/submodule.tar" \
+	        --prefix="$(_archive_prefix)$$path/" \
+	        HEAD . && \
+	      tar --concatenate -f "$(CURDIR)/$@" "$(CURDIR)/$$tmpdir/submodule.tar"); \
+	   fi \
 	 done)
 
+endif
 endif
 
 
@@ -144,7 +164,7 @@ $(COMPILED_ARCHIVE): $(SOURCE_ARCHIVE)
 	trap "rm -rf $$tmpdir" EXIT && \
 	(tar -C $$tmpdir -xf $(SOURCE_ARCHIVE) && \
 	 (cd $$tmpdir/$(_archive_prefix) && $(COMPILE_COMMAND)) && \
-	 tar -C $$tmpdir $(_archive_prefix) -cf $(COMPILED_ARCHIVE))
+	 tar -C $$tmpdir -cf $(COMPILED_ARCHIVE) $(_archive_prefix))
 
 endif
 
@@ -189,8 +209,13 @@ IMAGE_ARCHIVE ?= dummy.tar
 
 CLEANUP_FILES += $(IMAGE_ARCHIVE)
 
+ifeq ($(_git),)
+build-publish $(IMAGE_ARCHIVE) build save publish:
+	$(error Git does not appear to be installed, images cannot be tagged)
+else
+
 # The branch or tag name for which project is built
-CI_COMMIT_REF_NAME ?= $(shell git rev-parse --abbrev-ref HEAD)
+CI_COMMIT_REF_NAME ?= $(shell $(_git) rev-parse --abbrev-ref HEAD)
 CI_COMMIT_REF_NAME := $(subst /,_,$(CI_COMMIT_REF_NAME))
 CI_COMMIT_REF_NAME := $(subst \#,_,$(CI_COMMIT_REF_NAME))
 
@@ -219,40 +244,89 @@ IMAGE_LOCAL_TAG = $(IMAGE_REPO):$(_image_tag_prefix)$(CI_PIPELINE_ID)
 # Final tag
 IMAGE_TAG = $(IMAGE_REPO):$(_image_tag_prefix)$(CI_COMMIT_REF_NAME)
 
-define _cmd_docker_build =
-$(Q)docker build --pull --no-cache \
-  --file=$< \
-  --build-arg=BRANCH="$(CI_COMMIT_REF_NAME)" \
-  --build-arg=COMMIT="$(CI_COMMIT_SHA)" \
-  --build-arg=URL="$(CI_PROJECT_URL)" \
-  --build-arg=DATE="$(_date)" \
-  --build-arg=HOST="$(_host)" \
-  --tag=$(IMAGE_LOCAL_TAG) \
-  .
+define _cmd_image =
+$(Q)if command -v buildah >/dev/null && command -v kpod >/dev/null; then \
+  $(_cmd_image_buildah_$(1)); \
+elif command -v docker >/dev/null; then \
+  $(_cmd_image_docker_$(1)); \
+else \
+  echo >&2 "Neither buildah/kpod nor docker is available"; \
+  exit 1; \
+fi
+endef
+
+_buildah = buildah
+
+define _cmd_image_buildah_build =
+  $(_buildah) bud --pull-always \
+    --file=$< \
+    --build-arg=BRANCH="$(CI_COMMIT_REF_NAME)" \
+    --build-arg=COMMIT="$(CI_COMMIT_SHA)" \
+    --build-arg=URL="$(CI_PROJECT_URL)" \
+    --build-arg=DATE="$(_date)" \
+    --build-arg=HOST="$(_host)" \
+    --tag=$(IMAGE_LOCAL_TAG) \
+    .
+endef
+define _cmd_image_docker_build =
+  docker build --pull --no-cache \
+    --file=$< \
+    --build-arg=BRANCH="$(CI_COMMIT_REF_NAME)" \
+    --build-arg=COMMIT="$(CI_COMMIT_SHA)" \
+    --build-arg=URL="$(CI_PROJECT_URL)" \
+    --build-arg=DATE="$(_date)" \
+    --build-arg=HOST="$(_host)" \
+    --tag=$(IMAGE_LOCAL_TAG) \
+    .
+endef
+
+define _cmd_image_buildah_publish =
+  $(_buildah) push $(IMAGE_LOCAL_TAG) docker://$(IMAGE_TAG); \
+  $(_buildah) rmi $(IMAGE_LOCAL_TAG)
+endef
+define _cmd_image_docker_publish =
+  docker tag $(IMAGE_LOCAL_TAG) $(IMAGE_TAG); \
+  docker rmi $(IMAGE_LOCAL_TAG); \
+  docker push $(IMAGE_TAG); \
+  docker rmi $(IMAGE_TAG)
+endef
+
+define _cmd_image_buildah_save =
+  $(_buildah) push $(IMAGE_LOCAL_TAG) docker-archive:$(IMAGE_ARCHIVE):$(IMAGE_LOCAL_TAG); \
+  $(_buildah) rmi $(IMAGE_LOCAL_TAG)
+endef
+define _cmd_image_docker_save
+  docker save $(IMAGE_LOCAL_TAG) > $(IMAGE_ARCHIVE); \
+  docker rmi $(IMAGE_LOCAL_TAG)
 endef
 
 build-publish: $(IMAGE_DOCKERFILE) $(IMAGE_FILES)
-	$(call _cmd_docker_build)
-	$(Q)docker tag $(IMAGE_LOCAL_TAG) $(IMAGE_TAG)
-	$(Q)docker rmi $(IMAGE_LOCAL_TAG)
-	$(Q)docker push $(IMAGE_TAG)
-
+	$(call _cmd_image,build)
+	$(call _cmd_image,publish)
 
 $(IMAGE_ARCHIVE): $(IMAGE_DOCKERFILE) $(IMAGE_FILES)
-	$(call _cmd_docker_build)
-	$(Q)docker save $(IMAGE_LOCAL_TAG) > $@
-	$(Q)docker rmi $(IMAGE_LOCAL_TAG)
+	$(call _cmd_image,build)
+	$(call _cmd_image,save)
 
 build save: $(IMAGE_ARCHIVE)
 
-load:
-	$(Q)docker load < $(IMAGE_ARCHIVE)
-
 publish:
-	$(Q)docker load < $(IMAGE_ARCHIVE)
-	$(Q)docker tag $(IMAGE_LOCAL_TAG) $(IMAGE_TAG)
-	$(Q)docker rmi $(IMAGE_LOCAL_TAG)
-	$(Q)docker push $(IMAGE_TAG)
+	$(call _cmd_image,load)
+	$(call _cmd_image,publish)
+
+endif # ifeq($(_git),)
+
+# kpod 0.1 cant't actually load docker-format image archives, but the
+# documentation indicates that it should.
+define _cmd_image_buildah_load =
+  kpod load < $(IMAGE_ARCHIVE)
+endef
+define _cmd_image_docker_load =
+  docker load < $(IMAGE_ARCHIVE)
+endef
+
+load:
+	$(call _cmd_image,load)
 
 endif
 
@@ -267,3 +341,43 @@ endif
 
 RECORD_TEST_STATUS = let "_result=_result|$$?";
 RETURN_TEST_STATUS = ! let _result;
+
+
+######################################################################
+### Fedora root archive
+######################################################################
+
+## Set the FEDORA_ROOT_ARCHIVE variable to a file name to create a
+## rule which will build a tar archive of a small Fedora root file
+## system. The archive will be suitable for adding to a scratch
+## container image.
+##
+## The FEDORA_ROOT_PACKAGES variable should be set to a list of
+## packages to be installed in the file system.
+##
+## The file system is built using dnf install --installroot, so the
+## rule needs to be run with root privileges to work.
+
+ifneq ($(FEDORA_ROOT_ARCHIVE),)
+
+CLEANUP_FILES += $(FEDORA_ROOT_ARCHIVE)
+
+$(FEDORA_ROOT_ARCHIVE):
+	$(Q)tmpdir=$$(mktemp -d fedora_root.XXXXX) && \
+	trap "rm -rf $$tmpdir" EXIT && \
+	dnf install \
+	  --installroot $(CURDIR)/$$tmpdir \
+	  --releasever 27 \
+	  --disablerepo "*" \
+	  --enablerepo "fedora" \
+	  --enablerepo "updates" \
+	  $(FEDORA_ROOT_PACKAGES) \
+	  glibc-minimal-langpack \
+	  --setopt install_weak_deps=false \
+	  --assumeyes && \
+	rm -rf \
+	  $$tmpdir/var/cache \
+	  $$tmpdir/var/log/dnf* && \
+	tar -C $$tmpdir -cf $(CURDIR)/$@ .
+
+endif
