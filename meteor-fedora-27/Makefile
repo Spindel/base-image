@@ -1,7 +1,7 @@
 include /etc/os-release
 
 PLATFORM=os.linux.x86_64
-RELEASE=1.5.4.1
+RELEASE=1.6.1.1
 
 IMAGE_REPO = registry.gitlab.com/modioab/base-image
 IMAGE_TAG_PREFIX = $(ID)-$(VERSION_ID)-meteor
@@ -13,5 +13,5 @@ include ../build.mk
 
 meteor.tar.gz:
 	curl -sS -o meteor.tar.gz \
-	    https://meteorinstall-4168.kxcdn.com/packages-bootstrap/${RELEASE}/meteor-bootstrap-${PLATFORM}.tar.gz
+	    https://static-meteor.netdna-ssl.com/packages-bootstrap/${RELEASE}/meteor-bootstrap-${PLATFORM}.tar.gz
 	sha256sum -c checksum
