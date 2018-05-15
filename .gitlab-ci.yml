@@ -26,6 +26,15 @@ build-image-27:
   script:
     - make -C build-fedora-27 build-publish
 
+build-image-28:
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C build-fedora-28 build-publish
+
+
 zabbix-web:
   stage: build
   tags:
@@ -33,6 +42,16 @@ zabbix-web:
     - x86_64
   script:
     - make -C zabbix-web build-publish
+
+.python3-image-28:
+  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C python3-image build-publish
+
 
 python3-image-27:
   image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
@@ -156,6 +175,14 @@ nodejs-image-27:
   script:
     - make -C nodejs-image build-publish
 
+.nodejs-image-28:
+  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C nodejs-image build-publish
 
 nginx-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
@@ -168,6 +195,15 @@ nginx-26:
 
 nginx-27:
   image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C nginx build-publish
+
+nginx-28:
+  image: registry.gitlab.com/modioab/base-image:fedora-28-build-fc28
   stage: build
   tags:
     - docker
@@ -204,6 +240,14 @@ c-image-27:
   script:
     - make -C c-image build-publish
 
+.c-image-28:
+  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C c-image build-publish
 
 go-image-27:
   image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
@@ -214,8 +258,17 @@ go-image-27:
   script:
     - make -C go-image build-publish
 
-rust-cross:
-  image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
+.go-image-28:
+  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C go-image build-publish
+
+.rust-cross:
+  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
   stage: build
   tags:
     - docker
