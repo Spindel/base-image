@@ -10,7 +10,8 @@ COPY RPM-GPG-KEY-ZABBIX-3.0 /etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0
 RUN rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0         && \
     rpm --import https://getfedora.org/static/352C64E5.txt              && \
     rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7           && \
-    yum -y install epel-release https://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-release-3.0-1.el7.noarch.rpm && \
+    yum -y install https://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-release-3.0-1.el7.noarch.rpm && \
+    yum -y install epel-release                                         && \
     yum clean metadata                                                  && \
     yum -y update                                                       && \
     yum -y install nginx \
