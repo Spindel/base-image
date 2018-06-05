@@ -211,6 +211,14 @@ nginx-28:
   script:
     - make -C nginx build-publish
 
+mongodb:
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C mongodb build-publish
+
 meteor-image-27:
   image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
   stage: build
