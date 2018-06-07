@@ -22,8 +22,6 @@ RUN rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0         && \
                    python-requests                                      && \
     rm -f /etc/php-fpm.d/www.conf                                       && \
     yum clean all                                                       && \
-    echo ForwardToConsole=yes >> /etc/systemd/journald.conf             && \
-    echo MaxLevelConsole=debug >> /etc/systemd/journald.conf            && \
     rm -f /etc/httpd/logs && mkdir /etc/httpd/logs                      && \
     ln -sf /dev/stdout /etc/httpd/logs/access_log                       && \
     ln -sf /dev/stderr /etc/httpd/logs/error_log                        && \
@@ -34,5 +32,3 @@ RUN rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-3.0         && \
 COPY zabbix.ini /etc/php.d/zabbix.ini
 COPY php-fpm.conf /etc/php-fpm.conf
 RUN  chmod go-wx /etc/php.d/zabbix.ini  /etc/systemd/journald.conf
-
-CMD ["/sbin/init"]
