@@ -1,21 +1,19 @@
-include /etc/os-release
-IMAGE_REPO = registry.gitlab.com/modioab/base-image
-IMAGE_TAG_PREFIX = $(ID)-$(VERSION_ID)-c
-IMAGE_FILES = rootfs.tar
+IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-28-c
 
-rootfs.tar:
-	../build-rootfs.sh make automake \
-	    gcc gcc-c++ binutils \
-	    glibc-headers \
-	    clang clang-analyzer \
-	    cppcheck \
-	    avr-gcc avr-libc avr-gcc-c++ avr-binutils \
-	    arm-none-eabi-binutils-cs \
-	    arm-none-eabi-gcc-cs-c++ \
-	    arm-none-eabi-gcc-cs \
-	    arm-none-eabi-newlib \
-	    srecord \
-	    git
+FEDORA_ROOT_ARCHIVE = rootfs.tar
+IMAGE_FILES = $(FEDORA_ROOT_ARCHIVE)
+FEDORA_ROOT_PACKAGES = make automake \
+    gcc gcc-c++ binutils \
+    glibc-headers \
+    clang clang-analyzer \
+    cppcheck \
+    avr-gcc avr-libc avr-gcc-c++ avr-binutils \
+    arm-none-eabi-binutils-cs \
+    arm-none-eabi-gcc-cs-c++ \
+    arm-none-eabi-gcc-cs \
+    arm-none-eabi-newlib \
+    srecord \
+    git
 
 
 include ../build.mk

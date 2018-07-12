@@ -23,6 +23,3 @@ ENV LC_ALL C.utf8
 
 
 ADD rootfs.tar /
-# Supermin misses update-alternatives symlink for some reason
-RUN ln -fs ld.bfd /usr/bin/ld && \
-    ln -s /usr/lib64/pkcs11/p11-kit-trust.so /etc/alternatives/libnssckbi.so.x86_64

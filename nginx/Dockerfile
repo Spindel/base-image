@@ -13,9 +13,7 @@ ARG DATE=unknown
 LABEL "se.modio.ci.url"=$URL "se.modio.ci.branch"=$BRANCH "se.modio.ci.commit"=$COMMIT "se.modio.ci.host"=$HOST "se.modio.ci.date"=$DATE
 
 ADD rootfs.tar /
-RUN useradd  -M -c "nginx web server"  -d /var/lib/nginx -r -s /sbin/nologin nginx && \
-    chown -R nginx:nginx /var/lib/nginx && \
-    mkdir -p /etc/ssl
+RUN mkdir -p /etc/ssl
 
 STOPSIGNAL SIGTERM
 
