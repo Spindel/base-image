@@ -14,6 +14,8 @@ PACKAGES=" \
     make \
     supermin \
     docker-engine \
+    podman \
+    buildah \
     git \
     xorg-x11-server-Xvfb \
     which \
