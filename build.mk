@@ -52,7 +52,7 @@ TERM ?= dumb
 
 _tput = $(shell command -v tput)
 ifneq ($(_tput),)
-_log_before = if test -t 1; then  $(_tput) -T $(TERM) setaf 14; fi
+_log_before = if test -t 1; then $(_tput) -T $(TERM) setaf 14; fi
 _log_after = if test -t 1; then $(_tput) -T $(TERM) sgr0; fi
 else
 _log_before = :
@@ -412,6 +412,9 @@ RETURN_TEST_STATUS = ! let _result;
 ## system. The archive will be suitable for adding to a scratch
 ## container image.
 ##
+## The FEDORA_ROOT_RELEASE variable specifies the Fedora release to
+## use.
+##
 ## The FEDORA_ROOT_PACKAGES variable should be set to a list of
 ## packages to be installed in the file system.
 ##
@@ -422,12 +425,14 @@ ifneq ($(FEDORA_ROOT_ARCHIVE),)
 
 CLEANUP_FILES += $(FEDORA_ROOT_ARCHIVE)
 
+FEDORA_ROOT_RELEASE ?= 28
+
 define _cmd_fedora_root
 $(Q)tmpdir=$$(mktemp -d fedora_root.XXXXX) && \
 trap "rm -rf $$tmpdir" EXIT && \
 dnf install \
   --installroot $(CURDIR)/$$tmpdir \
-  --releasever 28 \
+  --releasever $(FEDORA_ROOT_RELEASE) \
   --disablerepo "*" \
   --enablerepo "fedora" \
   --enablerepo "updates" \
