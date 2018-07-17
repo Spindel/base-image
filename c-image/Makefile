@@ -1,7 +1,10 @@
-IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-28-c
+include ../build.mk
+
+IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-$(FEDORA_ROOT_RELEASE)-c
 
 FEDORA_ROOT_ARCHIVE = rootfs.tar
-IMAGE_FILES = $(FEDORA_ROOT_ARCHIVE)
+IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
+
 FEDORA_ROOT_PACKAGES = make automake \
     gcc gcc-c++ binutils \
     glibc-headers \
@@ -15,5 +18,3 @@ FEDORA_ROOT_PACKAGES = make automake \
     srecord \
     git
 
-
-include ../build.mk
