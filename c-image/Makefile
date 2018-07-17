@@ -1,5 +1,3 @@
-include ../build.mk
-
 IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-$(FEDORA_ROOT_RELEASE)-c
 
 FEDORA_ROOT_ARCHIVE = rootfs.tar
@@ -18,3 +16,4 @@ FEDORA_ROOT_PACKAGES = make automake \
     srecord \
     git
 
+include ../build.mk
