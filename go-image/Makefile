@@ -1,3 +1,4 @@
+FEDORA_ROOT_RELEASE ?= 28
 IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-$(FEDORA_ROOT_RELEASE)/go
 
 FEDORA_ROOT_ARCHIVE = rootfs.tar

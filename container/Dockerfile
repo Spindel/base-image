@@ -22,4 +22,7 @@ ENV LC_ALL C.utf8
 
 
 ADD rootfs.tar /
+# https://github.com/projectatomic/buildah/issues/874
+RUN dnf remove -y selinux-policy-targeted
+
 COPY storage.conf /etc/containers/storage.conf

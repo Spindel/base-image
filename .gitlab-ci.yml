@@ -1,4 +1,4 @@
-image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
+image: registry.gitlab.com/modioab/base-image/container:new-container-image
 stages:
     - first
     - second
@@ -10,22 +10,17 @@ before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker info
 
-container:first:
+container:28:
   stage: first
-  tags: 
-    - docker
-    - x86_64
+  tags:
+  - x86_64
+  variables:
+          FEDORA_ROOT_RELEASE: '28'
+  before_script:
+  - podman login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  - podman info
   script:
-    - make -C container build-publish
-
-container:second:
-  stage: second
-  image: registry.gitlab.com/modioab/base-image/container:new-container-image
-  tags: 
-    - docker
-    - x86_64
-  script:
-    - make -C container build-publish
+  - make -C container build-publish
 
 build-image-26:
   stage: build
@@ -192,6 +187,7 @@ nodejs-image-27:
   script:
     - make -C nodejs-image build-publish
 
+
 nodejs-image-28:
   image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
   stage: build
@@ -200,6 +196,7 @@ nodejs-image-28:
     - x86_64
   script:
     - make -C nodejs-image build-publish
+
 
 nginx-26:
   image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
@@ -257,8 +254,9 @@ c-image-26:
 
 
 c-image-27:
-  image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
-  stage: build
+  variables:
+          FEDORA_ROOT_RELEASE: "27"
+  stage: first
   tags:
     - docker
     - x86_64
@@ -266,8 +264,9 @@ c-image-27:
     - make -C c-image build-publish
 
 c-image-28:
-  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
-  stage: build
+  variables:
+          FEDORA_ROOT_RELEASE: "28"
+  stage: first
   tags:
     - docker
     - x86_64
@@ -275,8 +274,9 @@ c-image-28:
     - make -C c-image build-publish
 
 go-image-27:
-  image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
-  stage: build
+  stage: first
+  variables:
+          FEDORA_ROOT_RELEASE: "27"
   tags:
     - docker
     - x86_64
@@ -284,13 +284,15 @@ go-image-27:
     - make -C go-image build-publish
 
 go-image-28:
-  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
-  stage: build
+  stage: first
+  variables:
+          FEDORA_ROOT_RELEASE: "28"
   tags:
     - docker
     - x86_64
   script:
     - make -C go-image build-publish
+
 
 rust-cross:
   image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
