@@ -1,5 +1,7 @@
 image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
 stages:
+    - first
+    - second
     - build
     - publish
     - deploy
@@ -8,7 +10,22 @@ before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker info
 
+container:first:
+  stage: first
+  tags: 
+    - docker
+    - x86_64
+  script:
+    - make -C container build-publish
 
+container:second:
+  stage: second
+  image: registry.gitlab.com/modioab/base-image/container:new-container-image
+  tags: 
+    - docker
+    - x86_64
+  script:
+    - make -C container build-publish
 
 build-image-26:
   stage: build
