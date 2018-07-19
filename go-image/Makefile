@@ -1,9 +1,8 @@
-include /etc/os-release
-IMAGE_REPO = registry.gitlab.com/modioab/base-image/$(ID)-$(VERSION_ID)/go
-IMAGE_FILES += rootfs.tar
+IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-$(FEDORA_ROOT_RELEASE)/go
 
-rootfs.tar:
-	../build-rootfs.sh make golang git tar docker-common
+FEDORA_ROOT_ARCHIVE = rootfs.tar
+IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
 
+FEDORA_ROOT_PACKAGES = make golang git tar docker-common
 
 include ../build.mk

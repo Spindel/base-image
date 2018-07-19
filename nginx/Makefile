@@ -1,10 +1,9 @@
-include /etc/os-release
 IMAGE_REPO = registry.gitlab.com/modioab/base-image
-IMAGE_TAG_PREFIX = $(ID)-$(VERSION_ID)-nginx
-IMAGE_FILES = rootfs.tar
-CLEANUP_FILES = rootfs.tar
+IMAGE_TAG_PREFIX = fedora-$(FEDORA_ROOT_RELEASE)-nginx
+
+FEDORA_ROOT_ARCHIVE = rootfs.tar
+IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
+
+FEDORA_ROOT_PACKAGES = nginx
 
 include ../build.mk
-
-rootfs.tar:
-	../build-rootfs.sh nginx
