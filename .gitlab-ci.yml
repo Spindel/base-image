@@ -11,7 +11,7 @@ before_script:
     - docker info
 
 container:28:
-  stage: first
+  stage: second
   tags:
   - x86_64
   variables:
@@ -48,7 +48,7 @@ zabbix-web:
     - make -C zabbix-web build-publish
 
 python3-image-28:
-  stage: first
+  stage: second
   tags:
     - docker
     - x86_64
@@ -59,7 +59,7 @@ python3-image-28:
 
 
 python3-image-27:
-  stage: first
+  stage: second
   tags:
     - docker
     - x86_64
@@ -86,7 +86,9 @@ debian9-firmware:
       - make -C debian9-firmware build-publish
 
 debian-armv7:build:
-  image: registry.gitlab.com/modioab/base-image/bootstrap:debian-armv7
+  image: registry.gitlab.com/modioab/base-image:debian-armv7-new-container-image
+  #  image: arm32v7/debian
+  #  image: registry.gitlab.com/modioab/base-image/bootstrap:debian-armv7
   # TODO: Replace bootstrap with below image
   # image: registry.gitlab.com/modioab/base-image:debian-armv7
   before_script:
@@ -95,7 +97,7 @@ debian-armv7:build:
     - apt-get update
     - apt-get install -y -qq debootstrap
     - apt-get install -y -qq make  # TODO: remove this line
-  stage: build
+  stage: first
   tags:
     - arm
   script:
@@ -175,7 +177,7 @@ nodejs-image-28:
 
 
 nginx-27:
-  stage: first
+  stage: second
   tags:
     - docker
     - x86_64
@@ -185,7 +187,7 @@ nginx-27:
     - make -C nginx build-publish
 
 nginx-28:
-  stage: first
+  stage: second
   tags:
     - docker
     - x86_64
@@ -215,7 +217,7 @@ meteor-image-27:
 c-image-27:
   variables:
           FEDORA_ROOT_RELEASE: "27"
-  stage: first
+  stage: second
   tags:
     - docker
     - x86_64
@@ -225,7 +227,7 @@ c-image-27:
 c-image-28:
   variables:
           FEDORA_ROOT_RELEASE: "28"
-  stage: first
+  stage: second
   tags:
     - docker
     - x86_64
@@ -233,7 +235,7 @@ c-image-28:
     - make -C c-image build-publish
 
 go-image-27:
-  stage: first
+  stage: second
   variables:
           FEDORA_ROOT_RELEASE: "27"
   tags:
@@ -243,7 +245,7 @@ go-image-27:
     - make -C go-image build-publish
 
 go-image-28:
-  stage: first
+  stage: second
   variables:
           FEDORA_ROOT_RELEASE: "28"
   tags:
