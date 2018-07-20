@@ -52,7 +52,6 @@ python3-image-28:
   tags:
     - docker
     - x86_64
-
   variables:
           FEDORA_ROOT_RELEASE: '28'
   script:
@@ -176,20 +175,22 @@ nodejs-image-28:
 
 
 nginx-27:
-  image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
-  stage: build
+  stage: first
   tags:
     - docker
     - x86_64
+  variables:
+          FEDORA_ROOT_RELEASE: "27"
   script:
     - make -C nginx build-publish
 
 nginx-28:
-  image: registry.gitlab.com/modioab/base-image:fedora-28-build-fc28
-  stage: build
+  stage: first
   tags:
     - docker
     - x86_64
+  variables:
+          FEDORA_ROOT_RELEASE: "27"
   script:
     - make -C nginx build-publish
 
@@ -209,7 +210,6 @@ meteor-image-27:
     - x86_64
   script:
     - make -C meteor-fedora-27 build-publish
-
 
 
 c-image-27:
