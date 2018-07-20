@@ -7,8 +7,9 @@ stages:
     - deploy
 
 before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker info
+    - make login
+    - "docker info ||:"
+    - "podman info ||:"
 
 container:28:
   stage: second
@@ -16,9 +17,6 @@ container:28:
   - x86_64
   variables:
           FEDORA_ROOT_RELEASE: '28'
-  before_script:
-  - podman login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-  - podman info
   script:
   - make -C container build-publish
 
@@ -277,4 +275,3 @@ trigger_build:
         - curl -X POST -F token=$SUBMIT_KEY     -F ref=master https://gitlab.com/api/v3/projects/1282147/trigger/builds
         - curl -X POST -F token=$CONTAINER_KEY  -F ref=master https://gitlab.com/api/v3/projects/1528552/trigger/builds
         - curl -X POST -F token=$HOUSEKEEPER_KEY -F ref=master https://gitlab.com/api/v4/projects/5299264/trigger/pipeline
-
