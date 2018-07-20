@@ -1,6 +1,7 @@
-include /etc/os-release
+FEDORA_ROOT_RELEASE ?= 28
+IMAGE_TAG_PREFIX = fedora-$(FEDORA_ROOT_RELEASE)-python
 IMAGE_REPO = registry.gitlab.com/modioab/base-image
-IMAGE_TAG_PREFIX = $(ID)-$(VERSION_ID)-python
+
 FEDORA_ROOT_ARCHIVE = rootfs.tar
 IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
 

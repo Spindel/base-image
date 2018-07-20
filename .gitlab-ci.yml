@@ -22,14 +22,6 @@ container:28:
   script:
   - make -C container build-publish
 
-build-image-26:
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C build-fedora-26 build-publish
-
 build-image-27:
   stage: build
   tags:
@@ -56,31 +48,24 @@ zabbix-web:
     - make -C zabbix-web build-publish
 
 python3-image-28:
-  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
-  stage: build
+  stage: first
   tags:
     - docker
     - x86_64
+
+  variables:
+          FEDORA_ROOT_RELEASE: '28'
   script:
     - make -C python3-image build-publish
 
 
 python3-image-27:
-  image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
-  stage: build
+  stage: first
   tags:
     - docker
     - x86_64
-  script:
-    - make -C python3-image build-publish
-
-
-python3-image-26:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: build
-  tags:
-    - docker
-    - x86_64
+  variables:
+          FEDORA_ROOT_RELEASE: '27'
   script:
     - make -C python3-image build-publish
 
@@ -169,14 +154,6 @@ rust-armv7:publish:
     - make -C rust-armv7 build-publish
 
 
-nodejs-image-26:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C nodejs-image build-publish
 
 nodejs-image-27:
   image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
@@ -197,15 +174,6 @@ nodejs-image-28:
   script:
     - make -C nodejs-image build-publish
 
-
-nginx-26:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C nginx build-publish
 
 nginx-27:
   image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
@@ -242,15 +210,6 @@ meteor-image-27:
   script:
     - make -C meteor-fedora-27 build-publish
 
-
-c-image-26:
-  image: registry.gitlab.com/modioab/base-image:fedora-26-build-master
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C c-image build-publish
 
 
 c-image-27:
