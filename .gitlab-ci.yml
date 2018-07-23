@@ -7,7 +7,7 @@ stages:
     - deploy
 
 before_script:
-    - make login
+    - make -f build.mk login
     - "docker info ||:"
     - "podman info ||:"
 
