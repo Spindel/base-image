@@ -1,10 +1,9 @@
-include /etc/os-release
 IMAGE_REPO = registry.gitlab.com/modioab/base-image
-IMAGE_TAG_PREFIX = $(ID)-$(VERSION_ID)-python
-FEDORA_ROOT_ARCHIVE = rootfs.tar
+IMAGE_TAG_PREFIX = fedora-$(FEDORA_ROOT_RELEASE)-python
 IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
 
-
+FEDORA_ROOT_ARCHIVE = rootfs.tar
+FEDORA_ROOT_RELEASE ?= 28
 FEDORA_ROOT_PACKAGES += python3
 FEDORA_ROOT_PACKAGES += python3-pycurl
 FEDORA_ROOT_PACKAGES += python3-pip
