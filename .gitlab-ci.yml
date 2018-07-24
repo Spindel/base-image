@@ -1,4 +1,4 @@
-image: registry.gitlab.com/modioab/base-image/container:new-container-image
+image: registry.gitlab.com/modioab/base-image/container:master
 stages:
     - first
     - second
@@ -84,17 +84,14 @@ debian9-firmware:
       - make -C debian9-firmware build-publish
 
 debian-armv7:build:
-  image: registry.gitlab.com/modioab/base-image:debian-armv7-new-container-image
+  image: registry.gitlab.com/modioab/base-image:debian-armv7-master
   #  image: arm32v7/debian
   #  image: registry.gitlab.com/modioab/base-image/bootstrap:debian-armv7
-  # TODO: Replace bootstrap with below image
-  # image: registry.gitlab.com/modioab/base-image:debian-armv7
   before_script:
     - sed -i s:httpredir:ftp.nl:g /etc/apt/sources.list
     - apt-get clean
     - apt-get update
     - apt-get install -y -qq debootstrap
-    - apt-get install -y -qq make  # TODO: remove this line
   stage: first
   tags:
     - arm
