@@ -14,4 +14,4 @@ LABEL "se.modio.ci.commit"=$COMMIT
 LABEL "se.modio.ci.host"=$HOST
 LABEL "se.modio.ci.date"=$DATE
 
-RUN dnf -y upgrade && dnf -y install podman buildah && dnf clean all
+RUN dnf -y upgrade && dnf -y install podman buildah rsync && dnf clean all
