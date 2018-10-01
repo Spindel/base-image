@@ -187,7 +187,7 @@ nginx-28:
     - docker
     - x86_64
   variables:
-          FEDORA_ROOT_RELEASE: "27"
+          FEDORA_ROOT_RELEASE: "28"
   script:
     - make -C nginx build-publish
 
