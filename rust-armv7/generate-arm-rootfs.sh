@@ -10,7 +10,7 @@ CWD=$(pwd)
 TMPDIR=$(mktemp -d rootfs.XXXXX)
 trap "chmod -R u+w $TMPDIR; rm -rf $TMPDIR" EXIT
 
-PACKAGES="bash,curl,make,libc6-dev,ca-certificates"
+PACKAGES="bash,curl,make,libc6-dev,gcc,ca-certificates"
 # Create basic root
 debootstrap --include=${PACKAGES} stretch $TMPDIR
 mkdir -p $TMPDIR/usr/local/bin
