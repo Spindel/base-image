@@ -17,7 +17,7 @@ mkdir -p $TMPDIR/usr/local/bin
 install rustup.sh $TMPDIR/usr/local/bin/rustup.sh
 mount --bind /proc $TMPDIR/proc
 chroot $TMPDIR /bin/bash /usr/local/bin/rustup.sh -y
-chroot $TMPDIR /bin/bash /usr/local/bin/rustup.sh -y component add rustfmt-preview
+chroot $TMPDIR /root/.cargo/bin/rustup component add rustfmt-preview
 umount $TMPDIR/proc
 
 tar -cf rootfs.tar -C $TMPDIR .
