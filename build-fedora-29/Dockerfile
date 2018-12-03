@@ -1,5 +1,5 @@
 # Docker container building docker container
-FROM registry.gitlab.com/modioab/base-image/bootstrap:fedora-29
+FROM registry.gitlab.com/modioab/base-image/fedora-29/bootstrap:master
 MAINTAINER "Nicklas Lindgren" <nili@modio.se>
 
 ARG URL=unknown

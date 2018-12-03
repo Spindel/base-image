@@ -216,17 +216,6 @@ mongodb:
     - make -C mongodb build-publish
 
 
-# Noone has maintained the Meteor image.  Removed
-#  meteor-image-27:
-#    image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
-#    stage: build
-#    tags:
-#      - docker
-#      - x86_64
-#    script:
-#      - make -C meteor-fedora-27 build-publish
-
-
 c-image-28:
   variables:
     FEDORA_ROOT_RELEASE: '28'
@@ -271,7 +260,6 @@ go-image:29:
 
 
 rust-cross:
-  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
   stage: build
   tags:
     - docker

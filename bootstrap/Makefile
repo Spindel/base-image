@@ -1,5 +1,4 @@
-IMAGE_REPO = registry.gitlab.com/modioab/base-image/bootstrap
-IMAGE_TAG_PREFIX = fedora-$(FEDORA_ROOT_RELEASE)
+IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-29/bootstrap
 IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
 
 FEDORA_ROOT_ARCHIVE = rootfs.tar
