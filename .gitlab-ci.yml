@@ -168,7 +168,7 @@ rust-armv7:publish:
 nodejs-image:28:
   stage: second
   variables:
-    FEDORA_ROOT_RELEASE: '28'
+    FEDORA_ROOT_RELEASE: '29'
   tags:
     - docker
     - x86_64
