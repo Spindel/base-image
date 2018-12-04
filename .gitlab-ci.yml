@@ -199,14 +199,14 @@ mongodb:
   script:
     - make -C mongodb build-publish
 
-meteor-image-27:
-  image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
+meteor-image-28:
+  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
   stage: build
   tags:
     - docker
     - x86_64
   script:
-    - make -C meteor-fedora-27 build-publish
+    - make -C meteor-fedora-28 build-publish
 
 
 c-image-27:

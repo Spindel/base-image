@@ -1,5 +1,5 @@
 # Docker container building docker container
-FROM  registry.fedoraproject.org/fedora:27
+FROM  registry.fedoraproject.org/fedora:28
 
 ARG URL=unknown
 ARG COMMIT=unknown
@@ -7,11 +7,11 @@ ARG BRANCH=unknown
 ARG HOST=unknown
 ARG DATE=unknown
 
-LABEL "se.modio.ci.url"=$URL
-LABEL "se.modio.ci.branch"=$BRANCH
-LABEL "se.modio.ci.commit"=$COMMIT
-LABEL "se.modio.ci.host"=$HOST
-LABEL "se.modio.ci.date"=$DATE
+LABEL "se.modio.ci.url"=$URL \
+ "se.modio.ci.branch"=$BRANCH \
+ "se.modio.ci.commit"=$COMMIT \
+ "se.modio.ci.host"=$HOST \
+ "se.modio.ci.date"=$DATE
 
 ADD meteor.tar.gz /data/
 WORKDIR /data
