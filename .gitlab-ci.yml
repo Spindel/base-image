@@ -216,12 +216,21 @@ mongodb:
     - make -C mongodb build-publish
 
 meteor-image-28:
-  stage: build
+  stage: second
   tags:
     - docker
     - x86_64
   script:
     - make -C meteor-fedora-28 build-publish
+
+meteor-image-29:
+  stage: second
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C meteor-fedora-28 build-publish
+
 
 c-image-28:
   variables:
