@@ -1,32 +1,36 @@
+---
 image: registry.gitlab.com/modioab/base-image/fedora-28/container:master
 stages:
-    - first
-    - second
-    - build
-    - publish
-    - deploy
+  - first
+  - second
+  - build
+  - publish
+  - deploy
 
 before_script:
-    - make -f build.mk login
-    - "docker info ||:"
-    - "podman info ||:"
+  - make -f build.mk login
+  - 'docker info ||:'
+  - 'podman info ||:'
+
 
 container:28:
   stage: second
   tags:
-  - x86_64
-  variables:
-          FEDORA_ROOT_RELEASE: '28'
-  script:
-  - make -C container build-publish
-
-build-image-27:
-  stage: build
-  tags:
-    - docker
     - x86_64
+  variables:
+    FEDORA_ROOT_RELEASE: '28'
   script:
-    - make -C build-fedora-27 build-publish
+    - make -C container build-publish
+
+container:29:
+  stage: second
+  tags:
+    - x86_64
+  variables:
+    FEDORA_ROOT_RELEASE: '29'
+  script:
+    - make -C container build-publish
+
 
 build-image-28:
   stage: build
@@ -37,6 +41,15 @@ build-image-28:
     - make -C build-fedora-28 build-publish
 
 
+build-image-29:
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C build-fedora-29 build-publish
+
+
 zabbix-web:
   stage: build
   tags:
@@ -45,43 +58,45 @@ zabbix-web:
   script:
     - make -C zabbix-web build-publish
 
+
 python3-image-28:
   stage: second
   tags:
     - docker
     - x86_64
   variables:
-          FEDORA_ROOT_RELEASE: '28'
+    FEDORA_ROOT_RELEASE: '28'
   script:
     - make -C python3-image build-publish
 
-
-python3-image-27:
+python3-image:29:
   stage: second
   tags:
     - docker
     - x86_64
   variables:
-          FEDORA_ROOT_RELEASE: '27'
+    FEDORA_ROOT_RELEASE: '29'
   script:
     - make -C python3-image build-publish
 
 
 debian8-firmware:
-    stage: build
-    tags:
-        - docker
-        - x86_64
-    script:
-      - make -C debian8-firmware build-publish
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C debian8-firmware build-publish
+
 
 debian9-firmware:
-    stage: build
-    tags:
-        - docker
-        - x86_64
-    script:
-      - make -C debian9-firmware build-publish
+  stage: build
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C debian9-firmware build-publish
+
 
 debian-armv7:build:
   image: registry.gitlab.com/modioab/base-image:debian-armv7-master
@@ -92,7 +107,7 @@ debian-armv7:build:
     - apt-get clean
     - apt-get update
     - apt-get install -y -qq debootstrap
-  stage: first
+  stage: second
   tags:
     - arm
   script:
@@ -107,7 +122,7 @@ debian-armv7:publish:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
     - docker info
-  stage: publish # Because we want it in the stage after build
+  stage: publish  # Because we want it in the stage after build
   when: always
   tags:
     - docker
@@ -139,7 +154,7 @@ rust-armv7:publish:
   before_script:
     - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
     - docker info
-  stage: publish # Because we want it in the stage after build
+  stage: publish  # Because we want it in the stage after build
   when: always
   tags:
     - docker
@@ -150,36 +165,26 @@ rust-armv7:publish:
     - make -C rust-armv7 build-publish
 
 
-
-nodejs-image-27:
-  image: registry.gitlab.com/modioab/base-image:fedora-27-build-master
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C nodejs-image build-publish
-
-
-nodejs-image-28:
-  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
-  stage: build
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C nodejs-image build-publish
-
-
-nginx-27:
+nodejs-image:28:
   stage: second
+  variables:
+    FEDORA_ROOT_RELEASE: '29'
   tags:
     - docker
     - x86_64
-  variables:
-          FEDORA_ROOT_RELEASE: "27"
   script:
-    - make -C nginx build-publish
+    - make -C nodejs-image build-publish
+
+nodejs-image:29:
+  stage: second
+  variables:
+    FEDORA_ROOT_RELEASE: '29'
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C nodejs-image build-publish
+
 
 nginx-28:
   stage: second
@@ -187,9 +192,20 @@ nginx-28:
     - docker
     - x86_64
   variables:
-          FEDORA_ROOT_RELEASE: "28"
+    FEDORA_ROOT_RELEASE: '28'
   script:
     - make -C nginx build-publish
+
+nginx:29:
+  stage: second
+  tags:
+    - docker
+    - x86_64
+  variables:
+    FEDORA_ROOT_RELEASE: '29'
+  script:
+    - make -C nginx build-publish
+
 
 mongodb:
   stage: build
@@ -200,7 +216,6 @@ mongodb:
     - make -C mongodb build-publish
 
 meteor-image-28:
-  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
   stage: build
   tags:
     - docker
@@ -208,20 +223,9 @@ meteor-image-28:
   script:
     - make -C meteor-fedora-28 build-publish
 
-
-c-image-27:
-  variables:
-          FEDORA_ROOT_RELEASE: "27"
-  stage: second
-  tags:
-    - docker
-    - x86_64
-  script:
-    - make -C c-image build-publish
-
 c-image-28:
   variables:
-          FEDORA_ROOT_RELEASE: "28"
+    FEDORA_ROOT_RELEASE: '28'
   stage: second
   tags:
     - docker
@@ -229,20 +233,32 @@ c-image-28:
   script:
     - make -C c-image build-publish
 
-go-image-27:
+c-image-29:
+  variables:
+    FEDORA_ROOT_RELEASE: '29'
+  stage: second
+  tags:
+    - docker
+    - x86_64
+  script:
+    - make -C c-image build-publish
+
+
+go-image-28:
   stage: second
   variables:
-          FEDORA_ROOT_RELEASE: "27"
+    FEDORA_ROOT_RELEASE: '28'
   tags:
     - docker
     - x86_64
   script:
     - make -C go-image build-publish
 
-go-image-28:
+
+go-image:29:
   stage: second
   variables:
-          FEDORA_ROOT_RELEASE: "28"
+    FEDORA_ROOT_RELEASE: '29'
   tags:
     - docker
     - x86_64
@@ -251,7 +267,6 @@ go-image-28:
 
 
 rust-cross:
-  image: registry.gitlab.com/modioab/base-image:fedora-28-build-master
   stage: build
   tags:
     - docker
@@ -261,15 +276,15 @@ rust-cross:
 
 
 trigger_build:
-    before_script:
-        - "true"
-    stage: deploy
-    only:
-        - master
-    dependencies: []
-    script:
-        - curl -X POST -F token=$API_KEY        -F ref=master https://gitlab.com/api/v3/projects/1282148/trigger/builds
-        - curl -X POST -F token=$SUBMIT_KEY     -F ref=master https://gitlab.com/api/v3/projects/1282147/trigger/builds
-        - curl -X POST -F token=$CONTAINER_KEY  -F ref=master https://gitlab.com/api/v3/projects/1528552/trigger/builds
-        - curl -X POST -F token=$HOUSEKEEPER_KEY -F ref=master https://gitlab.com/api/v4/projects/5299264/trigger/pipeline
-        - curl -X POST -F token=$SSHCA_KEY      -F ref=master https://gitlab.com/api/v4/projects/7519281/trigger/pipeline
+  before_script:
+    - 'true'
+  stage: deploy
+  only:
+    - master
+  dependencies: []
+  script:
+    - curl -X POST -F token=$API_KEY        -F ref=master https://gitlab.com/api/v3/projects/1282148/trigger/builds
+    - curl -X POST -F token=$SUBMIT_KEY     -F ref=master https://gitlab.com/api/v3/projects/1282147/trigger/builds
+    - curl -X POST -F token=$CONTAINER_KEY  -F ref=master https://gitlab.com/api/v3/projects/1528552/trigger/builds
+    - curl -X POST -F token=$HOUSEKEEPER_KEY -F ref=master https://gitlab.com/api/v4/projects/5299264/trigger/pipeline
+    - curl -X POST -F token=$SSHCA_KEY      -F ref=master https://gitlab.com/api/v4/projects/7519281/trigger/pipeline

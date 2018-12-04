@@ -1,5 +1,5 @@
 # Docker container building docker container
-FROM registry.gitlab.com/modioab/base-image/fedora-28/bootstrap:master
+FROM registry.gitlab.com/modioab/base-image/fedora-29/bootstrap:master
 MAINTAINER "Nicklas Lindgren" <nili@modio.se>
 
 ARG URL=unknown
@@ -14,4 +14,4 @@ LABEL "se.modio.ci.url"=$URL \
     "se.modio.ci.host"=$HOST \
     "se.modio.ci.date"=$DATE
 
-RUN dnf -y upgrade && dnf -y install podman buildah rsync zstd && dnf clean all
+RUN dnf -y upgrade && dnf clean all

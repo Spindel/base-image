@@ -1,6 +1,6 @@
-# Docker container building docker container
-FROM registry.gitlab.com/modioab/base-image/bootstrap:fedora-27
+FROM scratch
 MAINTAINER "Nicklas Lindgren" <nili@modio.se>
+
 
 ARG URL=unknown
 ARG COMMIT=unknown
@@ -14,5 +14,11 @@ LABEL "se.modio.ci.url"=$URL \
  "se.modio.ci.host"=$HOST \
  "se.modio.ci.date"=$DATE
 
-RUN dnf -y upgrade && \
-    dnf clean all
+ENV LC_CTYPE C.utf8
+ENV LANG C.utf8
+ENV LANGUAGE en_US:en
+ENV LC_ALL C.utf8
+
+
+ADD rootfs.tar /
+RUN echo tsflags=nodocs >> /etc/dnf/dnf.conf
