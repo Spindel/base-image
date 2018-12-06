@@ -14,4 +14,4 @@ LABEL "se.modio.ci.url"=$URL \
     "se.modio.ci.host"=$HOST \
     "se.modio.ci.date"=$DATE
 
-RUN dnf -y upgrade && dnf clean all
+RUN dnf -y upgrade && dnf install -y python3-pip && dnf clean all
