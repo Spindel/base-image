@@ -22,3 +22,9 @@ ENV LC_ALL C.utf8
 
 ADD rootfs.tar /
 RUN echo tsflags=nodocs >> /etc/dnf/dnf.conf
+
+# https://github.com/projectatomic/buildah/issues/874
+RUN dnf remove -y selinux-policy-targeted
+
+COPY storage.conf /etc/containers/storage.conf
+COPY libpod.conf /etc/containers/libpod.conf

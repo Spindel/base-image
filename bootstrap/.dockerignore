@@ -1,1 +1,4 @@
 *
+!rootfs.tar
+!libpod.conf
+!storage.conf
