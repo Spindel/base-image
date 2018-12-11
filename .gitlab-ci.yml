@@ -20,7 +20,7 @@ container:28:
   variables:
     FEDORA_ROOT_RELEASE: '28'
   script:
-    - make -C container build-publish
+    - make -C container build test publish
 
 container:29:
   stage: second
@@ -29,7 +29,7 @@ container:29:
   variables:
     FEDORA_ROOT_RELEASE: '29'
   script:
-    - make -C container build-publish
+    - make -C container build test publish
 
 
 build-image-28:
