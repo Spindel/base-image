@@ -24,7 +24,7 @@ ADD rootfs.tar /
 RUN echo tsflags=nodocs >> /etc/dnf/dnf.conf
 
 # https://github.com/projectatomic/buildah/issues/874
-RUN dnf remove -y selinux-policy-targeted &&
+RUN dnf remove -y selinux-policy-targeted && \
   ln -s /usr/bin/yarnpkg /usr/bin/yarn
 
 COPY storage.conf /etc/containers/storage.conf
