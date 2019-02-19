@@ -35,7 +35,6 @@ container:29:
 build-image-28:
   stage: build
   tags:
-    - docker
     - x86_64
   script:
     - make -C build-fedora-28 build-publish
@@ -44,7 +43,6 @@ build-image-28:
 build-image-29:
   stage: build
   tags:
-    - docker
     - x86_64
   script:
     - make -C build-fedora-29 build-publish
@@ -53,7 +51,6 @@ build-image-29:
 zabbix-web:
   stage: build
   tags:
-    - docker
     - x86_64
   script:
     - make -C zabbix-web build-publish
@@ -62,7 +59,6 @@ zabbix-web:
 python3-image-28:
   stage: second
   tags:
-    - docker
     - x86_64
   variables:
     FEDORA_ROOT_RELEASE: '28'
@@ -72,7 +68,6 @@ python3-image-28:
 python3-image:29:
   stage: second
   tags:
-    - docker
     - x86_64
   variables:
     FEDORA_ROOT_RELEASE: '29'
@@ -83,7 +78,6 @@ python3-image:29:
 debian8-firmware:
   stage: build
   tags:
-    - docker
     - x86_64
   script:
     - make -C debian8-firmware build-publish
@@ -92,7 +86,6 @@ debian8-firmware:
 debian9-firmware:
   stage: build
   tags:
-    - docker
     - x86_64
   script:
     - make -C debian9-firmware build-publish
@@ -125,7 +118,6 @@ debian-armv7:publish:
   stage: publish  # Because we want it in the stage after build
   when: always
   tags:
-    - docker
     - x86_64
   dependencies:
     - debian-armv7:build
@@ -157,7 +149,6 @@ rust-armv7:publish:
   stage: publish  # Because we want it in the stage after build
   when: always
   tags:
-    - docker
     - x86_64
   dependencies:
     - rust-armv7:build
@@ -170,7 +161,6 @@ nodejs-image:28:
   variables:
     FEDORA_ROOT_RELEASE: '29'
   tags:
-    - docker
     - x86_64
   script:
     - make -C nodejs-image build-publish
@@ -180,7 +170,6 @@ nodejs-image:29:
   variables:
     FEDORA_ROOT_RELEASE: '29'
   tags:
-    - docker
     - x86_64
   script:
     - make -C nodejs-image build-publish
@@ -189,7 +178,6 @@ nodejs-image:29:
 nginx-28:
   stage: second
   tags:
-    - docker
     - x86_64
   variables:
     FEDORA_ROOT_RELEASE: '28'
@@ -199,7 +187,6 @@ nginx-28:
 nginx:29:
   stage: second
   tags:
-    - docker
     - x86_64
   variables:
     FEDORA_ROOT_RELEASE: '29'
@@ -210,7 +197,6 @@ nginx:29:
 mongodb:
   stage: build
   tags:
-    - docker
     - x86_64
   script:
     - make -C mongodb build-publish
@@ -218,7 +204,6 @@ mongodb:
 meteor-image-28:
   stage: second
   tags:
-    - docker
     - x86_64
   script:
     - make -C meteor-fedora-28 build-publish
@@ -226,7 +211,6 @@ meteor-image-28:
 meteor-image-29:
   stage: second
   tags:
-    - docker
     - x86_64
   script:
     - make -C meteor-fedora-28 build-publish
@@ -237,7 +221,6 @@ c-image-28:
     FEDORA_ROOT_RELEASE: '28'
   stage: second
   tags:
-    - docker
     - x86_64
   script:
     - make -C c-image build-publish
@@ -247,7 +230,6 @@ c-image-29:
     FEDORA_ROOT_RELEASE: '29'
   stage: second
   tags:
-    - docker
     - x86_64
   script:
     - make -C c-image build-publish
@@ -258,7 +240,6 @@ go-image-28:
   variables:
     FEDORA_ROOT_RELEASE: '28'
   tags:
-    - docker
     - x86_64
   script:
     - make -C go-image build-publish
@@ -269,7 +250,6 @@ go-image:29:
   variables:
     FEDORA_ROOT_RELEASE: '29'
   tags:
-    - docker
     - x86_64
   script:
     - make -C go-image build-publish
@@ -278,7 +258,6 @@ go-image:29:
 rust-cross:
   stage: build
   tags:
-    - docker
     - x86_64
   script:
     - make -C rust-cross build-publish
