@@ -18,6 +18,7 @@ container:28:
   tags:
     - x86_64
   variables:
+  script:
     FEDORA_ROOT_RELEASE: '28'
   script:
     - make -C container build test publish
@@ -112,9 +113,6 @@ debian-armv7:build:
 
 
 debian-armv7:publish:
-  before_script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - docker info
   stage: publish  # Because we want it in the stage after build
   when: always
   tags:
