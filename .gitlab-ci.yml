@@ -141,9 +141,6 @@ rust-armv7:build:
 
 
 rust-armv7:publish:
-  before_script:
-    - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
-    - docker info
   stage: publish  # Because we want it in the stage after build
   when: always
   tags:
