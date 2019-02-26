@@ -15,3 +15,5 @@ LABEL "se.modio.ci.url"=$URL \
     "se.modio.ci.date"=$DATE
 
 RUN dnf -y upgrade && dnf clean all
+# https://gitlab.com/gitlab-com/support-forum/issues/4349
+ENV BUILDAH_FORMAT docker
