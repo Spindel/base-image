@@ -14,4 +14,7 @@ LABEL "se.modio.ci.url"=$URL \
     "se.modio.ci.host"=$HOST \
     "se.modio.ci.date"=$DATE
 
-RUN dnf -y upgrade && dnf -y install podman buildah rsync zstd && dnf clean all
+RUN echo deltarpm=0 >> /etc/dnf/dnf.conf && \
+    dnf -y upgrade && dnf -y install podman buildah rsync zstd && dnf clean all
+# https://gitlab.com/gitlab-com/support-forum/issues/4349
+ENV BUILDAH_FORMAT docker

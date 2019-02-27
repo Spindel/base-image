@@ -21,7 +21,8 @@ ENV LC_ALL C.utf8
 
 
 ADD rootfs.tar /
-RUN echo tsflags=nodocs >> /etc/dnf/dnf.conf
+RUN echo tsflags=nodocs >> /etc/dnf/dnf.conf && \
+    echo deltarpm=0 >> /etc/dnf/dnf.conf
 
 # https://github.com/projectatomic/buildah/issues/874
 RUN dnf remove -y selinux-policy-targeted && \

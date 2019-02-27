@@ -7,6 +7,12 @@ stages:
   - publish
   - deploy
 
+variables:
+    # Podman defaults to OCI images, since 2019-02-15+ onwards, gitlab registry
+    # fails to work properly with the default `oci` images.
+    # TODO: Test & bug-report this
+    BUILDAH_FORMAT: docker
+
 before_script:
   - make -f build.mk login
   - 'docker info ||:'

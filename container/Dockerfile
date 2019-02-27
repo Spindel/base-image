@@ -20,10 +20,14 @@ ENV LANG C.utf8
 ENV LANGUAGE en_US:en
 ENV LC_ALL C.utf8
 
+# Bug compat with Gitlab Registry
+# https://gitlab.com/gitlab-com/support-forum/issues/4349
+ENV BUILDAH_FORMAT docker
 
 ADD rootfs.tar /
 # https://github.com/projectatomic/buildah/issues/874
-RUN dnf remove -y selinux-policy-targeted
+RUN echo deltarpm=0 >> /etc/dnf/dnf.conf && \
+    dnf remove -y selinux-policy-targeted
 
 COPY storage.conf /etc/containers/storage.conf
 COPY libpod.conf /etc/containers/libpod.conf
