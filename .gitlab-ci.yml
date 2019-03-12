@@ -214,7 +214,7 @@ meteor-image-29:
   tags:
     - x86_64
   script:
-    - make -C meteor-fedora-28 build-publish
+    - make -C meteor-fedora-29 build-publish
 
 
 c-image-28:
