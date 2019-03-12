@@ -1,7 +1,7 @@
 include /etc/os-release
 
 PLATFORM=os.linux.x86_64
-RELEASE=1.6.1.1
+RELEASE=1.6.1.4
 
 IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-29/meteor
 IMAGE_FILES = meteor.tar.gz
