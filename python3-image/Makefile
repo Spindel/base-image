@@ -12,5 +12,6 @@ FEDORA_ROOT_PACKAGES += python3-zope-interface
 FEDORA_ROOT_PACKAGES += python3-CacheControl
 FEDORA_ROOT_PACKAGES += python3-dbus
 FEDORA_ROOT_PACKAGES += python3-netifaces
+FEDORA_ROOT_PACKAGES += python3-ujson
 
 include ../build.mk
