@@ -19,7 +19,7 @@ before_script:
   - 'podman info ||:'
 
 
-container:28:
+.container:28:
   stage: second
   tags:
     - x86_64
@@ -29,7 +29,7 @@ container:28:
   script:
     - make -C container build test publish
 
-container:29:
+.container:29:
   stage: second
   tags:
     - x86_64
@@ -39,7 +39,7 @@ container:29:
     - make -C container build test publish
 
 
-build-image-28:
+.build-image-28:
   stage: build
   tags:
     - x86_64
@@ -47,7 +47,7 @@ build-image-28:
     - make -C build-fedora-28 build-publish
 
 
-build-image-29:
+.build-image-29:
   stage: build
   tags:
     - x86_64
@@ -55,7 +55,7 @@ build-image-29:
     - make -C build-fedora-29 build-publish
 
 
-zabbix-web:
+.zabbix-web:
   stage: build
   tags:
     - x86_64
@@ -63,7 +63,7 @@ zabbix-web:
     - make -C zabbix-web build-publish
 
 
-python3-image-28:
+.python3-image-28:
   stage: second
   tags:
     - x86_64
@@ -72,7 +72,7 @@ python3-image-28:
   script:
     - make -C python3-image build-publish
 
-python3-image:29:
+.python3-image:29:
   stage: second
   tags:
     - x86_64
@@ -82,7 +82,7 @@ python3-image:29:
     - make -C python3-image build-publish
 
 
-debian8-firmware:
+.debian8-firmware:
   stage: build
   tags:
     - x86_64
@@ -90,7 +90,7 @@ debian8-firmware:
     - make -C debian8-firmware build-publish
 
 
-debian9-firmware:
+.debian9-firmware:
   stage: build
   tags:
     - x86_64
@@ -157,7 +157,7 @@ rust-armv7:publish:
     - make -C rust-armv7 build-publish
 
 
-nodejs-image:28:
+.nodejs-image:28:
   stage: second
   variables:
     FEDORA_ROOT_RELEASE: '29'
@@ -166,7 +166,7 @@ nodejs-image:28:
   script:
     - make -C nodejs-image build-publish
 
-nodejs-image:29:
+.nodejs-image:29:
   stage: second
   variables:
     FEDORA_ROOT_RELEASE: '29'
@@ -176,7 +176,7 @@ nodejs-image:29:
     - make -C nodejs-image build-publish
 
 
-nginx-28:
+.nginx-28:
   stage: second
   tags:
     - x86_64
@@ -185,7 +185,7 @@ nginx-28:
   script:
     - make -C nginx build-publish
 
-nginx:29:
+.nginx:29:
   stage: second
   tags:
     - x86_64
@@ -195,21 +195,21 @@ nginx:29:
     - make -C nginx build-publish
 
 
-mongodb:
+.mongodb:
   stage: build
   tags:
     - x86_64
   script:
     - make -C mongodb build-publish
 
-meteor-image-28:
+.meteor-image-28:
   stage: second
   tags:
     - x86_64
   script:
     - make -C meteor-fedora-28 build-publish
 
-meteor-image-29:
+.meteor-image-29:
   stage: second
   tags:
     - x86_64
@@ -217,7 +217,7 @@ meteor-image-29:
     - make -C meteor-fedora-29 build-publish
 
 
-c-image-28:
+.c-image-28:
   variables:
     FEDORA_ROOT_RELEASE: '28'
   stage: second
@@ -226,7 +226,7 @@ c-image-28:
   script:
     - make -C c-image build-publish
 
-c-image-29:
+.c-image-29:
   variables:
     FEDORA_ROOT_RELEASE: '29'
   stage: second
@@ -236,7 +236,7 @@ c-image-29:
     - make -C c-image build-publish
 
 
-go-image-28:
+.go-image-28:
   stage: second
   variables:
     FEDORA_ROOT_RELEASE: '28'
@@ -246,7 +246,7 @@ go-image-28:
     - make -C go-image build-publish
 
 
-go-image:29:
+.go-image:29:
   stage: second
   variables:
     FEDORA_ROOT_RELEASE: '29'
@@ -264,7 +264,7 @@ rust-cross:
     - make -C rust-cross build-publish
 
 
-trigger_build:
+.trigger_build:
   before_script:
     - 'true'
   stage: deploy
