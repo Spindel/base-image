@@ -10,4 +10,4 @@ FEDORA_ROOT_PACKAGES += postgresql
 include ../build.mk
 
 pgbouncer_exporter:
-	./download.sh
+	./download

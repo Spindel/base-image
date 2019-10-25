@@ -1,0 +1,36 @@
+#!/bin/env python3
+import urllib.request
+import tempfile
+import tarfile
+import json
+import os
+
+LATEST_URL="https://api.github.com/repos/stanhu/pgbouncer_exporter/releases/latest"
+OUT_NAME = "pgbouncer_exporter"
+
+with urllib.request.urlopen(LATEST_URL) as resp:
+    obj = json.load(resp)
+
+archive = None
+
+for asset in obj["assets"]:
+    desktop = asset.get("browser_download_url")
+    if "linux-amd64.tar" in desktop:
+        archive = desktop
+
+assert archive, "no amd64 file in release?"
+print(archive)
+
+with tempfile.TemporaryFile() as tf:
+    with urllib.request.urlopen(archive) as resp:
+        tf.write(resp.read())
+    tf.seek(0)
+    with tarfile.open(fileobj=tf, mode="r") as tgz:
+        for member in tgz:
+            print(member.name)
+            if member.isreg() and member.name.endswith(OUT_NAME):
+                datfile = tgz.extractfile(member)
+                with open(OUT_NAME, "wb") as outf:
+                    outf.truncate()
+                    outf.write(datfile.read())
+                os.chmod(OUT_NAME, 0o755)
