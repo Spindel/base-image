@@ -19,16 +19,6 @@ before_script:
   - 'podman info ||:'
 
 
-container:28:
-  stage: second
-  tags:
-    - x86_64
-  variables:
-  script:
-    FEDORA_ROOT_RELEASE: '28'
-  script:
-    - make -C container build test publish
-
 container:29:
   stage: second
   tags:
@@ -37,14 +27,6 @@ container:29:
     FEDORA_ROOT_RELEASE: '29'
   script:
     - make -C container build test publish
-
-
-build-image-28:
-  stage: build
-  tags:
-    - x86_64
-  script:
-    - make -C build-fedora-28 build-publish
 
 
 build-image-29:
@@ -62,15 +44,6 @@ zabbix-web:
   script:
     - make -C zabbix-web build-publish
 
-
-python3-image-28:
-  stage: second
-  tags:
-    - x86_64
-  variables:
-    FEDORA_ROOT_RELEASE: '28'
-  script:
-    - make -C python3-image build-publish
 
 python3-image:29:
   stage: second
@@ -157,15 +130,6 @@ rust-armv7:publish:
     - make -C rust-armv7 build-publish
 
 
-nodejs-image:28:
-  stage: second
-  variables:
-    FEDORA_ROOT_RELEASE: '29'
-  tags:
-    - x86_64
-  script:
-    - make -C nodejs-image build-publish
-
 nodejs-image:29:
   stage: second
   variables:
@@ -175,15 +139,6 @@ nodejs-image:29:
   script:
     - make -C nodejs-image build-publish
 
-
-nginx-28:
-  stage: second
-  tags:
-    - x86_64
-  variables:
-    FEDORA_ROOT_RELEASE: '28'
-  script:
-    - make -C nginx build-publish
 
 nginx:29:
   stage: second
@@ -202,12 +157,6 @@ mongodb:
   script:
     - make -C mongodb build-publish
 
-meteor-image-28:
-  stage: second
-  tags:
-    - x86_64
-  script:
-    - make -C meteor-fedora-28 build-publish
 
 meteor-image-29:
   stage: second
@@ -217,15 +166,6 @@ meteor-image-29:
     - make -C meteor-fedora-29 build-publish
 
 
-c-image-28:
-  variables:
-    FEDORA_ROOT_RELEASE: '28'
-  stage: second
-  tags:
-    - x86_64
-  script:
-    - make -C c-image build-publish
-
 c-image-29:
   variables:
     FEDORA_ROOT_RELEASE: '29'
@@ -234,16 +174,6 @@ c-image-29:
     - x86_64
   script:
     - make -C c-image build-publish
-
-
-go-image-28:
-  stage: second
-  variables:
-    FEDORA_ROOT_RELEASE: '28'
-  tags:
-    - x86_64
-  script:
-    - make -C go-image build-publish
 
 
 go-image:29:
