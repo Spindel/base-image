@@ -12,7 +12,7 @@ FEDORA_ROOT_PACKAGES += tar
 FEDORA_ROOT_PACKAGES += findutils
 FEDORA_ROOT_PACKAGES += podman
 FEDORA_ROOT_PACKAGES += fedora-release
-FEDORA_ROOT_PACKAGES += docker-engine
+FEDORA_ROOT_PACKAGES += runc
 FEDORA_ROOT_PACKAGES += buildah
 
 IMAGE_RUN_ARGS = -v $$tmpdir:/test:z --privileged
