@@ -23,6 +23,7 @@ FEDORA_ROOT_PACKAGES += nodejs-yarn
 FEDORA_ROOT_PACKAGES += npm
 FEDORA_ROOT_PACKAGES += rsync
 FEDORA_ROOT_PACKAGES += zstd
-
+FEDORA_ROOT_PACKAGES += gcc
+FEDORA_ROOT_PACKAGES += python3-devel
 
 include ../build.mk
