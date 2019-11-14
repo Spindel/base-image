@@ -1,5 +1,5 @@
 ---
-image: registry.gitlab.com/modioab/base-image/fedora-28/container:master
+image: registry.gitlab.com/modioab/base-image/fedora-31/container:master
 stages:
   - first
   - second
