@@ -47,6 +47,14 @@ build-image-29:
     - make -C build-fedora-29 build-publish
 
 
+build-image:f31:
+  stage: build
+  tags:
+    - x86_64
+  script:
+    - make -C build-fedora-31 build-publish
+
+
 zabbix-web:
   stage: build
   tags:
