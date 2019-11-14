@@ -1,4 +1,4 @@
-FEDORA_ROOT_RELEASE ?= 30
+FEDORA_ROOT_RELEASE ?= 31
 IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-$(FEDORA_ROOT_RELEASE)/pgbouncer
 IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
 IMAGE_FILES += pgbouncer_exporter
