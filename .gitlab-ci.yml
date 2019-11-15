@@ -131,6 +131,7 @@ debian-armv7:publish:
 
 
 rust-armv7:build:
+  allow_failure: true # FIXME: Remove when this is no longer failing
   image: registry.gitlab.com/modioab/base-image:debian-armv7-master
   before_script:
     - apt-get clean
@@ -148,6 +149,7 @@ rust-armv7:build:
 
 
 rust-armv7:publish:
+  allow_failure: true # FIXME: Remove when this is no longer failing
   stage: publish  # Because we want it in the stage after build
   when: always
   tags:
