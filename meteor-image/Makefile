@@ -1,16 +1,28 @@
-include /etc/os-release
+FEDORA_ROOT_RELEASE ?= 31
+METEOR_RELEASE = 1.6.1.4
 
-PLATFORM=os.linux.x86_64
-RELEASE=1.6.1.4
+IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-$(FEDORA_ROOT_RELEASE)/meteor
+IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
+IMAGE_FILES += meteor.tar.gz
 
-IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-29/meteor
-IMAGE_FILES = meteor.tar.gz
+FEDORA_ROOT_ARCHIVE = rootfs.tar
+
+FEDORA_ROOT_PACKAGES += sqlite
+FEDORA_ROOT_PACKAGES += git
+FEDORA_ROOT_PACKAGES += docker
+FEDORA_ROOT_PACKAGES += procps-ng
+FEDORA_ROOT_PACKAGES += python2
+FEDORA_ROOT_PACKAGES += gcc-c++
+FEDORA_ROOT_PACKAGES += make
+FEDORA_ROOT_PACKAGES += findutils
+
+PLATFORM = os.linux.x86_64
+
 CLEANUP_FILES = meteor.tar.gz
-
 
 include ../build.mk
 
 meteor.tar.gz:
 	curl -sS -o meteor.tar.gz \
-	    https://static-meteor.netdna-ssl.com/packages-bootstrap/${RELEASE}/meteor-bootstrap-${PLATFORM}.tar.gz
+	    https://static-meteor.netdna-ssl.com/packages-bootstrap/$(METEOR_RELEASE)/meteor-bootstrap-$(PLATFORM).tar.gz
 	sha256sum -c checksum
