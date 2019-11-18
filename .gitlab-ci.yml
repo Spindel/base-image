@@ -216,6 +216,16 @@ meteor-image-29:
     - make -C meteor-fedora-29 build-publish
 
 
+meteor:f31:
+  stage: second
+  tags:
+    - x86_64
+  variables:
+    FEDORA_ROOT_RELEASE: '31'
+  script:
+    - make -C meteor-image build-publish
+
+
 c-image-29:
   variables:
     FEDORA_ROOT_RELEASE: '29'
