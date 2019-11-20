@@ -21,9 +21,15 @@ FEDORA_ROOT_PACKAGES += python3-pip
 FEDORA_ROOT_PACKAGES += python3-ujson
 FEDORA_ROOT_PACKAGES += nodejs-yarn
 FEDORA_ROOT_PACKAGES += npm
+# Required by clientconfig
 FEDORA_ROOT_PACKAGES += rsync
+# Required by clientconfig
+FEDORA_ROOT_PACKAGES += xz
+# Required by distribution
 FEDORA_ROOT_PACKAGES += zstd
+# Required for python wheel/compiling
 FEDORA_ROOT_PACKAGES += gcc
+# Required for python wheel/compiling
 FEDORA_ROOT_PACKAGES += python3-devel
 
 include ../build.mk
