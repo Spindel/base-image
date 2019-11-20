@@ -11,11 +11,10 @@ FEDORA_ROOT_PACKAGES += runc
 FEDORA_ROOT_PACKAGES += podman
 FEDORA_ROOT_PACKAGES += buildah
 FEDORA_ROOT_PACKAGES += git
-FEDORA_ROOT_PACKAGES += xorg-x11-server-Xvfb
 # Required by many shellscripts
 FEDORA_ROOT_PACKAGES += which
-FEDORA_ROOT_PACKAGES += firefox
-FEDORA_ROOT_PACKAGES += chromium
+
+# Required by javascript build jobs
 FEDORA_ROOT_PACKAGES += nodejs
 FEDORA_ROOT_PACKAGES += nodejs-yarn
 FEDORA_ROOT_PACKAGES += npm
