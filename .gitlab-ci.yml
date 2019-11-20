@@ -82,6 +82,12 @@ python3:f31:
   script:
     - make -C python3-image build-publish
 
+jstest:f31:
+  stage: second
+  tags:
+    - x86_64
+  script:
+    - make -C jstest build-publish
 
 debian8-firmware:
   stage: build
