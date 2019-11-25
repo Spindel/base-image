@@ -26,6 +26,6 @@ RUN echo "WTF? Meteor tarball has uid/gid 1000"                                 
 
 USER wtf
 
-RUN meteor create --bare bare && \
-    cd bare && meteor add fourseven:scss@3.13.0 && \
+RUN meteor create --release 1.8.2 --typescript new-typescript-app      && \
+    cd new-typescript-app && meteor add fourseven:scss@3.13.0          && \
     meteor list && meteor npm install

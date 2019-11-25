@@ -223,7 +223,7 @@ meteor-image-29:
 
 
 meteor:f31:
-  stage: second
+  stage: first
   tags:
     - x86_64
   variables:
