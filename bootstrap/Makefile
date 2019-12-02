@@ -11,6 +11,7 @@ FEDORA_ROOT_PACKAGES += runc
 FEDORA_ROOT_PACKAGES += podman
 FEDORA_ROOT_PACKAGES += buildah
 FEDORA_ROOT_PACKAGES += git
+
 # Required by many shellscripts
 FEDORA_ROOT_PACKAGES += which
 
@@ -32,5 +33,9 @@ FEDORA_ROOT_PACKAGES += zstd
 FEDORA_ROOT_PACKAGES += gcc
 # Required for python wheel/compiling
 FEDORA_ROOT_PACKAGES += python3-devel
+
+# Required by ModioAB/mytemp-backend tests
+FEDORA_ROOT_PACKAGES += python3-dbus
+
 
 include ../build.mk
