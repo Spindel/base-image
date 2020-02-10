@@ -17,6 +17,8 @@ LABEL "se.modio.ci.date"=$DATE
 
 ADD backports.list /etc/apt/sources.list.d/
 RUN apt-get update && apt-get -y install \
+                        git \
+                        openssh-client \
                         python3 \
                         python3-requests \
                         python3-mako \

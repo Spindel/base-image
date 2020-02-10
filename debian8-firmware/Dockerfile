@@ -18,6 +18,8 @@ LABEL "se.modio.ci.date"=$DATE
 ADD testing.list /etc/apt/sources.list.d/
 ADD defaultrelease /etc/apt/apt.conf.d/
 RUN apt-get update && apt-get  -t jessie -y install \
+                        git \
+                        openssh-client \
                         python3 \
                         python3-requests \
                         python3-mako \
