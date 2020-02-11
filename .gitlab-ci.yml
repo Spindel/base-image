@@ -98,6 +98,14 @@ debian9-firmware:
     - make -C debian9-firmware build-publish
 
 
+debian10-firmware:
+  stage: build
+  tags:
+    - x86_64
+  script:
+    - make -C debian10-firmware build-publish
+
+
 debian-armv7:build:
   image: registry.gitlab.com/modioab/base-image:debian-armv7-master
   #  image: arm32v7/debian
