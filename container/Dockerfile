@@ -26,8 +26,9 @@ ENV BUILDAH_FORMAT docker
 
 ADD rootfs.tar /
 # https://github.com/projectatomic/buildah/issues/874
-RUN echo deltarpm=0 >> /etc/dnf/dnf.conf && \
-    dnf remove -y selinux-policy-targeted
+# https://github.com/containers/libpod/issues/5154
+# RUN echo deltarpm=0 >> /etc/dnf/dnf.conf && \
+#    dnf remove -y selinux-policy-targeted
 
 COPY storage.conf /etc/containers/storage.conf
 COPY libpod.conf /etc/containers/libpod.conf
