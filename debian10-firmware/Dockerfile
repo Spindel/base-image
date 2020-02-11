@@ -20,6 +20,7 @@ RUN apt-get update && \
 # Added for our use in containers
         openssh-client \
         git \
+        python3-setuptools \
 # Below are part of system image
         python3 \
         python3-pip \
