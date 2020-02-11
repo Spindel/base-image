@@ -17,18 +17,20 @@ LABEL "se.modio.ci.url"=$URL \
 
 RUN apt-get update && \
     apt-get --assume-yes --no-install-recommends install \
-            openssh-client \
-            git \
-                        python3 \
-                        python3-pip \
-                        python3-gi \
-                        python3-dbus \
-                        python3-pycurl \
-                        python3-serial \
-                        python3-requests \
-                        python3-flufl.lock \
-                        python3-netifaces \
-                        python3-serial \
-                        python3-serial-asyncio \
-                        python3-pymodbus && \
-    apt-get clean all
+# Added for our use in containers
+        openssh-client \
+        git \
+# Below are part of system image
+        python3 \
+        python3-pip \
+        python3-gi \
+        python3-dbus \
+        python3-pycurl \
+        python3-serial \
+        python3-requests \
+        python3-flufl.lock \
+        python3-netifaces \
+        python3-serial \
+        python3-serial-asyncio \
+        python3-pymodbus \
+    && apt-get clean all
