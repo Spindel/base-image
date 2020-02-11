@@ -21,7 +21,9 @@ RUN apt-get update && \
         openssh-client \
         git \
         python3-setuptools \
+        python3-wheel \
 # Below are part of system image
+        dbus \
         python3 \
         python3-pip \
         python3-gi \
