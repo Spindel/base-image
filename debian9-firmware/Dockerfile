@@ -17,22 +17,27 @@ LABEL "se.modio.ci.date"=$DATE
 
 ADD backports.list /etc/apt/sources.list.d/
 RUN apt-get update && apt-get -y install \
-                        git \
-                        openssh-client \
-                        python3 \
-                        python3-requests \
-                        python3-mako \
-                        python3-gi \
-                        python3-dbus \
-                        python3-pycurl \
-                        python3-openssl \
-                        python3-serial \
-                        python3-flufl.lock \
-                        python3-netifaces \
-                        python3-dbus \
-                        python3-pip \
-                        python3-gi \
-                        python3-serial && \
-                apt-get download  python3-pymodbus && \
-                dpkg --force-depends -i python3-pymodbus* &&  rm -f python3-pymodbus*  && \
+# Install only in containers
+    git \
+    openssh-client \
+    python3-setuptools \
+# Installed on firmware too
+    python3 \
+    python3-pip \
+    python3-requests \
+    python3-mako \
+    python3-gi \
+    python3-dbus \
+    python3-pycurl \
+    python3-openssl \
+    python3-serial \
+    python3-flufl.lock \
+    python3-netifaces \
+    python3-dbus \
+    python3-gi \
+    python3-serial && \
+# Force in pymodbus
+    apt-get download  python3-pymodbus && \
+    dpkg --force-depends -i python3-pymodbus* &&  rm -f python3-pymodbus*  && \
+# Clean out
     apt-get clean all

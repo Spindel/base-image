@@ -89,13 +89,6 @@ jstest:f31:
   script:
     - make -C jstest build-publish
 
-debian8-firmware:
-  stage: build
-  tags:
-    - x86_64
-  script:
-    - make -C debian8-firmware build-publish
-
 
 debian9-firmware:
   stage: build
@@ -103,6 +96,14 @@ debian9-firmware:
     - x86_64
   script:
     - make -C debian9-firmware build-publish
+
+
+debian10-firmware:
+  stage: build
+  tags:
+    - x86_64
+  script:
+    - make -C debian10-firmware build-publish
 
 
 debian-armv7:build:
