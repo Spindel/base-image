@@ -13,5 +13,6 @@ FEDORA_ROOT_PACKAGES += python3-CacheControl
 FEDORA_ROOT_PACKAGES += python3-dbus
 FEDORA_ROOT_PACKAGES += python3-netifaces
 FEDORA_ROOT_PACKAGES += python3-ujson
+FEDORA_ROOT_PACKAGES += python3-pandas
 
 include ../build.mk
