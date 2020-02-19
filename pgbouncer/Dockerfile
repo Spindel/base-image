@@ -11,8 +11,14 @@ LABEL "se.modio.ci.url"=$URL "se.modio.ci.branch"=$BRANCH "se.modio.ci.commit"=$
 
 ADD rootfs.tar /
 COPY pgbouncer.ini /etc/pgbouncer/pgbouncer.ini
-COPY pgbouncer_exporter /usr/local/bin/
-RUN mkdir -p /etc/pgbouncer/dropin && touch /etc/pgbouncer/dropin/database.conf
+COPY pgbouncer_exporter /usr/local/bin/pgbouncer_exporter
+
+RUN mkdir -p /etc/pgbouncer/dropin && \
+    touch /etc/pgbouncer/dropin/database.conf && \
+    test -f /etc/pgbouncer/pgbouncer.ini && \
+    test -f /usr/local/bin/pgbouncer_exporter && \
+    test -x /usr/local/bin/pgbouncer_exporter
+
 USER pgbouncer
 
 CMD ["/usr/bin/pgbouncer", "/etc/pgbouncer/pgbouncer.ini"]

@@ -1,2 +1,4 @@
 *
 !rootfs.tar
+!pgbouncer_exporter
+!pgbouncer.ini
