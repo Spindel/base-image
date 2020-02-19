@@ -55,14 +55,6 @@ build-image:f31:
     - make -C build-fedora-31 build-publish
 
 
-zabbix-web:
-  stage: build
-  tags:
-    - x86_64
-  script:
-    - make -C zabbix-web build-publish
-
-
 python3-image:29:
   stage: second
   tags:
