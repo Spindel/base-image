@@ -129,36 +129,6 @@ debian-armv7:publish:
     - make -C debian-armv7 build-publish
 
 
-rust-armv7:build:
-  allow_failure: true # FIXME: Remove when this is no longer failing
-  image: registry.gitlab.com/modioab/base-image:debian-armv7-master
-  before_script:
-    - apt-get clean
-    - apt-get update
-    - apt-get install -y -qq debootstrap
-  stage: build
-  tags:
-    - arm
-  script:
-    - make -C rust-armv7 rootfs.tar
-  artifacts:
-    paths:
-      - rust-armv7/rootfs.tar
-    expire_in: 1 day
-
-
-rust-armv7:publish:
-  allow_failure: true # FIXME: Remove when this is no longer failing
-  stage: publish  # Because we want it in the stage after build
-  when: always
-  tags:
-    - x86_64
-  dependencies:
-    - rust-armv7:build
-  script:
-    - make -C rust-armv7 build-publish
-
-
 nodejs-image:29:
   stage: second
   variables:
