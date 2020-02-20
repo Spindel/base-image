@@ -265,26 +265,6 @@ go-image:f31:
     - make -C go-image build-publish
 
 
-pgbouncer:30:
-  stage: second
-  variables:
-    FEDORA_ROOT_RELEASE: '30'
-  tags:
-    - x86_64
-  script:
-    - make -C pgbouncer build-publish
-
-
-pgbouncer:f31:
-  stage: second
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
-  tags:
-    - x86_64
-  script:
-    - make -C pgbouncer build-publish
-
-
 rust-cross:
   stage: build
   tags:

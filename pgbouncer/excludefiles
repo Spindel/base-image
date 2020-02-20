@@ -1,8 +1,0 @@
--/usr/bin/python2
--/usr/bin/python2.7
--/usr/share/doc/*
--/usr/share/man/*
--/usr/share/info/*
--/usr/lib64/guile/*
--/usr/share/guile/*
--/lib/systemd/*
