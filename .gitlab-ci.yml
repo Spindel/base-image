@@ -329,3 +329,5 @@ trigger_build:
     - curl -X POST -F token=$HOUSEKEEPER_KEY -F ref=master https://gitlab.com/api/v4/projects/5299264/trigger/pipeline
     - curl -X POST -F token=$SSHCA_KEY      -F ref=master https://gitlab.com/api/v4/projects/7519281/trigger/pipeline
     - curl -X POST -F token=$JOURNAL_GELF_KEY -F ref=master https://gitlab.com/api/v4/projects/9359556/trigger/pipeline
+    - curl -X POST -F token=$SYSADMIN_KEY     -F ref=master
+           https://gitlab.com/api/v4/projects/1274252/trigger/pipeline
