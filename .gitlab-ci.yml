@@ -15,7 +15,6 @@ variables:
 
 before_script:
   - make -f build.mk login
-  - 'docker info ||:'
   - 'podman info ||:'
 
 
