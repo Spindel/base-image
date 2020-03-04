@@ -324,11 +324,11 @@ trigger_build:
   dependencies: []
   script:
     - curl -X POST -F token=$API_KEY          -F ref=master
-           https://gitlab.com/api/v3/projects/1282148/trigger/builds
+           https://gitlab.com/api/v4/projects/1282148/trigger/pipeline
     - curl -X POST -F token=$SUBMIT_KEY       -F ref=master
-           https://gitlab.com/api/v3/projects/1282147/trigger/builds
+           https://gitlab.com/api/v4/projects/1282147/trigger/pipeline
     - curl -X POST -F token=$CONTAINER_KEY    -F ref=master
-           https://gitlab.com/api/v3/projects/1528552/trigger/builds
+           https://gitlab.com/api/v4/projects/1528552/trigger/pipeline
     - curl -X POST -F token=$HOUSEKEEPER_KEY  -F ref=master
            https://gitlab.com/api/v4/projects/5299264/trigger/pipeline
     - curl -X POST -F token=$SSHCA_KEY        -F ref=master
