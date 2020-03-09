@@ -30,5 +30,9 @@ ADD rootfs.tar /
 # RUN echo deltarpm=0 >> /etc/dnf/dnf.conf && \
 #    dnf remove -y selinux-policy-targeted
 
+# https://github.com/containers/buildah/issues/2176#issuecomment-594126909
+RUN dnf -y upgrade --enablerepo=updates-testing buildah && \
+    dnf clean all
+
 COPY storage.conf /etc/containers/storage.conf
 COPY libpod.conf /etc/containers/libpod.conf
