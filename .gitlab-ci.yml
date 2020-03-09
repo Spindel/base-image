@@ -15,7 +15,7 @@ variables:
 
 before_script:
   - make -f build.mk login
-  - 'podman info ||:'
+  - podman ${BUILDAH_RUNTIME+--runtime} ${BUILDAH_RUNTIME} info
 
 
 container:29:
