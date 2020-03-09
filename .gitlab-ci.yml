@@ -18,21 +18,6 @@ before_script:
   - podman ${BUILDAH_RUNTIME+--runtime} ${BUILDAH_RUNTIME} info
 
 
-container:29:
-  stage: second
-  tags:
-    - x86_64
-  variables:
-    FEDORA_ROOT_RELEASE: '29'
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - container/**/*
-  script:
-    - make -C container build test publish
-
-
 container:f31:
   stage: second
   tags:
@@ -48,19 +33,6 @@ container:f31:
     - make -C container build test publish
 
 
-build-image-29:
-  stage: build
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - build-fedora-29/**/*
-  script:
-    - make -C build-fedora-29 build-publish
-
-
 build-image:f31:
   stage: build
   tags:
@@ -72,21 +44,6 @@ build-image:f31:
       - build-fedora-31/**/*
   script:
     - make -C build-fedora-31 build-publish
-
-
-python3-image:29:
-  stage: second
-  tags:
-    - x86_64
-  variables:
-    FEDORA_ROOT_RELEASE: '29'
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - python3-image/**/*
-  script:
-    - make -C python3-image build-publish
 
 
 python3:f31:
@@ -141,20 +98,6 @@ debian10-firmware:
   script:
     - make -C debian10-firmware build-publish
 
-nodejs-image:29:
-  stage: second
-  variables:
-    FEDORA_ROOT_RELEASE: '29'
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - nodejs-image/**/*
-  script:
-    - make -C nodejs-image build-publish
-
 
 nodejs:f31:
   stage: second
@@ -169,21 +112,6 @@ nodejs:f31:
       - nodejs-image/**/*
   script:
     - make -C nodejs-image build-publish
-
-
-nginx:29:
-  stage: second
-  tags:
-    - x86_64
-  variables:
-    FEDORA_ROOT_RELEASE: '29'
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - nginx/**/*
-  script:
-    - make -C nginx build-publish
 
 
 nginx:f31:
@@ -214,19 +142,6 @@ mongodb:
     - make -C mongodb build-publish
 
 
-meteor-image-29:
-  stage: second
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - meteor-fedora-29/**/*
-  script:
-    - make -C meteor-fedora-29 build-publish
-
-
 meteor:f31:
   stage: second
   tags:
@@ -242,21 +157,6 @@ meteor:f31:
     - make -C meteor-image build-publish
 
 
-c-image-29:
-  variables:
-    FEDORA_ROOT_RELEASE: '29'
-  stage: second
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - c-image/**/*
-  script:
-    - make -C c-image build-publish
-
-
 c-image:f31:
   variables:
     FEDORA_ROOT_RELEASE: '31'
@@ -270,21 +170,6 @@ c-image:f31:
       - c-image/**/*
   script:
     - make -C c-image build-publish
-
-
-go-image:29:
-  stage: second
-  variables:
-    FEDORA_ROOT_RELEASE: '29'
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - go-image/**/*
-  script:
-    - make -C go-image build-publish
 
 
 go-image:f31:
