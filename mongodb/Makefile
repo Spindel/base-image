@@ -1,4 +1,3 @@
-IMAGE_REPO = registry.gitlab.com/modioab/base-image
-IMAGE_TAG_PREFIX = mongodb
+IMAGE_REPO = registry.gitlab.com/modioab/base-image/mongodb
 
 include ../build.mk
