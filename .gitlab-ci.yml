@@ -129,19 +129,6 @@ nginx:f31:
     - make -C nginx build-publish
 
 
-mongodb:
-  stage: build
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - mongodb/**/*
-  script:
-    - make -C mongodb build-publish
-
-
 meteor:f31:
   stage: second
   tags:
