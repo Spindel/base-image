@@ -135,6 +135,7 @@ meteor:f31:
     - x86_64
   variables:
     FEDORA_ROOT_RELEASE: '31'
+    METEOR_RELEASE: '1.10.1'
   only:
     changes:
       - .gitlab-ci.yml

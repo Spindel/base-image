@@ -1,5 +1,5 @@
 FEDORA_ROOT_RELEASE ?= 31
-METEOR_RELEASE = 1.6.1.4
+METEOR_RELEASE ?= 1.8.2
 
 IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-$(FEDORA_ROOT_RELEASE)/meteor
 IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
@@ -25,4 +25,4 @@ include ../build.mk
 meteor.tar.gz:
 	curl -sS -o meteor.tar.gz \
 	    https://static-meteor.netdna-ssl.com/packages-bootstrap/$(METEOR_RELEASE)/meteor-bootstrap-$(PLATFORM).tar.gz
-	sha256sum -c checksum
+	sha256sum -c checksum-$(METEOR_RELEASE)
