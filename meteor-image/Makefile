@@ -1,7 +1,7 @@
 FEDORA_ROOT_RELEASE ?= 31
 METEOR_RELEASE ?= 1.8.2
 
-IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-$(FEDORA_ROOT_RELEASE)/meteor
+IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-$(FEDORA_ROOT_RELEASE)/meteor-$(METEOR_RELEASE)
 IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
 IMAGE_FILES += meteor.tar.gz
 
