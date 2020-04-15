@@ -13,5 +13,7 @@ FEDORA_ROOT_PACKAGES += python3-CacheControl
 FEDORA_ROOT_PACKAGES += python3-dbus
 FEDORA_ROOT_PACKAGES += python3-netifaces
 FEDORA_ROOT_PACKAGES += python3-ujson
+# Some binary python packages require the c++ standard library.
+FEDORA_ROOT_PACKAGES += libstdc++
 
 include ../build.mk
