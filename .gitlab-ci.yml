@@ -73,6 +73,19 @@ jstest:f31:
     - make -C jstest build-publish
 
 
+debian9-cross:
+  stage: build
+  tags:
+    - x86_64
+  only:
+    changes:
+      - .gitlab-ci.yml
+      - build.mk
+      - debian9-cross/**/*
+  script:
+    - make -C debian9-cross build-publish
+
+
 debian9-firmware:
   stage: build
   tags:
