@@ -29,4 +29,4 @@ RUN dnf remove -y selinux-policy-targeted && \
   ln -s /usr/bin/yarnpkg /usr/bin/yarn
 
 COPY storage.conf /etc/containers/storage.conf
-COPY libpod.conf /etc/containers/libpod.conf
+COPY containers.conf /etc/containers/containers.conf
