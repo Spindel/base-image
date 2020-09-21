@@ -31,4 +31,4 @@ ADD rootfs.tar /
 #    dnf remove -y selinux-policy-targeted
 
 COPY storage.conf /etc/containers/storage.conf
-COPY libpod.conf /etc/containers/libpod.conf
+COPY containers.conf /etc/containers/containers.conf
