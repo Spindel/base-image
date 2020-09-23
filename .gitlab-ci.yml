@@ -20,6 +20,7 @@ before_script:
 
 container:f31:
   stage: second
+  image: registry.gitlab.com/modioab/base-image/fedora-31/container:v3.19.0
   tags:
     - x86_64
   variables:

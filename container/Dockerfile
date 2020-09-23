@@ -32,3 +32,4 @@ ADD rootfs.tar /
 
 COPY storage.conf /etc/containers/storage.conf
 COPY containers.conf /etc/containers/containers.conf
+COPY containers.conf /etc/containers/libpod.conf
