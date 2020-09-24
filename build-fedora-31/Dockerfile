@@ -16,5 +16,7 @@ LABEL "se.modio.ci.url"=$URL \
 
 RUN echo deltarpm=0 >> /etc/dnf/dnf.conf && \
     dnf -y upgrade && dnf -y install xz python3-dbus && dnf clean all
+COPY containers.conf /etc/containers/containers.conf
+COPY containers.conf /etc/containers/libpod.conf
 # https://gitlab.com/gitlab-com/support-forum/issues/4349
 ENV BUILDAH_FORMAT docker
