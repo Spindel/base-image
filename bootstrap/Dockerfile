@@ -24,8 +24,5 @@ ADD rootfs.tar /
 RUN echo tsflags=nodocs >> /etc/dnf/dnf.conf && \
     echo deltarpm=0 >> /etc/dnf/dnf.conf
 
-# https://github.com/projectatomic/buildah/issues/874
-RUN dnf remove -y selinux-policy-targeted
-
 COPY storage.conf /etc/containers/storage.conf
 COPY containers.conf /etc/containers/containers.conf
