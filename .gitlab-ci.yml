@@ -1,5 +1,5 @@
 ---
-image: registry.gitlab.com/modioab/base-image/fedora-31/container:master
+image: registry.gitlab.com/modioab/base-image/fedora-31/container:v3.19.0
 stages:
   - first
   - promote
@@ -20,7 +20,7 @@ before_script:
 
 
 container:f31:
-  stage: second
+  stage: first
   tags:
     - x86_64
   variables:
