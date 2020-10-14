@@ -15,6 +15,6 @@ LABEL "se.modio.ci.url"=$URL \
     "se.modio.ci.date"=$DATE
 
 RUN echo deltarpm=0 >> /etc/dnf/dnf.conf && \
-    dnf -y upgrade && dnf -y install xz python3-dbus && dnf clean all
+    dnf -y upgrade && dnf clean all
 # https://gitlab.com/gitlab-com/support-forum/issues/4349
 ENV BUILDAH_FORMAT docker
