@@ -4,13 +4,19 @@ IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
 FEDORA_ROOT_ARCHIVE = rootfs.tar
 FEDORA_ROOT_RELEASE ?= 31
 
+# Will be superseded by fedora-release-common
 FEDORA_ROOT_PACKAGES += fedora-release
+
 FEDORA_ROOT_PACKAGES += dnf
 FEDORA_ROOT_PACKAGES += make
 FEDORA_ROOT_PACKAGES += runc
 FEDORA_ROOT_PACKAGES += podman
+# Deprecated in latest build.mk, replaced by podman
 FEDORA_ROOT_PACKAGES += buildah
+# Required by some build.mk goals
 FEDORA_ROOT_PACKAGES += git
+FEDORA_ROOT_PACKAGES += tar
+FEDORA_ROOT_PACKAGES += findutils
 
 # Required by many shellscripts
 FEDORA_ROOT_PACKAGES += which
