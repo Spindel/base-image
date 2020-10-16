@@ -40,7 +40,7 @@ container:f31:
 
 container:promote:
   stage: promote
-  image: registry.gitlab.com/modioab/base-image/fedora-31/contrainer:${CI_PIPELINE_ID}
+  image: registry.gitlab.com/modioab/base-image/fedora-31/container:${CI_PIPELINE_ID}
   tags:
     - x86_64
   rules:
