@@ -26,14 +26,14 @@ container:f31:
   variables:
     FEDORA_ROOT_RELEASE: '31'
   rules:
-    - if: '$CI_PIPELINE_SOURCE != "push"'
-      when: never
+    - if: '$CI_PIPELINE_SOURCE == "push"'
     # - changes:
     #     - .gitlab-ci.yml
     #     - build.mk
     #     - container/**/*
     # - if: '$CI_COMMIT_BRANCH == "master"'
-    # - when: never
+    - when: never
+
   script:
     - make -C container build temp-publish
 
@@ -44,10 +44,9 @@ container:promote:
   tags:
     - x86_64
   rules:
-    - if: '$CI_PIPELINE_SOURCE != "push"'
-      when: never
+    - if: '$CI_PIPELINE_SOURCE == "push"'
     # - if: '$CI_COMMIT_BRANCH == "master"'
-    # - when: never
+    - when: never
   needs:
     - job: container:f31
   script:
