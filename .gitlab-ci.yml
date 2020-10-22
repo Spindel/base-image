@@ -19,24 +19,24 @@ variables:
 
 # The default settings above can be overriden in any of the jobs that follow
 
-container:f31:
+container:
   stage: second
   script:
     - make -C container build test publish
 
 
-build-image:f31:
+build-image:
   stage: build
   script:
     - make -C build-fedora-31 build-publish
 
 
-python3:f31:
+python3:
   stage: second
   script:
     - make -C python3-image build-publish
 
-jstest:f31:
+jstest:
   stage: second
   script:
     - make -C jstest build-publish
@@ -60,26 +60,26 @@ debian10-firmware:
     - make -C debian10-firmware build-publish
 
 
-nodejs:f31:
+nodejs:
   stage: second
   script:
     - make -C nodejs-image build-publish
 
 
-nginx:f31:
+nginx:
   stage: second
   script:
     - make -C nginx build-publish
 
 
-meteor-1.10:f31:
+meteor-1.10:
   stage: second
   variables:
     METEOR_RELEASE: '1.10.1'
   script:
     - make -C meteor-image build-publish
 
-meteor-1.8.2:f31:
+meteor-1.8.2:
   stage: second
   variables:
     METEOR_RELEASE: '1.8.2'
@@ -87,13 +87,13 @@ meteor-1.8.2:f31:
     - make -C meteor-image build-publish
 
 
-c-image:f31:
+c-image:
   stage: second
   script:
     - make -C c-image build-publish
 
 
-go-image:f31:
+go-image:
   stage: second
   script:
     - make -C go-image build-publish
