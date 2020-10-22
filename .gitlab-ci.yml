@@ -1,21 +1,16 @@
+%YAML 1.1
 ---
 image: registry.gitlab.com/modioab/base-image/fedora-31/container:master
+
+include:
+  - local: /templates/defaults/container-build.yaml
+
 stages:
   - first
   - second
   - build
   - publish
   - deploy
-
-variables:
-    # Podman defaults to OCI images, since 2019-02-15+ onwards, gitlab registry
-    # fails to work properly with the default `oci` images.
-    # TODO: Test & bug-report this
-    BUILDAH_FORMAT: docker
-
-before_script:
-  - make -f build.mk login
-  - podman ${BUILDAH_RUNTIME+--runtime} ${BUILDAH_RUNTIME} info
 
 
 container:f31:
@@ -214,3 +209,4 @@ rust-cross:
       - rust-cross/**/*
   script:
     - make -C rust-cross build-publish
+...
