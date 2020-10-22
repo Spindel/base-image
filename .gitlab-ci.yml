@@ -21,8 +21,6 @@ variables:
 
 container:f31:
   stage: second
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml
@@ -34,8 +32,6 @@ container:f31:
 
 build-image:f31:
   stage: build
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml
@@ -47,8 +43,6 @@ build-image:f31:
 
 python3:f31:
   stage: second
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml
@@ -59,8 +53,6 @@ python3:f31:
 
 jstest:f31:
   stage: second
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml
@@ -72,8 +64,6 @@ jstest:f31:
 
 debian9-cross:
   stage: build
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml
@@ -85,8 +75,6 @@ debian9-cross:
 
 debian9-firmware:
   stage: build
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml
@@ -98,8 +86,6 @@ debian9-firmware:
 
 debian10-firmware:
   stage: build
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml
@@ -111,8 +97,6 @@ debian10-firmware:
 
 nodejs:f31:
   stage: second
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml
@@ -124,8 +108,6 @@ nodejs:f31:
 
 nginx:f31:
   stage: second
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml
@@ -137,8 +119,6 @@ nginx:f31:
 
 meteor-1.10:f31:
   stage: second
-  tags:
-    - x86_64
   variables:
     METEOR_RELEASE: '1.10.1'
   only:
@@ -151,8 +131,6 @@ meteor-1.10:f31:
 
 meteor-1.8.2:f31:
   stage: second
-  tags:
-    - x86_64
   variables:
     METEOR_RELEASE: '1.8.2'
   only:
@@ -166,8 +144,6 @@ meteor-1.8.2:f31:
 
 c-image:f31:
   stage: second
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml
@@ -179,8 +155,6 @@ c-image:f31:
 
 go-image:f31:
   stage: second
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml
@@ -192,8 +166,6 @@ go-image:f31:
 
 rust-cross:
   stage: build
-  tags:
-    - x86_64
   only:
     changes:
       - .gitlab-ci.yml

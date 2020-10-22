@@ -4,6 +4,8 @@ default:
   before_script:
     - make -f build.mk login
     - podman ${BUILDAH_RUNTIME+--runtime} ${BUILDAH_RUNTIME} info
+  tags:
+    - x86_64
 
 variables:
   # Podman defaults to OCI images, since 2019-02-15+ onwards, gitlab registry
