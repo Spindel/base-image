@@ -21,98 +21,53 @@ variables:
 
 container:f31:
   stage: second
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - container/**/*
   script:
     - make -C container build test publish
 
 
 build-image:f31:
   stage: build
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - build-fedora-31/**/*
   script:
     - make -C build-fedora-31 build-publish
 
 
 python3:f31:
   stage: second
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - python3-image/**/*
   script:
     - make -C python3-image build-publish
 
 jstest:f31:
   stage: second
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - jstest/**/*
   script:
     - make -C jstest build-publish
 
 
 debian9-cross:
   stage: build
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - debian9-cross/**/*
   script:
     - make -C debian9-cross build-publish
 
 
 debian9-firmware:
   stage: build
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - debian9-firmware/**/*
   script:
     - make -C debian9-firmware build-publish
 
 
 debian10-firmware:
   stage: build
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - debian10-firmware/**/*
   script:
     - make -C debian10-firmware build-publish
 
 
 nodejs:f31:
   stage: second
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - nodejs-image/**/*
   script:
     - make -C nodejs-image build-publish
 
 
 nginx:f31:
   stage: second
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - nginx/**/*
   script:
     - make -C nginx build-publish
 
@@ -121,11 +76,6 @@ meteor-1.10:f31:
   stage: second
   variables:
     METEOR_RELEASE: '1.10.1'
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - meteor-image/**/*
   script:
     - make -C meteor-image build-publish
 
@@ -133,44 +83,24 @@ meteor-1.8.2:f31:
   stage: second
   variables:
     METEOR_RELEASE: '1.8.2'
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - meteor-image/**/*
   script:
     - make -C meteor-image build-publish
 
 
 c-image:f31:
   stage: second
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - c-image/**/*
   script:
     - make -C c-image build-publish
 
 
 go-image:f31:
   stage: second
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - go-image/**/*
   script:
     - make -C go-image build-publish
 
 
 rust-cross:
   stage: build
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - rust-cross/**/*
   script:
     - make -C rust-cross build-publish
 ...
