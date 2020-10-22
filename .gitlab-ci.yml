@@ -12,13 +12,17 @@ stages:
   - publish
   - deploy
 
+variables:
+  # This is specified up front to make it explicit and visible for inventory
+  # Do not set this in makefiles or other places, except as job variables below.
+  FEDORA_ROOT_RELEASE: 31
+
+# The default settings above can be overriden in any of the jobs that follow
 
 container:f31:
   stage: second
   tags:
     - x86_64
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
   only:
     changes:
       - .gitlab-ci.yml
@@ -45,8 +49,6 @@ python3:f31:
   stage: second
   tags:
     - x86_64
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
   only:
     changes:
       - .gitlab-ci.yml
@@ -109,8 +111,6 @@ debian10-firmware:
 
 nodejs:f31:
   stage: second
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
   tags:
     - x86_64
   only:
@@ -126,8 +126,6 @@ nginx:f31:
   stage: second
   tags:
     - x86_64
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
   only:
     changes:
       - .gitlab-ci.yml
@@ -142,7 +140,6 @@ meteor-1.10:f31:
   tags:
     - x86_64
   variables:
-    FEDORA_ROOT_RELEASE: '31'
     METEOR_RELEASE: '1.10.1'
   only:
     changes:
@@ -157,7 +154,6 @@ meteor-1.8.2:f31:
   tags:
     - x86_64
   variables:
-    FEDORA_ROOT_RELEASE: '31'
     METEOR_RELEASE: '1.8.2'
   only:
     changes:
@@ -169,8 +165,6 @@ meteor-1.8.2:f31:
 
 
 c-image:f31:
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
   stage: second
   tags:
     - x86_64
@@ -185,8 +179,6 @@ c-image:f31:
 
 go-image:f31:
   stage: second
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
   tags:
     - x86_64
   only:
