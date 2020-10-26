@@ -36,7 +36,7 @@ container:
 build-image:
   stage: build
   script:
-    - make -C build-fedora-31 build-publish
+    - make -C build-fedora build-publish
 
 
 python3:
