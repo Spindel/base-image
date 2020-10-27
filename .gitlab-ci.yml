@@ -18,7 +18,7 @@ stages:
 variables:
   # This is specified up front to make it explicit and visible for inventory
   # Do not set this in makefiles or other places, except as job variables below.
-  FEDORA_ROOT_RELEASE: 31
+  FEDORA_ROOT_RELEASE: 33
 
 workflow:
   rules:
