@@ -1,9 +1,12 @@
 %YAML 1.1
 ---
-image: registry.gitlab.com/modioab/base-image/fedora-31/container:master
-
+# Keep the includes first to illustrate that definitions that everything that
+# follows override included definitions.
 include:
   - local: /templates/defaults/container-build.yaml
+
+default:
+  image: registry.gitlab.com/modioab/base-image/fedora-31/container:master
 
 stages:
   - first
