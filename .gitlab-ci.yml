@@ -6,7 +6,7 @@ include:
   - local: /templates/defaults/container-build.yaml
 
 default:
-  image: registry.gitlab.com/modioab/base-image/fedora-31/container:master
+  image: registry.gitlab.com/modioab/base-image/fedora-33/container:master
 
 stages:
   - first
