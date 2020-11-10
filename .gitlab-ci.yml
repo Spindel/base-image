@@ -20,6 +20,11 @@ variables:
   # Do not set this in makefiles or other places, except as job variables below.
   FEDORA_ROOT_RELEASE: 31
 
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+
 # The default settings above can be overriden in any of the jobs that follow
 
 container:
