@@ -27,24 +27,37 @@ workflow:
 
 # The default settings above can be overriden in any of the jobs that follow
 
+.fedora-release-matrix:
+  parallel:
+    matrix:
+      - FEDORA_ROOT_RELEASE:
+          - 31
+          - 33
+
 container:
+  extends: .fedora-release-matrix
   stage: second
   script:
     - make -C container build test publish
 
 
 build-image:
+  # FIXME: hard-coded image versions in Makefile and Dockerfile
+  # extends: .fedora-release-matrix
   stage: build
   script:
     - make -C build-fedora build-publish
 
 
 python3:
+  extends: .fedora-release-matrix
   stage: second
   script:
     - make -C python3-image build-publish
 
 jstest:
+  # FIXME: hard-coded image versions in Makefile and Dockerfile
+  # extends: .fedora-release-matrix
   stage: second
   script:
     - make -C jstest build-publish
@@ -69,18 +82,21 @@ debian10-firmware:
 
 
 nodejs:
+  extends: .fedora-release-matrix
   stage: second
   script:
     - make -C nodejs-image build-publish
 
 
 nginx:
+  extends: .fedora-release-matrix
   stage: second
   script:
     - make -C nginx build-publish
 
 
 meteor-1.10:
+  extends: .fedora-release-matrix
   stage: second
   variables:
     METEOR_RELEASE: '1.10.1'
@@ -88,6 +104,7 @@ meteor-1.10:
     - make -C meteor-image build-publish
 
 meteor-1.8.2:
+  extends: .fedora-release-matrix
   stage: second
   variables:
     METEOR_RELEASE: '1.8.2'
@@ -96,12 +113,14 @@ meteor-1.8.2:
 
 
 c-image:
+  extends: .fedora-release-matrix
   stage: second
   script:
     - make -C c-image build-publish
 
 
 go-image:
+  extends: .fedora-release-matrix
   stage: second
   script:
     - make -C go-image build-publish
