@@ -1,5 +1,13 @@
+%YAML 1.1
 ---
-image: registry.gitlab.com/modioab/base-image/fedora-31/container:master
+# Keep the includes first to illustrate that definitions that everything that
+# follows override included definitions.
+include:
+  - local: /templates/defaults/container-build.yaml
+
+default:
+  image: registry.gitlab.com/modioab/base-image/fedora-31/container:master
+
 stages:
   - first
   - second
@@ -8,209 +16,99 @@ stages:
   - deploy
 
 variables:
-    # Podman defaults to OCI images, since 2019-02-15+ onwards, gitlab registry
-    # fails to work properly with the default `oci` images.
-    # TODO: Test & bug-report this
-    BUILDAH_FORMAT: docker
+  # This is specified up front to make it explicit and visible for inventory
+  # Do not set this in makefiles or other places, except as job variables below.
+  FEDORA_ROOT_RELEASE: 31
 
-before_script:
-  - make -f build.mk login
-  - podman ${BUILDAH_RUNTIME+--runtime} ${BUILDAH_RUNTIME} info
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
+# The default settings above can be overriden in any of the jobs that follow
 
-container:f31:
+container:
   stage: second
-  tags:
-    - x86_64
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - container/**/*
   script:
     - make -C container build test publish
 
 
-build-image:f31:
+build-image:
   stage: build
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - build-fedora-31/**/*
   script:
     - make -C build-fedora-31 build-publish
 
 
-python3:f31:
+python3:
   stage: second
-  tags:
-    - x86_64
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - python3-image/**/*
   script:
     - make -C python3-image build-publish
 
-jstest:f31:
+jstest:
   stage: second
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - jstest/**/*
   script:
     - make -C jstest build-publish
 
 
 debian9-cross:
   stage: build
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - debian9-cross/**/*
   script:
     - make -C debian9-cross build-publish
 
 
 debian9-firmware:
   stage: build
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - debian9-firmware/**/*
   script:
     - make -C debian9-firmware build-publish
 
 
 debian10-firmware:
   stage: build
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - debian10-firmware/**/*
   script:
     - make -C debian10-firmware build-publish
 
 
-nodejs:f31:
+nodejs:
   stage: second
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - nodejs-image/**/*
   script:
     - make -C nodejs-image build-publish
 
 
-nginx:f31:
+nginx:
   stage: second
-  tags:
-    - x86_64
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - nginx/**/*
   script:
     - make -C nginx build-publish
 
 
-meteor-1.10:f31:
+meteor-1.10:
   stage: second
-  tags:
-    - x86_64
   variables:
-    FEDORA_ROOT_RELEASE: '31'
     METEOR_RELEASE: '1.10.1'
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - meteor-image/**/*
   script:
     - make -C meteor-image build-publish
 
-meteor-1.8.2:f31:
+meteor-1.8.2:
   stage: second
-  tags:
-    - x86_64
   variables:
-    FEDORA_ROOT_RELEASE: '31'
     METEOR_RELEASE: '1.8.2'
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - meteor-image/**/*
   script:
     - make -C meteor-image build-publish
 
 
-c-image:f31:
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
+c-image:
   stage: second
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - c-image/**/*
   script:
     - make -C c-image build-publish
 
 
-go-image:f31:
+go-image:
   stage: second
-  variables:
-    FEDORA_ROOT_RELEASE: '31'
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - go-image/**/*
   script:
     - make -C go-image build-publish
 
 
 rust-cross:
   stage: build
-  tags:
-    - x86_64
-  only:
-    changes:
-      - .gitlab-ci.yml
-      - build.mk
-      - rust-cross/**/*
   script:
     - make -C rust-cross build-publish
+...

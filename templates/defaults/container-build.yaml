@@ -1,0 +1,25 @@
+%YAML 1.1
+---
+default:
+  before_script:
+    - make -f build.mk login
+    - podman ${BUILDAH_RUNTIME+--runtime} ${BUILDAH_RUNTIME} info
+
+  # Retry jobs when parts of the CI system itself fails
+  # https://docs.gitlab.com/ee/ci/yaml/#retry
+  retry:
+    max: 2
+    when:
+      - api_failure
+      - runner_system_failure
+      - scheduler_failure
+
+  tags:
+    - x86_64
+
+variables:
+  # Podman defaults to OCI images, since 2019-02-15+ onwards, gitlab registry
+  # fails to work properly with the default `oci` images.
+  # TODO: Test & bug-report this
+  BUILDAH_FORMAT: docker
+...

@@ -2,7 +2,6 @@ IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-$(FEDORA_ROOT_RELEASE
 IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
 
 FEDORA_ROOT_ARCHIVE = rootfs.tar
-FEDORA_ROOT_RELEASE ?= 31
 
 # Will be superseded by fedora-release-common
 FEDORA_ROOT_PACKAGES += fedora-release
