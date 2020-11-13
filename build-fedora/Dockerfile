@@ -1,7 +1,6 @@
 # Docker container building docker container
-
-# This must be hard-coded and keept in sync with the Makefile
-FROM registry.gitlab.com/modioab/base-image/fedora-33/bootstrap:master
+ARG IMAGE_BUILD_FROM
+FROM $IMAGE_BUILD_FROM
 MAINTAINER "Nicklas Lindgren" <nili@modio.se>
 
 ARG URL=unknown

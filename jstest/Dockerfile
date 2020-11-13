@@ -1,5 +1,6 @@
 # Docker container building docker container
-FROM registry.gitlab.com/modioab/base-image/fedora-31/build:master
+ARG IMAGE_BUILD_FROM
+FROM $IMAGE_BUILD_FROM
 MAINTAINER "Nicklas Lindgren" <nili@modio.se>
 
 ARG URL=unknown

@@ -42,8 +42,7 @@ container:
 
 
 build-image:
-  # FIXME: hard-coded image versions in Makefile and Dockerfile
-  # extends: .fedora-release-matrix
+  extends: .fedora-release-matrix
   stage: build
   script:
     - make -C build-fedora build-publish
@@ -56,8 +55,7 @@ python3:
     - make -C python3-image build-publish
 
 jstest:
-  # FIXME: hard-coded image versions in Makefile and Dockerfile
-  # extends: .fedora-release-matrix
+  extends: .fedora-release-matrix
   stage: second
   script:
     - make -C jstest build-publish
