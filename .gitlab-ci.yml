@@ -106,9 +106,13 @@ go-image:
   script:
     - make -C go-image build-publish
 
+rust:
+  stage: second
+  script:
+    - make -C rust build-publish
 
 rust-cross:
-  stage: build
+  stage: second
   script:
     - make -C rust-cross build-publish
 ...
