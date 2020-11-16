@@ -28,6 +28,7 @@ FEDORA_ROOT_PACKAGES += npm
 # Required for python installation
 FEDORA_ROOT_PACKAGES += python3-pip
 FEDORA_ROOT_PACKAGES += python3-ujson
+FEDORA_ROOT_PACKAGES += python3-setuptools
 # Required by clientconfig
 FEDORA_ROOT_PACKAGES += rsync
 # Required by clientconfig
