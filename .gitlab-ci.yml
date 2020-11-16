@@ -132,4 +132,16 @@ rust-cross:
   stage: second
   script:
     - make -C rust-cross build-publish
+
+# Bootstrap can be run by setting FEDORA_ROOT_RELEASE in the variables part
+# when running a pipeline manually.
+bootstrap:
+  stage: first
+  rules:
+    - if: '"${FEDORA_ROOT_RELEASE}" != ""'
+      when: manual
+      allow_failure: true
+    - when: never
+  script:
+    - make -C bootstrap build-publish
 ...
