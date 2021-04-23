@@ -43,5 +43,7 @@ FEDORA_ROOT_PACKAGES += python3-devel
 # Required by ModioAB/mytemp-backend tests
 FEDORA_ROOT_PACKAGES += python3-dbus
 
+# Commonly used linter
+FEDORA_ROOT_PACKAGES += ShellCheck
 
 include ../build.mk
