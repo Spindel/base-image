@@ -23,6 +23,4 @@ ENV LC_ALL C.utf8
 
 
 ADD rootfs.tar /
-ADD get-pip.py /usr/local/bin
-RUN ln -f -s python3 /usr/bin/python && \
-    python3 /usr/local/bin/get-pip.py
+RUN python3 -m pip install -U pip
