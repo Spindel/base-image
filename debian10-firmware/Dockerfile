@@ -36,4 +36,5 @@ RUN apt-get update && \
         python3-serial \
         python3-serial-asyncio \
         python3-pymodbus \
+	squashfs-tools \
     && apt-get clean all
