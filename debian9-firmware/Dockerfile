@@ -35,8 +35,8 @@ RUN apt-get update && apt-get -y install \
     python3-netifaces \
     python3-dbus \
     python3-gi \
-    python3-serial && \
-    squashfs-tools \
+    python3-serial \
+    squashfs-tools && \
 # Force in pymodbus
     apt-get download  python3-pymodbus && \
     dpkg --force-depends -i python3-pymodbus* &&  rm -f python3-pymodbus*  && \
