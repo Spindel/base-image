@@ -46,4 +46,8 @@ FEDORA_ROOT_PACKAGES += python3-dbus
 # Commonly used linter
 FEDORA_ROOT_PACKAGES += ShellCheck
 
+# Used by ModioAB/modio-contain
+FEDORA_ROOT_PACKAGES += squashfs-tools
+
+
 include ../build.mk
