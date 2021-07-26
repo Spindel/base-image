@@ -97,7 +97,7 @@ nginx:
 
 meteor-1.10:
   extends: .fedora-release-matrix
-  stage: second
+  stage: build
   variables:
     METEOR_RELEASE: '1.10.1'
   script:
@@ -105,7 +105,7 @@ meteor-1.10:
 
 meteor-1.8.2:
   extends: .fedora-release-matrix
-  stage: second
+  stage: build
   variables:
     METEOR_RELEASE: '1.8.2'
   script:
