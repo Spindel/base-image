@@ -6,7 +6,10 @@ include:
   - local: /templates/defaults/container-build.yaml
 
 default:
-  image: registry.gitlab.com/modioab/base-image/fedora-34/container:master
+  # 2021-07: Spindel
+  # This is a temp branch to make the tree build again.
+  image: registry.gitlab.com/modioab/base-image/fedora-34/container:container-runc-workaround-test
+    # image: registry.gitlab.com/modioab/base-image/fedora-34/container:master
 
 stages:
   - first
@@ -40,7 +43,7 @@ workflow:
 
 container:
   extends: .fedora-release-matrix
-  stage: second
+  stage: first
   script:
     - make -C container build test publish
 
