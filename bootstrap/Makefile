@@ -8,6 +8,7 @@ FEDORA_ROOT_PACKAGES += fedora-release
 
 FEDORA_ROOT_PACKAGES += dnf
 FEDORA_ROOT_PACKAGES += make
+FEDORA_ROOT_PACKAGES += crun
 FEDORA_ROOT_PACKAGES += runc
 FEDORA_ROOT_PACKAGES += podman
 # Deprecated in latest build.mk, replaced by podman
