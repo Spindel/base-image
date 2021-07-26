@@ -21,6 +21,8 @@ variables:
   FEDORA_ROOT_RELEASE: 33
   # This is a conservative "pull if missing" default.
   PODMAN_PULL: "--pull=false"
+  # This is because in 2021-07 runc fails inside containers
+  PODMAN_RUNTIME: "/usr/bin/crun"
 
 workflow:
   rules:
