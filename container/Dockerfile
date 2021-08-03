@@ -34,4 +34,7 @@ COPY storage.conf /etc/containers/storage.conf
 COPY containers.conf /etc/containers/containers.conf
 COPY modio.yaml /etc/containers/registries.d/modio.yaml
 COPY gitlab_com_modioab.pub /etc/pki/containers/gitlab_com_modioab.pub
-RUN  podman image trust set --type accept --pubkeysfile /etc/pki/containers/gitlab_com_modioab.pub  registry.gitlab.com/modioab/
+# Uncomment the below to require all containers in registry.gitlab.com/modioab/scada-hello to be signed
+# RUN  podman image trust set --type signedby --pubkeysfile /etc/pki/containers/gitlab_com_modioab.pub  registry.gitlab.com/modioab/scada-hello
+# Uncomment the below to require all containers in registry.gitlab.com/modioab to be signed
+# RUN  podman image trust set --type signedby --pubkeysfile /etc/pki/containers/gitlab_com_modioab.pub  registry.gitlab.com/modioab
