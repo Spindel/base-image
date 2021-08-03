@@ -51,3 +51,11 @@ else
 	  $(RETURN_TEST_STATUS)
 endif
 
+
+.PHONY: new-gpg-key
+# This target is a documentation on how the keys were generated
+new-gpg-key:
+	gpg --batch --passphrase '' --quick-generate-key gitlab.com/modioab ed25519
+	gpg --armor --export gitlab.com/modioab > gitlab_com_modioab.pub
+	gpg --armor --export-secret-keys gitlab.com/modioab > gitlab_com_modioab.priv
+	gpg --batch --delete-secret-and-public-key gitlab.com/modioab
