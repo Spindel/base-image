@@ -106,15 +106,6 @@ meteor-1.10:
   script:
     - make -C meteor-image build-publish
 
-meteor-1.8.2:
-  extends: .fedora-release-matrix
-  stage: build
-  variables:
-    METEOR_RELEASE: '1.8.2'
-  script:
-    - make -C meteor-image build-publish
-
-
 c-image:
   extends: .fedora-release-matrix
   stage: second
