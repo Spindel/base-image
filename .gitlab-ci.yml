@@ -18,7 +18,7 @@ stages:
 variables:
   # This is specified up front to make it explicit and visible for inventory
   # Do not set this in makefiles or other places, except as job variables below.
-  FEDORA_ROOT_RELEASE: 33
+  FEDORA_ROOT_RELEASE: 34
   # This is a conservative "pull if missing" default.
   PODMAN_PULL: "--pull=false"
   # This is because in 2021-07 runc fails inside containers
@@ -38,6 +38,7 @@ workflow:
       - FEDORA_ROOT_RELEASE:
           - 33
           - 34
+          - 35
 
 container:
   extends: .fedora-release-matrix
