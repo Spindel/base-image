@@ -35,6 +35,7 @@ RUN apt-get update \
     && rustup component add clippy \
     && rustup component add rustfmt \
     && apt-get install --no-install-recommends -y dbus \
+    && cargo install cargo-audit \
     && apt-get clean \
     && rustup --version \
     && cargo --version \
