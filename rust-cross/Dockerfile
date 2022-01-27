@@ -33,6 +33,7 @@ ENV USER root
 RUN bash /usr/local/bin/rustup.sh -y && \
     rustup default stable && \
     rustup target add armv7-unknown-linux-gnueabihf && \
-    rustup target add x86_64-unknown-linux-gnu
+    rustup target add x86_64-unknown-linux-gnu && \
+    cargo install maturin
 
 WORKDIR /code/
