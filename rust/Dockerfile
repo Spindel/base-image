@@ -25,18 +25,20 @@ LABEL "se.modio.ci.url"=$URL \
 # armv7/GNU:	libc6-armhf-cross libc6-dev-armhf-cross gcc-arm-linux-gnueabihf
 # clippy, rustfmt:  Commonly used in rust projects
 # dbus:  To run modio-localapi tests under
-RUN apt-get update \
+
+RUN dpkg --add-architecture armhf && \
+    apt-get update \
     && apt-get install --no-install-recommends -y libc-dev \
-    && rustup target add armv7-unknown-linux-gnueabihf \
     && apt-get install --no-install-recommends -y musl-tools musl-dev \
-    && rustup target add x86_64-unknown-linux-musl \
     && apt-get install --no-install-recommends -y libc6-armhf-cross libc6-dev-armhf-cross gcc-arm-linux-gnueabihf \
+    && apt-get install --no-install-recommends -y dbus \
+    && apt-get clean \
+    && rustup target add armv7-unknown-linux-gnueabihf \
+    && rustup target add x86_64-unknown-linux-musl \
     && rustup target add x86_64-unknown-linux-gnu \
     && rustup component add clippy \
     && rustup component add rustfmt \
-    && apt-get install --no-install-recommends -y dbus \
     && cargo install cargo-audit maturin \
-    && apt-get clean \
     && rustup --version \
     && cargo --version \
     && rustc --version
