@@ -1,4 +1,4 @@
-FROM docker.io/library/rust:latest
+FROM docker.io/library/rust:buster
 
 ARG URL=unknown
 ARG COMMIT=unknown
