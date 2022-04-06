@@ -15,5 +15,9 @@ ENV LANG C.utf8
 ENV LANGUAGE en_US:en
 ENV LC_ALL C.utf8
 
+# Restore some golang defaults that Fedora helpfully disabled
+# https://go.dev/ref/mod#environment-variables
+ENV GOPROXY https://proxy.golang.org,direct
+ENV GOSUMDB sum.golang.org
 
 ADD rootfs.tar /
