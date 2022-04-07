@@ -3,10 +3,17 @@
 # Keep the includes first to illustrate that definitions that everything that
 # follows override included definitions.
 include:
-  - local: /templates/defaults/container-build.yaml
+  - file: /ci/default.yml
+    project: ModioAB/CI
+    ref: main
 
 default:
-  image: registry.gitlab.com/modioab/base-image/fedora-34/container:master
+  # Hard-code the container image to use one that we know already exists
+  image: registry.gitlab.com/modioab/base-image/fedora-35/container:master
+
+  before_script:
+    - make -f build.mk login
+    - podman ${PODMAN_RUNTIME+--runtime} ${PODMAN_RUNTIME} info
 
 stages:
   - first
@@ -16,9 +23,6 @@ stages:
   - deploy
 
 variables:
-  # This is specified up front to make it explicit and visible for inventory
-  # Do not set this in makefiles or other places, except as job variables below.
-  FEDORA_ROOT_RELEASE: 34
   # This is a conservative "pull if missing" default.
   PODMAN_PULL: "--pull=false"
   # This is because in 2021-07 runc fails inside containers
