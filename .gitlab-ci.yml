@@ -76,6 +76,10 @@ jstest:
   extends:
     - .container:build
     - .fedora-release-matrix
+  needs:
+    - build-image
+  variables:
+    BASE_IMAGE_TAG: ${CI_COMMIT_REF_NAME}
   script:
     - make -C jstest build-publish
 
