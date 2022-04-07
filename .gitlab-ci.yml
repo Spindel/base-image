@@ -36,9 +36,8 @@ workflow:
   parallel:
     matrix:
       - FEDORA_ROOT_RELEASE:
-          - 33
-          - 34
           - 35
+          - 36
 
 container:
   extends: .fedora-release-matrix
