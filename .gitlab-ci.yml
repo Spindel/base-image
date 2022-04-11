@@ -48,13 +48,14 @@ bootstrap:
   extends:
     - .container:build-publish
   stage: prepare
+  variables:
+    FEDORA_ROOT_RELEASE: ''
+    SUBDIR: bootstrap
   rules:
     - if: '"${FEDORA_ROOT_RELEASE}" != ""'
       when: manual
       allow_failure: true
     - when: never
-  variables:
-    SUBDIR: bootstrap
 
 
 fedora:build-image:
