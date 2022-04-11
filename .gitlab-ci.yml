@@ -10,8 +10,11 @@ include:
     project: ModioAB/CI
 
 variables:
-  # Hard-code the container image to use one that we know already exists
-  CONTAINER_IMAGE: registry.gitlab.com/modioab/base-image/fedora-35/container:master
+  # Hard-code the container image for bootstrapping to use one that exists
+  BOOTSTRAP_IMAGE: registry.gitlab.com/modioab/base-image/fedora-35/container:master
+
+  # Override the default, to dogfood development work, and catch issues early
+  CONTAINER_IMAGE: registry.gitlab.com/modioab/base-image/fedora-${FEDORA_ROOT_RELEASE}/container:${CI_COMMIT_REF_NAME}
 
 workflow:
   rules:
@@ -48,6 +51,7 @@ bootstrap:
   extends:
     - .container:build-publish
   stage: prepare
+  image: ${BOOTSTRAP_IMAGE}
   variables:
     FEDORA_ROOT_RELEASE: ''
     SUBDIR: bootstrap
@@ -62,6 +66,8 @@ fedora:build-image:
   extends:
     - .container:build-publish
     - .fedora-release-matrix
+  stage: prepare
+  image: ${BOOTSTRAP_IMAGE}
   variables:
     SUBDIR: build-fedora
 
@@ -70,6 +76,12 @@ fedora:container:
   extends:
     - .container:build-publish
     - .fedora-release-matrix
+  stage: prepare
+  image: ${BOOTSTRAP_IMAGE}
+  rules:
+    - if: '"${CI_COMMIT_BRANCH}" == "${CI_DEFAULT_BRANCH}"'
+      allow_failure: true
+    - when: always
   script:
     - make --directory=container login
     - podman info
@@ -81,6 +93,7 @@ fedora:jstest:
     - .container:build-publish
     - .fedora-release-matrix
   needs:
+    - fedora:container
     - fedora:build-image
   variables:
     BASE_IMAGE_TAG: ${CI_COMMIT_REF_NAME}
@@ -90,6 +103,8 @@ fedora:jstest:
 fedora:
   extends:
     - .container:build-publish
+  needs:
+    - fedora:container
   parallel:
     matrix:
       - <<: *fedora-root-release
@@ -110,6 +125,8 @@ fedora:
 other:
   extends:
     - .container:build-publish
+  needs:
+    - fedora:container
   parallel:
     matrix:
       - SUBDIR:
