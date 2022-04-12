@@ -3,142 +3,139 @@
 # Keep the includes first to illustrate that definitions that everything that
 # follows override included definitions.
 include:
-  - local: /templates/defaults/container-build.yaml
-
-default:
-  image: registry.gitlab.com/modioab/base-image/fedora-34/container:master
-
-stages:
-  - first
-  - second
-  - build
-  - publish
-  - deploy
+  - file: /ci/default.yml
+    project: ModioAB/CI
+    ref: main
+  - file: /ci/container.yml
+    project: ModioAB/CI
 
 variables:
-  # This is specified up front to make it explicit and visible for inventory
-  # Do not set this in makefiles or other places, except as job variables below.
-  FEDORA_ROOT_RELEASE: 34
-  # This is a conservative "pull if missing" default.
-  PODMAN_PULL: "--pull=false"
-  # This is because in 2021-07 runc fails inside containers
-  PODMAN_RUNTIME: "/usr/bin/crun"
+  # Hard-code the container image for bootstrapping to use one that exists
+  BOOTSTRAP_IMAGE: registry.gitlab.com/modioab/base-image/fedora-35/container:master
 
+  # Override the default, to dogfood development work, and catch issues early
+  CONTAINER_IMAGE: registry.gitlab.com/modioab/base-image/fedora-${FEDORA_ROOT_RELEASE}/container:${CI_COMMIT_REF_NAME}
+
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Workflows/MergeRequest-Pipelines.gitlab-ci.yml
 workflow:
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    # Also allow starting manual pipelines on all branches
     - if: '$CI_PIPELINE_SOURCE == "web"'
 
 # The default settings above can be overriden in any of the jobs that follow
 
+.container:build-publish:
+  extends:
+    - .container:build
+  # /CI/container uses a hard-coded image, instead of using the variable as
+  # defined in /CI/default, so we can't just override the variable for now.
+  # TODO: https://gitlab.com/ModioAB/CI/-/issues/1
+  image: ${CONTAINER_IMAGE}
+  script:
+    - make ${SUBDIR:+--directory=}${SUBDIR} login
+    - podman info
+    - make ${SUBDIR:+--directory=}${SUBDIR} build-publish
+
 .fedora-release-matrix:
   parallel:
     matrix:
-      - FEDORA_ROOT_RELEASE:
-          - 33
-          - 34
+      - &fedora-root-release
+        FEDORA_ROOT_RELEASE:
           - 35
+          - 36
 
-container:
-  extends: .fedora-release-matrix
-  stage: second
-  script:
-    - make -C container build test publish
-
-
-build-image:
-  extends: .fedora-release-matrix
-  stage: build
-  script:
-    - make -C build-fedora build-publish
-
-
-python3:
-  extends: .fedora-release-matrix
-  stage: second
-  script:
-    - make -C python3-image build-publish
-
-jstest:
-  extends: .fedora-release-matrix
-  stage: second
-  script:
-    - make -C jstest build-publish
-
-
-debian9-cross:
-  stage: build
-  script:
-    - make -C debian9-cross build-publish
-
-
-debian9-firmware:
-  stage: build
-  script:
-    - make -C debian9-firmware build-publish
-
-
-debian10-firmware:
-  stage: build
-  script:
-    - make -C debian10-firmware build-publish
-
-
-nodejs:
-  extends: .fedora-release-matrix
-  stage: second
-  script:
-    - make -C nodejs-image build-publish
-
-
-nginx:
-  extends: .fedora-release-matrix
-  stage: second
-  script:
-    - make -C nginx build-publish
-
-
-meteor-1.10:
-  extends: .fedora-release-matrix
-  stage: build
-  variables:
-    METEOR_RELEASE: '1.10.1'
-  script:
-    - make -C meteor-image build-publish
-
-c-image:
-  extends: .fedora-release-matrix
-  stage: second
-  script:
-    - make -C c-image build-publish
-
-
-go-image:
-  extends: .fedora-release-matrix
-  stage: second
-  script:
-    - make -C go-image build-publish
-
-rust:
-  stage: second
-  script:
-    - make -C rust build-publish
-
-rust-cross:
-  stage: second
-  script:
-    - make -C rust-cross build-publish
 
 # Bootstrap can be run by setting FEDORA_ROOT_RELEASE in the variables part
 # when running a pipeline manually.
 bootstrap:
-  stage: first
+  extends:
+    - .container:build-publish
+  stage: prepare
+  image: ${BOOTSTRAP_IMAGE}
+  variables:
+    FEDORA_ROOT_RELEASE: ''
+    SUBDIR: bootstrap
   rules:
     - if: '"${FEDORA_ROOT_RELEASE}" != ""'
       when: manual
       allow_failure: true
     - when: never
+
+
+fedora:build-image:
+  extends:
+    - .container:build-publish
+    - .fedora-release-matrix
+  stage: prepare
+  image: ${BOOTSTRAP_IMAGE}
+  variables:
+    SUBDIR: build-fedora
+
+
+fedora:container:
+  extends:
+    - .container:build-publish
+    - .fedora-release-matrix
+  stage: prepare
+  image: ${BOOTSTRAP_IMAGE}
+  rules:
+    - if: '"${CI_COMMIT_BRANCH}" == "${CI_DEFAULT_BRANCH}"'
+      allow_failure: true
+    - when: always
   script:
-    - make -C bootstrap build-publish
+    - make --directory=container login
+    - podman info
+    - make --directory=container build test publish
+
+
+fedora:jstest:
+  extends:
+    - .container:build-publish
+    - .fedora-release-matrix
+  needs:
+    - fedora:container
+    - fedora:build-image
+  variables:
+    BASE_IMAGE_TAG: ${CI_COMMIT_REF_NAME}
+    SUBDIR: jstest
+
+
+fedora:
+  extends:
+    - .container:build-publish
+  needs:
+    - fedora:container
+  parallel:
+    matrix:
+      - <<: *fedora-root-release
+        SUBDIR:
+          - c-image
+          - go-image
+          - nginx
+          - nodejs-image
+          - python3-image
+
+      - <<: *fedora-root-release
+        SUBDIR:
+          - meteor-image
+        METEOR_RELEASE:
+          - '1.10.1'
+
+
+other:
+  extends:
+    - .container:build-publish
+  needs:
+    - fedora:container
+  parallel:
+    matrix:
+      - SUBDIR:
+          - debian9-cross
+          - debian9-firmware
+          - debian10-firmware
+          - rust
+          - rust-cross
 ...
