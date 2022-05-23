@@ -136,6 +136,7 @@ other:
           - debian9-cross
           - debian9-firmware
           - debian10-firmware
+          - debian11-firmware
           - rust
           - rust-cross
 ...
