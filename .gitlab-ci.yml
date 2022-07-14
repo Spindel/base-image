@@ -37,7 +37,13 @@ workflow:
   script:
     - make ${SUBDIR:+--directory=}${SUBDIR} login
     - podman info
-    - make ${SUBDIR:+--directory=}${SUBDIR} build-publish
+    - make ${SUBDIR:+--directory=}${SUBDIR} build
+    - make ${SUBDIR:+--directory=}${SUBDIR} publish
+    - |
+      if [[ $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH ]]
+      then
+        make ${SUBDIR:+--directory=}${SUBDIR} IMAGE_TAG_SUFFIX=latest publish
+      fi
 
 .fedora-release-matrix:
   parallel:
