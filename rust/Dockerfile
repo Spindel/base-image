@@ -25,6 +25,8 @@ LABEL "se.modio.ci.url"=$URL \
 # armv7/GNU:	libc6-armhf-cross libc6-dev-armhf-cross gcc-arm-linux-gnueabihf
 # clippy, rustfmt:  Commonly used in rust projects
 # dbus:  To run modio-localapi tests under
+# maturin: To package rust binaries as python, or build python modules in rust
+# grcov+llvm-tools-preview:   To get code-coverage from tests
 
 RUN dpkg --add-architecture armhf && \
     apt-get update \
@@ -38,7 +40,8 @@ RUN dpkg --add-architecture armhf && \
     && rustup target add x86_64-unknown-linux-gnu \
     && rustup component add clippy \
     && rustup component add rustfmt \
-    && cargo install cargo-audit maturin \
+    && rustup component add llvm-tools-preview \
+    && cargo install cargo-audit maturin grcov \
     && rustup --version \
     && cargo --version \
     && rustc --version
