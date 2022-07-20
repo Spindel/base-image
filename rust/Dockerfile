@@ -27,6 +27,8 @@ LABEL "se.modio.ci.url"=$URL \
 # dbus:  To run modio-localapi tests under
 # maturin: To package rust binaries as python, or build python modules in rust
 # grcov+llvm-tools-preview:   To get code-coverage from tests
+# cargo-llvm-cov:  gives reports in terminal for tests,
+#                  and sets up cargo for coverage profiling in an easier way.
 
 RUN dpkg --add-architecture armhf && \
     apt-get update \
@@ -41,7 +43,7 @@ RUN dpkg --add-architecture armhf && \
     && rustup component add clippy \
     && rustup component add rustfmt \
     && rustup component add llvm-tools-preview \
-    && cargo install cargo-audit maturin grcov \
+    && cargo install cargo-audit maturin grcov cargo-llvm-cov \
     && rustup --version \
     && cargo --version \
     && rustc --version
