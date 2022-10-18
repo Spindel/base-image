@@ -4,17 +4,17 @@
 # follows override included definitions.
 include:
   - file: /ci/default.yml
-    project: ModioAB/CI
+    project: ${CI_PROJECT_NAMESPACE}/CI
     ref: main
   - file: /ci/container.yml
-    project: ModioAB/CI
+    project: ${CI_PROJECT_NAMESPACE}/CI
 
 variables:
   # Hard-code the container image for bootstrapping to use one that exists
   BOOTSTRAP_IMAGE: registry.gitlab.com/modioab/base-image/fedora-35/container:master
 
   # Override the default, to dogfood development work, and catch issues early
-  CONTAINER_IMAGE: registry.gitlab.com/modioab/base-image/fedora-${FEDORA_ROOT_RELEASE}/container:${CI_COMMIT_REF_NAME}
+  CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}/fedora-${FEDORA_ROOT_RELEASE}/container:${CI_COMMIT_REF_NAME}
 
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Workflows/MergeRequest-Pipelines.gitlab-ci.yml
 workflow:
