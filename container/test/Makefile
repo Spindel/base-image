@@ -1,6 +1,6 @@
 ## Build a test image using a `container` image
 
-IMAGE_REPO = registry.gitlab.com/modioab/base-image/test-dummy
+IMAGE_REPO = $(CI_REGISTRY_IMAGE)/test-dummy
 
 include build.mk
 
