@@ -11,8 +11,8 @@ include:
 
 variables:
   # Hard-code the container image for bootstrapping to use one that exists
-  # BOOTSTRAP_IMAGE: registry.gitlab.com/modioab/base-image/fedora-35/container:master
-  BOOTSTRAP_IMAGE: ${CI_REGISTRY_IMAGE}/fedora-35/container:master
+  # BOOTSTRAP_IMAGE: registry.gitlab.com/modioab/base-image/fedora-35/container:latest
+  BOOTSTRAP_IMAGE: ${CI_REGISTRY_IMAGE}/fedora-35/container:latest
 
   # Override the default, to dogfood development work, and catch issues early
   CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}/fedora-${FEDORA_ROOT_RELEASE}/container:${CI_COMMIT_REF_NAME}
