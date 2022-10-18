@@ -6,8 +6,6 @@ include:
   - file: /ci/default.yml
     project: ${CI_PROJECT_NAMESPACE}/CI
     ref: main
-  - file: /ci/container.yml
-    project: ${CI_PROJECT_NAMESPACE}/CI
 
 variables:
   # Hard-code the container image for bootstrapping to use one that exists
@@ -29,11 +27,9 @@ workflow:
 # The default settings above can be overriden in any of the jobs that follow
 
 .container:build-publish:
-  extends:
-    - .container:build
-  # /CI/container uses a hard-coded image, instead of using the variable as
-  # defined in /CI/default, so we can't just override the variable for now.
-  # TODO: https://gitlab.com/ModioAB/CI/-/issues/1
+  stage: build
+  variables:
+    PODMAN_PULL: "--pull=false"
   image: ${CONTAINER_IMAGE}
   script:
     - make ${SUBDIR:+--directory=}${SUBDIR} login
