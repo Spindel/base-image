@@ -16,6 +16,10 @@ FEDORA_ROOT_PACKAGES += runc
 FEDORA_ROOT_PACKAGES += buildah
 
 IMAGE_RUN_ARGS = -v $$tmpdir:/test:z --privileged
+IMAGE_RUN_ARGS += --env CI_REGISTRY
+IMAGE_RUN_ARGS += --env CI_REGISTRY_IMAGE
+IMAGE_RUN_ARGS += --env IMAGE_REGISTRY
+
 IMAGE_RUN_CMD = make -C /test build-publish
 
 include ../build.mk
