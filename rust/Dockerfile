@@ -43,7 +43,8 @@ RUN dpkg --add-architecture armhf && \
     && rustup component add clippy \
     && rustup component add rustfmt \
     && rustup component add llvm-tools-preview \
-    && cargo install cargo-audit maturin grcov cargo-llvm-cov \
+    && cargo install cargo-audit grcov cargo-llvm-cov \
+    && cargo install maturin --version 0.13.5 \
     && rustup --version \
     && cargo --version \
     && rustc --version
