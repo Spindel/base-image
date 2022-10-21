@@ -1,3 +1,3 @@
-IMAGE_REPO = registry.gitlab.com/modioab/base-image/debian9/cross
+IMAGE_REPO = $(CI_REGISTRY_IMAGE)/debian9/cross
 
 include ../build.mk

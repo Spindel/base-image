@@ -1,4 +1,4 @@
-IMAGE_REPO = registry.gitlab.com/modioab/base-image/fedora-$(FEDORA_ROOT_RELEASE)/container
+IMAGE_REPO = $(CI_REGISTRY_IMAGE)/fedora-$(FEDORA_ROOT_RELEASE)/container
 IMAGE_ARCHIVE = image.tar
 IMAGE_FILES += $(FEDORA_ROOT_ARCHIVE)
 
@@ -16,6 +16,10 @@ FEDORA_ROOT_PACKAGES += runc
 FEDORA_ROOT_PACKAGES += buildah
 
 IMAGE_RUN_ARGS = -v $$tmpdir:/test:z --privileged
+IMAGE_RUN_ARGS += --env CI_REGISTRY
+IMAGE_RUN_ARGS += --env CI_REGISTRY_IMAGE
+IMAGE_RUN_ARGS += --env IMAGE_REGISTRY
+
 IMAGE_RUN_CMD = make -C /test build-publish
 
 include ../build.mk
