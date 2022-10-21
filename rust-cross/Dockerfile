@@ -41,7 +41,8 @@ RUN dpkg --add-architecture armhf && \
     && rustup target add x86_64-unknown-linux-gnu \
     && rustup component add clippy \
     && rustup component add rustfmt \
-    && cargo install cargo-audit maturin \
+    && cargo install cargo-audit \
+    && cargo install maturin --version 0.13.5 \
     && rustup --version \
     && cargo --version \
     && rustc --version
